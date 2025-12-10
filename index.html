@@ -289,10 +289,12 @@
         <main class="max-w-3xl mx-auto px-6 pb-20">
             
             <!-- About Section -->
-            <section class="glass-container p-8 rounded-xl mb-16 fade-in-section" style="--delay: 0.1s;">
+            <!-- FIX: Padding angepasst (p-6 statt p-8 auf Mobile), damit mehr Platz ist -->
+            <section class="glass-container p-6 md:p-8 rounded-xl mb-16 fade-in-section" style="--delay: 0.1s;">
                 <div class="flex items-center space-x-4 mb-6">
                     <div class="h-px flex-1 bg-gradient-to-r from-transparent to-[#D4AF37]"></div>
-                    <h2 class="text-2xl font-medium text-[#D4AF37] text-center whitespace-nowrap">Über unsere Gemeinschaft</h2>
+                    <!-- FIX: whitespace-nowrap entfernt, damit der Text auf Handy umbrechen kann -->
+                    <h2 class="text-2xl font-medium text-[#D4AF37] text-center">Über unsere Gemeinschaft</h2>
                     <div class="h-px flex-1 bg-gradient-to-l from-transparent to-[#D4AF37]"></div>
                 </div>
                 
