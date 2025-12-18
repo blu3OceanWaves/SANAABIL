@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SANAABIL - Unsere Spenden-Community</title>
-    <!-- NEU: Favicon hinzugefügt -->
+    <!-- Favicon -->
     <link rel="icon" href="https://i.imgur.com/7GqbuO4.jpeg" type="image/jpeg">
     
     <script src="https://cdn.tailwindcss.com"></script>
@@ -204,6 +204,15 @@
             background: var(--accent-gold);
         }
         
+        /* Utility Class to hide scrollbar but allow scrolling */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+        
         /* Toast */
         .toast {
             background-color: var(--bg-primary);
@@ -324,8 +333,8 @@
         .switch-container {
             /* Positioniert den Switch absolut zum Seitenanfang */
             position: absolute; 
-            top: 1.5rem; /* Viel weiter oben (vorher 3rem) */
-            right: 0.5rem; /* Viel weiter außen (vorher 1.5rem) */
+            top: 1.5rem; 
+            right: 0.5rem; 
             z-index: 100;
             transform: rotate(90deg); /* Vertikale Ausrichtung */
             transform-origin: center;
@@ -336,7 +345,7 @@
           --INITIAL-THUMB-COLOR: #D4AF37;
           --OVERALL-TRANSITION-DURATION: 500ms;
           
-          font-size: 8px; /* VIEL KLEINER (vorher 12px) */
+          font-size: 8px; /* Kleiner Switch */
           position: relative;
           display: inline-block;
           width: 3.75em;
@@ -542,160 +551,200 @@
                 </div>
             </section>
 
-            <!-- Projects & FAQ Grid -->
-            <div class="grid grid-cols-1 gap-12 mb-16">
-                <!-- Completed Projects -->
-                <section class="fade-in-section" style="--delay: 0.3s;">
-                    <h2 class="text-xl font-medium text-[var(--accent-gold)] mb-6 flex items-center">
-                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        Abgeschlossene Projekte
-                    </h2>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <!-- Project Card 1: Afghanistan -->
-                        <div class="group relative overflow-hidden rounded-xl bg-[var(--glass-bg)] border border-[var(--glass-border)] hover:border-[var(--accent-gold)] transition-all duration-300 hover:shadow-[0_0_20px_var(--card-hover)]">
-                            <!-- Background Decoration -->
-                            <div class="absolute -right-6 -top-6 text-[var(--accent-gold)] opacity-5 transform rotate-12 group-hover:scale-110 transition-transform duration-500">
-                                <svg class="w-32 h-32" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg>
-                            </div>
-                            
-                            <div class="p-6 relative z-10">
-                                <div class="w-12 h-12 rounded-full border border-[var(--glass-border)] bg-[var(--card-hover)] flex items-center justify-center mb-4 text-[var(--accent-gold)] group-hover:bg-[var(--accent-gold)] group-hover:text-[var(--bg-primary)] transition-all duration-300">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2.5L8 2.69 9.31 4H20a2 2 0 0 1 2 2v2.5M12 21.5a8.38 8.38 0 0 0 2.5-1.95L12 17l-2.5 2.55A8.38 8.38 0 0 0 12 21.5z"></path></svg>
-                                </div>
-
-                                <h3 class="text-lg font-medium text-[var(--text-primary)] mb-1 group-hover:text-[var(--accent-gold)] transition-colors">Brunnen Reparatur</h3>
-                                <p class="text-sm text-[var(--text-secondary)] font-serif italic mb-4">Afghanistan</p>
-                                
-                                <div class="flex flex-wrap items-center gap-2">
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium badge-success border">
-                                        <svg class="mr-1.5 h-2.5 w-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
-                                        Erfolgreich
-                                    </span>
-                                    <span class="text-xs text-green-500/80 font-serif italic tracking-wide">wa lillahi-l hamd</span>
-                                </div>
-                            </div>
-                            <!-- Shine Effect -->
-                            <div class="project-shine"></div>
-                        </div>
-
-                        <!-- Project Card 2: Gambia -->
-                        <div class="group relative overflow-hidden rounded-xl bg-[var(--glass-bg)] border border-[var(--glass-border)] hover:border-[var(--accent-gold)] transition-all duration-300 hover:shadow-[0_0_20px_var(--card-hover)]">
-                            <div class="absolute -right-6 -top-6 text-[var(--accent-gold)] opacity-5 transform -rotate-6 group-hover:scale-110 transition-transform duration-500">
-                                <svg class="w-32 h-32" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path></svg>
-                            </div>
-
-                            <div class="p-6 relative z-10">
-                                <div class="w-12 h-12 rounded-full border border-[var(--glass-border)] bg-[var(--card-hover)] flex items-center justify-center mb-4 text-[var(--accent-gold)] group-hover:bg-[var(--accent-gold)] group-hover:text-[var(--bg-primary)] transition-all duration-300">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
-                                </div>
-
-                                <h3 class="text-lg font-medium text-[var(--text-primary)] mb-1 group-hover:text-[var(--accent-gold)] transition-colors">Unterstützung eines Bruders</h3>
-                                <p class="text-sm text-[var(--text-secondary)] font-serif italic mb-4">Gambia</p>
-                                
-                                <div class="flex flex-wrap items-center gap-2">
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium badge-success border">
-                                        <svg class="mr-1.5 h-2.5 w-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
-                                        Erfolgreich
-                                    </span>
-                                    <span class="text-xs text-green-500/80 font-serif italic tracking-wide">wa lillahi-l hamd</span>
-                                </div>
-                            </div>
-                            <div class="project-shine"></div>
-                        </div>
-                    </div>
-                </section>
+            <!-- Projects Section (Carousel) -->
+            <section class="fade-in-section relative group/slider" style="--delay: 0.3s;">
+                <h2 class="text-xl font-medium text-[var(--accent-gold)] mb-6 flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    Abgeschlossene Projekte
+                </h2>
                 
-                <!-- FAQ -->
-                <section class="fade-in-section" style="--delay: 0.4s;">
-                    <div class="flex items-center justify-between mb-6">
-                         <h2 class="text-2xl font-medium text-[var(--accent-gold)] flex items-center">
-                            <svg class="w-6 h-6 mr-3 text-[var(--accent-gold)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            Häufige Fragen
-                        </h2>
+                <!-- Navigation Buttons (Desktop) -->
+                <button id="slide-left" class="absolute left-[-15px] top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-[var(--accent-gold)] text-[var(--bg-primary)] opacity-0 group-hover/slider:opacity-100 transition-opacity hidden md:flex hover:scale-110 shadow-lg">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                </button>
+                <button id="slide-right" class="absolute right-[-15px] top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-[var(--accent-gold)] text-[var(--bg-primary)] opacity-0 group-hover/slider:opacity-100 transition-opacity hidden md:flex hover:scale-110 shadow-lg">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </button>
+
+                <!-- Scroll Container (Carousel) -->
+                <div id="projects-slider" class="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-4 no-scrollbar scroll-smooth">
+                    
+                    <!-- Project Card 1: Afghanistan -->
+                    <div class="snap-center flex-shrink-0 w-[90%] md:w-[48%] group relative overflow-hidden rounded-xl bg-[var(--glass-bg)] border border-[var(--glass-border)] hover:border-[var(--accent-gold)] transition-all duration-300 hover:shadow-[0_0_20px_var(--card-hover)]">
+                        <!-- Background Decoration -->
+                        <div class="absolute -right-6 -top-6 text-[var(--accent-gold)] opacity-5 transform rotate-12 group-hover:scale-110 transition-transform duration-500">
+                            <svg class="w-32 h-32" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg>
+                        </div>
+                        
+                        <div class="p-6 relative z-10 flex flex-col h-full">
+                            <div class="w-12 h-12 rounded-full border border-[var(--glass-border)] bg-[var(--card-hover)] flex items-center justify-center mb-4 text-[var(--accent-gold)] group-hover:bg-[var(--accent-gold)] group-hover:text-[var(--bg-primary)] transition-all duration-300">
+                                <!-- Well/Bucket Icon for Water project -->
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2.5L8 2.69 9.31 4H20a2 2 0 0 1 2 2v2.5M12 21.5a8.38 8.38 0 0 0 2.5-1.95L12 17l-2.5 2.55A8.38 8.38 0 0 0 12 21.5z"></path></svg>
+                            </div>
+
+                            <h3 class="text-lg font-medium text-[var(--text-primary)] mb-1 group-hover:text-[var(--accent-gold)] transition-colors">Brunnen Reparatur</h3>
+                            <p class="text-sm text-[var(--text-secondary)] font-serif italic mb-2">Afghanistan</p>
+                            
+                            <div class="mt-auto pt-4 border-t border-[var(--glass-border)] flex flex-wrap justify-between items-end gap-2">
+                                <div>
+                                    <p class="text-[var(--text-secondary)] text-xs uppercase tracking-wide">Betrag</p>
+                                    <p class="text-[var(--text-primary)] font-bold text-lg">507,03 €</p>
+                                </div>
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium badge-success border">
+                                    <svg class="mr-1.5 h-2.5 w-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                                    Erfolgreich
+                                </span>
+                            </div>
+                        </div>
+                        <!-- Shine Effect -->
+                        <div class="project-shine"></div>
                     </div>
 
-                    <div id="faq-container" class="space-y-4">
-                        <!-- Items: Numbers restored & Missing items added -->
-                        
-                        <!-- Item 1 -->
-                        <div class="faq-item cursor-pointer">
-                           <div class="flex justify-between items-center p-5">
-                                <span class="text-[var(--text-primary)] font-medium text-base"><span class="text-[var(--accent-gold)] font-bold mr-2">1.</span> Wie kann ich teilnehmen?</span>
-                                <svg class="faq-icon w-5 h-5 text-[var(--text-secondary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                           </div>
-                           <div class="faq-content px-5">
-                                <p class="text-[var(--text-secondary)] text-sm leading-relaxed border-t border-[var(--glass-border)] pt-3">
-                                    Die Teilnahme an unserer Initiative erfolgt über den Gruppen-Link, der von einem bestehenden Mitglied geteilt wird. Dort können Sie sich mit der Community verbinden, um Ihren monatlichen Beitrag von 1 € für die Bedürftigen zu leisten.
-                                </p>
-                           </div>
+                    <!-- Project Card 2: Gambia -->
+                    <div class="snap-center flex-shrink-0 w-[90%] md:w-[48%] group relative overflow-hidden rounded-xl bg-[var(--glass-bg)] border border-[var(--glass-border)] hover:border-[var(--accent-gold)] transition-all duration-300 hover:shadow-[0_0_20px_var(--card-hover)]">
+                        <div class="absolute -right-6 -top-6 text-[var(--accent-gold)] opacity-5 transform -rotate-6 group-hover:scale-110 transition-transform duration-500">
+                            <svg class="w-32 h-32" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path></svg>
                         </div>
 
-                        <!-- Item 2 -->
-                        <div class="faq-item cursor-pointer">
-                           <div class="flex justify-between items-center p-5">
-                                <span class="text-[var(--text-primary)] font-medium text-base"><span class="text-[var(--accent-gold)] font-bold mr-2">2.</span> Wofür werden Spenden verwendet?</span>
-                                <svg class="faq-icon w-5 h-5 text-[var(--text-secondary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                           </div>
-                           <div class="faq-content px-5">
-                                <p class="text-[var(--text-secondary)] text-sm leading-relaxed border-t border-[var(--glass-border)] pt-3">
-                                    Die gesammelten Beiträge werden ausschließlich für die Unterstützung von Bedürftigen eingesetzt, in sha ALLAH. Der genaue Verwendungszweck wird in der Community transparent kommuniziert.
-                                </p>
-                           </div>
+                        <div class="p-6 relative z-10 flex flex-col h-full">
+                            <div class="w-12 h-12 rounded-full border border-[var(--glass-border)] bg-[var(--card-hover)] flex items-center justify-center mb-4 text-[var(--accent-gold)] group-hover:bg-[var(--accent-gold)] group-hover:text-[var(--bg-primary)] transition-all duration-300">
+                                <!-- Heart Icon (Restored) -->
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                            </div>
+
+                            <h3 class="text-lg font-medium text-[var(--text-primary)] mb-1 group-hover:text-[var(--accent-gold)] transition-colors">Unterstützung eines Bruders</h3>
+                            <p class="text-sm text-[var(--text-secondary)] font-serif italic mb-2">Gambia</p>
+                            
+                            <div class="mt-auto pt-4 border-t border-[var(--glass-border)] flex flex-wrap justify-between items-end gap-2">
+                                <div>
+                                    <p class="text-[var(--text-secondary)] text-xs uppercase tracking-wide">Betrag</p>
+                                    <p class="text-[var(--text-primary)] font-bold text-lg">166,00 €</p>
+                                </div>
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium badge-success border">
+                                    <svg class="mr-1.5 h-2.5 w-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                                    Erfolgreich
+                                </span>
+                            </div>
+                        </div>
+                        <div class="project-shine"></div>
+                    </div>
+
+                    <!-- Project Card 3: Gaza (UPDATED) -->
+                    <div class="snap-center flex-shrink-0 w-[90%] md:w-[48%] group relative overflow-hidden rounded-xl bg-[var(--glass-bg)] border border-[var(--glass-border)] hover:border-[var(--accent-gold)] transition-all duration-300 hover:shadow-[0_0_20px_var(--card-hover)]">
+                        <div class="absolute -right-6 -top-6 text-[var(--accent-gold)] opacity-5 transform rotate-12 group-hover:scale-110 transition-transform duration-500">
+                            <!-- Simple Exclamation Mark Background -->
+                            <svg class="w-32 h-32" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v11m0 4h.01"></path>
+                            </svg>
                         </div>
 
-                        <!-- Item 3 -->
-                        <div class="faq-item cursor-pointer">
-                           <div class="flex justify-between items-center p-5">
-                                <span class="text-[var(--text-primary)] font-medium text-base"><span class="text-[var(--accent-gold)] font-bold mr-2">3.</span> Bedeutung des Namens "SANAABIL"?</span>
-                                <svg class="faq-icon w-5 h-5 text-[var(--text-secondary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                           </div>
-                           <div class="faq-content px-5">
-                                <p class="text-[var(--text-secondary)] text-sm leading-relaxed border-t border-[var(--glass-border)] pt-3">
-                                    "SANAABIL" (arabisch für Ähren) bezieht sich auf das Gleichnis im Qur'an (2:261), in dem eine Spende auf ALLAHs Weg mit einem Saatkorn verglichen wird, aus dem sieben Ähren wachsen, wobei jede Ähre hundert Körner trägt. Der Name erinnert daran, dass selbst die kleinste aufrichtige Gabe um ALLAHs willen zu einem großen, segensreichen Handel heranwachsen kann.
-                                </p>
-                           </div>
-                        </div>
+                        <div class="p-6 relative z-10 flex flex-col h-full">
+                            <div class="w-12 h-12 rounded-full border border-[var(--glass-border)] bg-[var(--card-hover)] flex items-center justify-center mb-4 text-[var(--accent-gold)] group-hover:bg-[var(--accent-gold)] group-hover:text-[var(--bg-primary)] transition-all duration-300">
+                                <!-- Simple Exclamation Mark Icon -->
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 5v10m0 4h.01"></path>
+                                </svg>
+                            </div>
 
-                        <!-- Item 4 -->
-                        <div class="faq-item cursor-pointer">
-                           <div class="flex justify-between items-center p-5">
-                                <span class="text-[var(--text-primary)] font-medium text-base"><span class="text-[var(--accent-gold)] font-bold mr-2">4.</span> Wie werden Projekte ausgewählt?</span>
-                                <svg class="faq-icon w-5 h-5 text-[var(--text-secondary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                           </div>
-                           <div class="faq-content px-5">
-                                <p class="text-[var(--text-secondary)] text-sm leading-relaxed border-t border-[var(--glass-border)] pt-3">
-                                    Die Auswahl erfolgt in Absprache innerhalb der Community. Informationen zu den jeweiligen Spendenprojekten werden in der Community bereitgestellt.
-                                </p>
-                           </div>
+                            <h3 class="text-lg font-medium text-[var(--text-primary)] mb-1 group-hover:text-[var(--accent-gold)] transition-colors">Nothilfe Gaza-Nahost</h3>
+                            <p class="text-sm text-[var(--text-secondary)] font-serif italic mb-2">Palästina</p>
+                            
+                            <div class="mt-auto pt-4 border-t border-[var(--glass-border)] flex flex-wrap justify-between items-end gap-2">
+                                <div>
+                                    <p class="text-[var(--text-secondary)] text-xs uppercase tracking-wide">Betrag</p>
+                                    <p class="text-[var(--text-primary)] font-bold text-lg">493,00 €</p>
+                                </div>
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium badge-success border">
+                                    <svg class="mr-1.5 h-2.5 w-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                                    Erfolgreich
+                                </span>
+                            </div>
                         </div>
+                        <div class="project-shine"></div>
+                    </div>
 
-                        <!-- Item 5 -->
-                        <div class="faq-item cursor-pointer">
-                           <div class="flex justify-between items-center p-5">
-                                <span class="text-[var(--text-primary)] font-medium text-base"><span class="text-[var(--accent-gold)] font-bold mr-2">5.</span> Gibt es eine Übersicht über die Beträge?</span>
-                                <svg class="faq-icon w-5 h-5 text-[var(--text-secondary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                           </div>
-                           <div class="faq-content px-5">
-                                <p class="text-[var(--text-secondary)] text-sm leading-relaxed border-t border-[var(--glass-border)] pt-3">
-                                    Ja, eine transparente Übersicht über die gesammelten und gespendeten Beträge wird am Ende des Monats oder auf Anfrage bereitgestellt. Dies dient dazu, die Nachvollziehbarkeit und das Vertrauen innerhalb der Community zu gewährleisten.
-                                </p>
-                           </div>
+                </div>
+                <div class="text-center mt-2 md:hidden">
+                    <span class="text-[var(--text-secondary)] text-xs opacity-50">← Wischen für mehr →</span>
+                </div>
+            </section>
+            
+            <!-- FAQ -->
+            <section class="fade-in-section" style="--delay: 0.4s;">
+                <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-2xl font-medium text-[var(--accent-gold)] flex items-center">
+                        <svg class="w-6 h-6 mr-3 text-[var(--accent-gold)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        Häufige Fragen
+                    </h2>
+                </div>
+
+                <div id="faq-container" class="space-y-4">
+                    <!-- Items: Numbers restored & Missing items added -->
+                    
+                    <!-- Item 1 -->
+                    <div class="faq-item cursor-pointer">
+                        <div class="flex justify-between items-center p-5">
+                            <span class="text-[var(--text-primary)] font-medium text-base"><span class="text-[var(--accent-gold)] font-bold mr-2">1.</span> Wie kann ich teilnehmen?</span>
+                            <svg class="faq-icon w-5 h-5 text-[var(--text-secondary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                         </div>
-
-                        <!-- Item 6 -->
-                        <div class="faq-item cursor-pointer">
-                           <div class="flex justify-between items-center p-5">
-                                <span class="text-[var(--text-primary)] font-medium text-base"><span class="text-[var(--accent-gold)] font-bold mr-2">6.</span> Ist die Teilnahme bindend?</span>
-                                <svg class="faq-icon w-5 h-5 text-[var(--text-secondary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                           </div>
-                           <div class="faq-content px-5">
-                                <p class="text-[var(--text-secondary)] text-sm leading-relaxed border-t border-[var(--glass-border)] pt-3">
-                                    Nein, die Teilnahme ist absolut freiwillig. Sie können die monatliche Spende jederzeit stoppen, indem Sie einem der Ansprechpartner Bescheid geben.
-                                </p>
-                           </div>
+                        <div class="faq-content px-5">
+                            <p class="text-[var(--text-secondary)] text-sm leading-relaxed border-t border-[var(--glass-border)] pt-3">
+                                Die Teilnahme an unserer Initiative erfolgt über den Gruppen-Link, der von einem bestehenden Mitglied geteilt wird. Dort können Sie sich mit der Community verbinden, um Ihren monatlichen Beitrag von 1 € für die Bedürftigen zu leisten.
+                            </p>
                         </div>
+                    </div>
 
+                    <!-- Item 2 -->
+                    <div class="faq-item cursor-pointer">
+                        <div class="flex justify-between items-center p-5">
+                            <span class="text-[var(--text-primary)] font-medium text-base"><span class="text-[var(--accent-gold)] font-bold mr-2">2.</span> Wofür werden Spenden verwendet?</span>
+                            <svg class="faq-icon w-5 h-5 text-[var(--text-secondary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                        <div class="faq-content px-5">
+                            <p class="text-[var(--text-secondary)] text-sm leading-relaxed border-t border-[var(--glass-border)] pt-3">
+                                Die gesammelten Beiträge werden ausschließlich für die Unterstützung von Bedürftigen eingesetzt, in sha ALLAH. Der genaue Verwendungszweck wird in der Community transparent kommuniziert.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Item 3 -->
+                    <div class="faq-item cursor-pointer">
+                        <div class="flex justify-between items-center p-5">
+                            <span class="text-[var(--text-primary)] font-medium text-base"><span class="text-[var(--accent-gold)] font-bold mr-2">3.</span> Bedeutung des Namens "SANAABIL"?</span>
+                            <svg class="faq-icon w-5 h-5 text-[var(--text-secondary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                        <div class="faq-content px-5">
+                            <p class="text-[var(--text-secondary)] text-sm leading-relaxed border-t border-[var(--glass-border)] pt-3">
+                                "SANAABIL" (arabisch für Ähren) bezieht sich auf das Gleichnis im Qur'an (2:261), in dem eine Spende auf ALLAHs Weg mit einem Saatkorn verglichen wird, aus dem sieben Ähren wachsen, wobei jede Ähre hundert Körner trägt. Der Name erinnert daran, dass selbst die kleinste aufrichtige Gabe um ALLAHs willen zu einem großen, segensreichen Handel heranwachsen kann.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Item 4 -->
+                    <div class="faq-item cursor-pointer">
+                        <div class="flex justify-between items-center p-5">
+                            <span class="text-[var(--text-primary)] font-medium text-base"><span class="text-[var(--accent-gold)] font-bold mr-2">4.</span> Wie werden Projekte ausgewählt?</span>
+                            <svg class="faq-icon w-5 h-5 text-[var(--text-secondary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                        <div class="faq-content px-5">
+                            <p class="text-[var(--text-secondary)] text-sm leading-relaxed border-t border-[var(--glass-border)] pt-3">
+                                Die Auswahl erfolgt in Absprache innerhalb der Community. Informationen zu den jeweiligen Spendenprojekten werden in der Community bereitgestellt.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Item 5 -->
+                    <div class="faq-item cursor-pointer">
+                        <div class="flex justify-between items-center p-5">
+                            <span class="text-[var(--text-primary)] font-medium text-base"><span class="text-[var(--accent-gold)] font-bold mr-2">5.</span> Gibt es eine Übersicht über die Beträge?</span>
+                            <svg class="faq-icon w-5 h-5 text-[var(--text-secondary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                        <div class="faq-content px-5">
+                            <p class="text-[var(--text-secondary)] text-sm leading-relaxed border-t border-[var(--glass-border)] pt-3">
+                                Ja, eine transparente Übersicht über die gesammelten und gespendeten Beträge wird am Ende des Monats oder auf Anfrage bereitgestellt. Dies dient dazu, die Nachvollziehbarkeit und das Vertrauen innerhalb der Community zu gewährleisten.
+                            </p>
+                        </div>
+                    </div>
                         <!-- Item 7 -->
                         <div class="faq-item cursor-pointer">
                            <div class="flex justify-between items-center p-5">
@@ -705,6 +754,19 @@
                            <div class="faq-content px-5">
                                 <p class="text-[var(--text-secondary)] text-sm leading-relaxed border-t border-[var(--glass-border)] pt-3">
                                     Jeder gespendete Betrag ist für uns eine Amana – ein uns von ALLAH anvertrautes Gut. Die korrekte Verwendung wird durch interne Rücksprache und eine sorgfältige Dokumentation sichergestellt.
+                                </p>
+                           </div>
+                        </div>
+
+                        <!-- Item 8 (NEU) -->
+                        <div class="faq-item cursor-pointer">
+                           <div class="flex justify-between items-center p-5">
+                                <span class="text-[var(--text-primary)] font-medium text-base"><span class="text-[var(--accent-gold)] font-bold mr-2">8.</span> Gibt es Bilder oder Videos als Nachweis?</span>
+                                <svg class="faq-icon w-5 h-5 text-[var(--text-secondary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                           </div>
+                           <div class="faq-content px-5">
+                                <p class="text-[var(--text-secondary)] text-sm leading-relaxed border-t border-[var(--glass-border)] pt-3">
+                                    Ja, entsprechende Nachweise werden intern in der Gruppe geteilt. Auf Wunsch können diese auch privat zur Verfügung gestellt werden, um Transparenz zu gewährleisten und gleichzeitig die Privatsphäre zu wahren.
                                 </p>
                            </div>
                         </div>
@@ -904,6 +966,19 @@
                                    <span class="text-sm font-medium">Link in die Zwischenablage kopiert</span>`;
                 toast.classList.remove('opacity-0', 'translate-y-4');
                 setTimeout(() => toast.classList.add('opacity-0', 'translate-y-4'), 3000);
+            });
+
+            // Slider Navigation Logic
+            const slider = document.getElementById('projects-slider');
+            const leftBtn = document.getElementById('slide-left');
+            const rightBtn = document.getElementById('slide-right');
+
+            leftBtn.addEventListener('click', () => {
+                slider.scrollBy({ left: -300, behavior: 'smooth' });
+            });
+
+            rightBtn.addEventListener('click', () => {
+                slider.scrollBy({ left: 300, behavior: 'smooth' });
             });
         });
     </script>
