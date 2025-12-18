@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SANAABIL - Unsere Spenden-Community</title>
+    <!-- NEU: Favicon hinzugefügt -->
+    <link rel="icon" href="https://i.imgur.com/7GqbuO4.jpeg" type="image/jpeg">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -319,10 +322,13 @@
         /* ------------------------------------------- */
         
         .switch-container {
-            position: fixed;
-            top: 1rem;
-            right: 1rem;
+            /* Positioniert den Switch absolut zum Seitenanfang */
+            position: absolute; 
+            top: 3rem; /* Etwas Platz von oben */
+            right: 1.5rem; /* Etwas Platz von rechts */
             z-index: 100;
+            transform: rotate(90deg); /* Vertikale Ausrichtung */
+            transform-origin: center;
         }
 
         .switch {
@@ -404,7 +410,7 @@
 </head>
 <body class="antialiased selection:bg-[#D4AF37] selection:text-black">
 
-    <!-- Wobble Switch -->
+    <!-- Wobble Switch (Vertikal oben rechts - scrollt weg) -->
     <div class="switch-container">
         <label class="switch">
             <input type="checkbox" id="theme-toggle" />
@@ -754,7 +760,9 @@
                 { text: 'O die ihr glaubt, gebt aus von dem, womit Wir euch versorgt haben, bevor ein Tag kommt, an dem es keinen Verkauf, keine Freundschaft und keine Fürsprache gibt! Die Ungläubigen sind die Ungerechten.', source: '[Qur\'an - 2:254]' },
                 { text: 'Diejenigen, die ihren Besitz auf Allahs Weg ausgeben und hierauf dem, was sie ausgegeben haben, weder Vorhaltungen noch Beleidigungen nachfolgen lassen, die haben ihren Lohn bei ihrem Herrn, und keine Furcht soll über sie kommen, noch sollen sie traurig sein.', source: '[Qur\'an - 2:262]' },
                 { text: 'Glaubt an Allah und Seinen Gesandten und gebt aus von dem, worüber Er euch zu Statthaltern eingesetzt hat. Diejenigen von euch, die glauben und ausgeben, für sie wird es großen Lohn geben.', source: '[Qur\'an: 57:7]' },
-                { text: '[..]„Wohlstand wird nicht durch Spenden verringert, und Allah mehrt einem Diener durch Vergebung nur an Ehre, und niemand demütigt sich vor Allah, außer dass Allah ihn erhöht.“', source: '[Sahih Muslim - 2588]' }
+                { text: 'Und was ist mit euch, daß ihr nicht auf Allahs Weg ausgeben sollt, wo doch das Erbe der Himmel und der Erde Allah gehört.[..]', source: '[Qur\'an - 57:10]' },
+                { text: '[..]„Wohlstand wird nicht durch Spenden verringert, und Allah mehrt einem Diener durch Vergebung nur an Ehre, und niemand demütigt sich vor Allah, außer dass Allah ihn erhöht.“', source: '[Sahih Muslim - 2588]' },
+                { text: '[..]„Allah hat gesagt: "Gib aus, o Sohn Adams, und Ich werde für dich ausgeben."“', source: '[Sahih al-Bukhari - 5352]' }
             ];
 
             // Loader
