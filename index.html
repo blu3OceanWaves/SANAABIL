@@ -324,8 +324,8 @@
         .switch-container {
             /* Positioniert den Switch absolut zum Seitenanfang */
             position: absolute; 
-            top: 3rem; /* Etwas Platz von oben */
-            right: 1.5rem; /* Etwas Platz von rechts */
+            top: 1.5rem; /* Viel weiter oben (vorher 3rem) */
+            right: 0.5rem; /* Viel weiter außen (vorher 1.5rem) */
             z-index: 100;
             transform: rotate(90deg); /* Vertikale Ausrichtung */
             transform-origin: center;
@@ -336,7 +336,7 @@
           --INITIAL-THUMB-COLOR: #D4AF37;
           --OVERALL-TRANSITION-DURATION: 500ms;
           
-          font-size: 12px;
+          font-size: 8px; /* VIEL KLEINER (vorher 12px) */
           position: relative;
           display: inline-block;
           width: 3.75em;
