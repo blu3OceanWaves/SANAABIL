@@ -629,7 +629,7 @@
                         <div class="project-shine"></div>
                     </div>
 
-                    <!-- Project Card 3: Gaza (UPDATED) -->
+                    <!-- Project Card 3: Gaza -->
                     <div class="snap-center flex-shrink-0 w-[90%] md:w-[48%] group relative overflow-hidden rounded-xl bg-[var(--glass-bg)] border border-[var(--glass-border)] hover:border-[var(--accent-gold)] transition-all duration-300 hover:shadow-[0_0_20px_var(--card-hover)]">
                         <div class="absolute -right-6 -top-6 text-[var(--accent-gold)] opacity-5 transform rotate-12 group-hover:scale-110 transition-transform duration-500">
                             <!-- Simple Exclamation Mark Background -->
@@ -663,7 +663,7 @@
                         <div class="project-shine"></div>
                     </div>
 
-                    <!-- Project Card 4: Deutschland (NEU) -->
+                    <!-- Project Card 4: Deutschland -->
                     <div class="snap-center flex-shrink-0 w-[90%] md:w-[48%] group relative overflow-hidden rounded-xl bg-[var(--glass-bg)] border border-[var(--glass-border)] hover:border-[var(--accent-gold)] transition-all duration-300 hover:shadow-[0_0_20px_var(--card-hover)]">
                         <div class="absolute -right-6 -top-6 text-[var(--accent-gold)] opacity-5 transform -rotate-6 group-hover:scale-110 transition-transform duration-500">
                             <!-- Heart Icon Background -->
@@ -693,6 +693,36 @@
                         <div class="project-shine"></div>
                     </div>
 
+                    <!-- Project Card 5: Gambia (Wedding Support - NEU) -->
+                    <div class="snap-center flex-shrink-0 w-[90%] md:w-[48%] group relative overflow-hidden rounded-xl bg-[var(--glass-bg)] border border-[var(--glass-border)] hover:border-[var(--accent-gold)] transition-all duration-300 hover:shadow-[0_0_20px_var(--card-hover)]">
+                        <div class="absolute -right-6 -top-6 text-[var(--accent-gold)] opacity-5 transform -rotate-6 group-hover:scale-110 transition-transform duration-500">
+                            <!-- Heart Icon Background -->
+                            <svg class="w-32 h-32" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path></svg>
+                        </div>
+
+                        <div class="p-6 relative z-10 flex flex-col h-full">
+                            <div class="w-12 h-12 rounded-full border border-[var(--glass-border)] bg-[var(--card-hover)] flex items-center justify-center mb-4 text-[var(--accent-gold)] group-hover:bg-[var(--accent-gold)] group-hover:text-[var(--bg-primary)] transition-all duration-300">
+                                <!-- Heart Icon -->
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                            </div>
+
+                            <h3 class="text-lg font-medium text-[var(--text-primary)] mb-1 group-hover:text-[var(--accent-gold)] transition-colors">Unterstützung Hochzeit</h3>
+                            <p class="text-sm text-[var(--text-secondary)] font-serif italic mb-2">Gambia</p>
+                            
+                            <div class="mt-auto pt-4 border-t border-[var(--glass-border)] flex flex-wrap justify-between items-end gap-2">
+                                <div>
+                                    <p class="text-[var(--text-secondary)] text-xs uppercase tracking-wide">Betrag</p>
+                                    <p class="text-[var(--text-primary)] font-bold text-lg">225,91 €</p>
+                                </div>
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium badge-success border">
+                                    <svg class="mr-1.5 h-2.5 w-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                                    Erfolgreich wa lillahi-l-hamd
+                                </span>
+                            </div>
+                        </div>
+                        <div class="project-shine"></div>
+                    </div>
+
                 </div>
                 <div class="text-center mt-2 md:hidden">
                     <span class="text-[var(--text-secondary)] text-xs opacity-50">← Wischen für mehr →</span>
@@ -709,8 +739,6 @@
                 </div>
 
                 <div id="faq-container" class="space-y-4">
-                    <!-- Items: Numbers restored & Missing items added -->
-                    
                     <!-- Item 1 -->
                     <div class="faq-item cursor-pointer">
                         <div class="flex justify-between items-center p-5">
@@ -802,7 +830,7 @@
                         </div>
                     </div>
 
-                    <!-- Item 8 (NEU) -->
+                    <!-- Item 8 -->
                     <div class="faq-item cursor-pointer">
                         <div class="flex justify-between items-center p-5">
                             <span class="text-[var(--text-primary)] font-medium text-base"><span class="text-[var(--accent-gold)] font-bold mr-2">8.</span> Gibt es Bilder oder Videos als Nachweis?</span>
@@ -966,7 +994,6 @@
                     if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
                 }
                 draw() {
-                    // Hole Farbe dynamisch aus CSS Variable
                     const colorString = getComputedStyle(document.body).getPropertyValue('--particle-color').trim();
                     ctx.fillStyle = `rgba(${colorString}, ${this.opacity})`;
                     ctx.beginPath();
