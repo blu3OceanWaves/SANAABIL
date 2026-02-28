@@ -163,7 +163,139 @@
         .faq-content { overflow: hidden; }
         .faq-icon { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
         .faq-item.active .faq-icon { transform: rotate(180deg); color: var(--accent-gold); }
-        /* Logo Animationen */
+        /* ===== PROFILE IMAGE - Rotating Ring ===== */
+        .profile-ring-outer {
+    background: conic-gradient(
+        from 0deg,
+        var(--accent-gold),
+        var(--accent-gold-light),
+        transparent 40%,
+        var(--accent-gold-light),
+        var(--accent-gold)
+    );
+    /* 'reverse' sorgt für die Drehung gegen den Uhrzeigersinn */
+    animation: ring-spin 4s linear infinite reverse;
+    border-radius: 50%;
+    padding: 4px;
+}
+        @keyframes ring-spin {
+            0%   { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .profile-halo {
+            background: radial-gradient(circle, var(--profile-glow) 0%, transparent 70%);
+            animation: halo-breathe 3s ease-in-out infinite alternate;
+        }
+        @keyframes halo-breathe {
+            0%   { opacity: 0.5; transform: scale(0.95); }
+            100% { opacity: 1;   transform: scale(1.1); }
+        }
+        .profile-img-inner {
+            border: 3px solid var(--bg-primary);
+            box-shadow: 0 0 0 1px var(--glass-border), 0 8px 32px rgba(0,0,0,0.3);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .profile-img-inner:hover { transform: scale(1.04); }
+
+        /* ===== ROADMAP - Upgraded ===== */
+        .roadmap-line-container {
+            position: absolute; left: 15px; top: 0; bottom: 0; width: 2px;
+            background: var(--roadmap-line); overflow: visible;
+        }
+        @media (min-width: 640px) { .roadmap-line-container { left: 19px; } }
+        
+        .roadmap-progress-line {
+            position: absolute; top: 0; left: 0; width: 100%; height: 0%;
+            background: linear-gradient(180deg, var(--accent-gold), var(--accent-gold-light), var(--accent-gold));
+            box-shadow: 0 0 8px 2px rgba(212, 175, 55, 0.5), 0 0 20px rgba(212, 175, 55, 0.2);
+            transition: height 2.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        /* Glowing traveler bead on the line */
+        .roadmap-traveler {
+            position: absolute; left: 50%; top: 0%; transform: translate(-50%, 0);
+            width: 10px; height: 10px; border-radius: 50%;
+            background: var(--accent-gold-light);
+            box-shadow: 0 0 12px 4px var(--accent-gold), 0 0 24px 8px rgba(212,175,55,0.3);
+            opacity: 0;
+            transition: top 2.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+        }
+        .roadmap-traveler.active { opacity: 1; }
+
+        /* Roadmap items */
+        .roadmap-item {
+            opacity: 0; transform: translateX(-20px);
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.34, 1.3, 0.64, 1);
+            position: relative; z-index: 20;
+        }
+        .roadmap-item.active { opacity: 1; transform: translateX(0); }
+
+        /* Dot base - starts at scale 0 */
+        .roadmap-dot { transform: scale(0); }
+        .roadmap-item.active .roadmap-dot { 
+            transform: scale(1);
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* Done node (gold fill + checkmark) */
+        .roadmap-node-done {
+            background: var(--accent-gold);
+            border-color: var(--accent-gold);
+            color: var(--bg-primary);
+            box-shadow: 0 0 0 4px rgba(212,175,55,0.2);
+            transition: box-shadow 0.4s ease, transform 0.6s cubic-bezier(0.34,1.56,0.64,1);
+            position: relative; z-index: 10;
+        }
+        .roadmap-item.active .roadmap-node-done {
+            box-shadow: 0 0 0 5px rgba(212,175,55,0.25), 0 0 20px rgba(212,175,55,0.3);
+        }
+        /* Glow ring behind done node */
+        .roadmap-node-glow {
+            background: radial-gradient(circle, rgba(212,175,55,0.25) 0%, transparent 70%);
+            transition: transform 0.6s cubic-bezier(0.34,1.56,0.64,1), opacity 0.4s ease;
+            opacity: 0;
+        }
+        .roadmap-item.active .roadmap-node-glow { opacity: 1; }
+
+        /* Active node - triple pulse rings */
+        .roadmap-node-active {
+            box-shadow: 0 0 0 4px rgba(212,175,55,0.3), 0 0 24px rgba(212,175,55,0.4);
+        }
+        .roadmap-pulse-ring-1, .roadmap-pulse-ring-2 {
+            width: 2.5rem; height: 2.5rem;
+            background: transparent;
+            border: 2px solid var(--accent-gold);
+            opacity: 0;
+        }
+        @media (min-width: 640px) {
+            .roadmap-pulse-ring-1, .roadmap-pulse-ring-2 { width: 3.5rem; height: 3.5rem; }
+        }
+        .roadmap-item.active .roadmap-pulse-ring-1 {
+            animation: pulse-ring-out 2.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s infinite;
+        }
+        .roadmap-item.active .roadmap-pulse-ring-2 {
+            animation: pulse-ring-out 2.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.9s infinite;
+        }
+        @keyframes pulse-ring-out {
+            0%   { transform: scale(1);   opacity: 0.7; }
+            100% { transform: scale(2.2); opacity: 0; }
+        }
+
+        /* Card left accent glow on enter */
+        .roadmap-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .roadmap-item.active .roadmap-card {
+            box-shadow: -4px 0 20px -4px rgba(212,175,55,0.3), 0 10px 40px -10px rgba(0,0,0,0.1);
+        }
+
+        /* Active badge pulse */
+        @keyframes badge-pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        .animate-pulse-badge { animation: badge-pulse 2s ease-in-out infinite; }
+
+        /* Keep old gentle-breathe for fallback */
         .logo-static {
             box-shadow: 0 0 30px var(--profile-glow);
             animation: gentle-breathe 4s ease-in-out infinite alternate;
@@ -172,15 +304,7 @@
             0% { box-shadow: 0 0 20px var(--profile-glow); transform: scale(1); }
             100% { box-shadow: 0 0 40px var(--profile-glow); transform: scale(1.02); }
         }
-        .pulse-active-dot {
-            animation: pulse-gold-ring 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
-            background-color: var(--accent-gold) !important; color: var(--bg-primary) !important; border-color: var(--accent-gold) !important;
-        }
-        @keyframes pulse-gold-ring {
-            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.6); }
-            70% { transform: scale(1.1); box-shadow: 0 0 0 12px rgba(212, 175, 55, 0); }
-            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
-        }
+        /* REMOVED old pulse-active-dot - replaced by new roadmap system */
         /* Project Card Shine */
         .project-shine {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -221,8 +345,16 @@
         
         <!-- Header Section -->
         <header class="text-center pt-20 pb-14 px-4 fade-in-section" style="--delay: 0.1s;">
-            <div class="relative inline-block mb-8">
-                <img src="https://i.imgur.com/7GqbuO4.jpeg" alt="SANAABIL Community Logo" class="w-32 h-32 md:w-44 md:h-44 mx-auto rounded-full logo-static object-cover border-2 border-[var(--glass-border)]" fetchpriority="high">
+            <div class="relative inline-flex items-center justify-center mb-10">
+                <!-- Rotating gradient ring -->
+                <div class="profile-ring-outer absolute rounded-full" style="width:calc(100% + 8px);height:calc(100% + 8px);top:-4px;left:-4px;"></div>
+                <!-- Soft glow halo behind -->
+                <div class="absolute rounded-full profile-halo w-40 h-40 md:w-56 md:h-56"></div>
+                <!-- Image -->
+                <img src="https://i.imgur.com/7GqbuO4.jpeg" 
+                     alt="SANAABIL Community Logo" 
+                     class="w-36 h-36 md:w-48 md:h-48 mx-auto rounded-full object-cover relative z-10 profile-img-inner" 
+                     fetchpriority="high">
             </div>
             
             <h1 class="text-4xl md:text-6xl font-bold mb-4 tracking-widest uppercase text-gradient-gold drop-shadow-sm">
@@ -277,14 +409,14 @@
                 <div class="mb-12">
                     <div class="flex justify-between items-end mb-3">
                         <span class="text-[var(--text-primary)] font-medium text-sm md:text-base">
-                            Bisher gesammelt: <span class="text-[var(--accent-gold)] text-2xl font-bold ml-1 tracking-wider">407</span>
+                            Bisher gesammelt: <span class="text-[var(--accent-gold)] text-2xl font-bold ml-1 tracking-wider">517,27</span>
                         </span>
                         <span class="text-[var(--text-secondary)] font-medium text-sm md:text-base">Ziel: 1.500</span>
                     </div>
                     <!-- Master Bar -->
                     <div class="h-7 w-full bg-[var(--bg-primary)] rounded-full border border-[var(--glass-border)] overflow-hidden relative shadow-inner">
-                        <!-- 407/1500 = 27.13% -->
-                        <div class="ramadan-progress-fill absolute left-0 top-0 h-full bg-gradient-to-r from-[var(--accent-gold-light)] to-[var(--accent-gold)] shadow-[0_0_20px_var(--accent-gold)]" style="width: 0%;" data-target="27.13%">
+                        <!-- 517.27/1500 = 34.48% -->
+                        <div class="ramadan-progress-fill absolute left-0 top-0 h-full bg-gradient-to-r from-[var(--accent-gold-light)] to-[var(--accent-gold)] shadow-[0_0_20px_var(--accent-gold)]" style="width: 0%;" data-target="34.48%">
                             <!-- Optimierter Shine-Effekt Container -->
                             <div class="absolute inset-0 w-full h-full overflow-hidden">
                                 <div class="absolute inset-0 w-[40%] h-full bg-gradient-to-r from-transparent via-white/40 to-transparent animate-shine"></div>
@@ -320,12 +452,12 @@
                     <!-- Brunnen (In Arbeit) -->
                     <div class="p-5 md:p-6 rounded-xl border border-[var(--glass-border)] bg-[var(--glass-bg)] relative transition-transform hover:-translate-y-1">
                         <h3 class="text-xl font-semibold text-[var(--text-primary)] mb-1">Brunnen</h3>
-                        <!-- 407 - 300 = 107 -->
-                        <p class="text-[var(--text-secondary)] font-medium text-sm mb-4">107 € / 600 €</p>
+                        <!-- 517.27 - 300 = 217.27 -->
+                        <p class="text-[var(--text-secondary)] font-medium text-sm mb-4">217,27 € / 600 €</p>
                         
-                        <!-- Teil-Balken (107/600 = ~17.83%) -->
+                        <!-- Teil-Balken (217.27/600 = 36.21%) -->
                         <div class="h-2 w-full bg-[var(--bg-primary)] rounded-full overflow-hidden relative">
-                            <div class="ramadan-progress-fill absolute left-0 top-0 h-full bg-[var(--accent-gold)] rounded-full shadow-[0_0_5px_var(--accent-gold)]" style="width: 0%;" data-target="17.83%"></div>
+                            <div class="ramadan-progress-fill absolute left-0 top-0 h-full bg-[var(--accent-gold)] rounded-full shadow-[0_0_5px_var(--accent-gold)]" style="width: 0%;" data-target="36.21%"></div>
                         </div>
                     </div>
                     <!-- Marrakesch (Ausstehend) -->
@@ -347,33 +479,55 @@
                 <div class="relative pl-4 sm:pl-10 py-2">
                     <div class="roadmap-line-container">
                         <div class="roadmap-progress-line" id="progress-line"></div>
+                        <!-- Animated glow dot traveling down the line -->
+                        <div class="roadmap-traveler" id="roadmap-traveler"></div>
                     </div>
-                    <!-- Timeline Item 1 -->
+                    <!-- Timeline Item 1 - ABGESCHLOSSEN -->
                     <div class="mb-14 relative roadmap-item" data-index="1">
                         <div class="absolute -left-1 sm:-left-1 top-0 flex items-center justify-center">
-                            <div class="w-8 h-8 sm:w-12 sm:h-12 bg-[var(--bg-primary)] rounded-full border-2 border-[var(--text-secondary)] z-10 flex items-center justify-center text-[var(--text-secondary)] font-bold roadmap-dot transition-colors">1</div>
+                            <!-- Outer glow ring -->
+                            <div class="roadmap-node-glow roadmap-dot absolute w-10 h-10 sm:w-14 sm:h-14 rounded-full"></div>
+                            <div class="w-8 h-8 sm:w-12 sm:h-12 rounded-full border-2 z-10 flex items-center justify-center font-bold roadmap-dot roadmap-node-done">
+                                <!-- Checkmark icon -->
+                                <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                            </div>
                         </div>
-                        <div class="ml-12 sm:ml-20 glass-container p-6 sm:p-8 rounded-2xl opacity-80 hover:opacity-100 transition-opacity">
+                        <div class="ml-12 sm:ml-20 glass-container p-6 sm:p-8 rounded-2xl roadmap-card opacity-80 hover:opacity-100 transition-opacity">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="text-[9px] font-bold uppercase tracking-widest text-[var(--accent-gold)] bg-[var(--card-hover)] px-2 py-0.5 rounded-full border border-[var(--glass-border)]">Abgeschlossen</span>
+                            </div>
                             <h3 class="text-xl sm:text-2xl font-medium text-[var(--text-primary)] mb-3">Start der Community</h3>
                             <p class="text-[var(--text-secondary)] text-sm sm:text-base leading-relaxed">Der offizielle Start unserer Sadaqa-Initiative ist für Rabi' al-Thani 1447 in sha ALLAH geplant. Wir beginnen mit der Sammlung der ersten monatlichen Beiträge.</p>
                         </div>
                     </div>
-                    <!-- Timeline Item 2 -->
+                    <!-- Timeline Item 2 - ABGESCHLOSSEN -->
                     <div class="mb-14 relative roadmap-item" data-index="2">
                         <div class="absolute -left-1 sm:-left-1 top-0 flex items-center justify-center">
-                            <div class="w-8 h-8 sm:w-12 sm:h-12 bg-[var(--bg-primary)] rounded-full border-2 border-[var(--text-secondary)] z-10 flex items-center justify-center text-[var(--text-secondary)] font-bold roadmap-dot transition-colors duration-500">2</div>
+                            <div class="roadmap-node-glow roadmap-dot absolute w-10 h-10 sm:w-14 sm:h-14 rounded-full"></div>
+                            <div class="w-8 h-8 sm:w-12 sm:h-12 rounded-full border-2 z-10 flex items-center justify-center font-bold roadmap-dot roadmap-node-done">
+                                <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                            </div>
                         </div>
-                        <div class="ml-12 sm:ml-20 glass-container p-6 sm:p-8 rounded-2xl opacity-80 hover:opacity-100 transition-opacity">
-                            <h3 class="text-xl sm:text-2xl font-medium text-[var(--text-primary)] mb-3 transition-colors duration-500">Erstes Projekt</h3>
+                        <div class="ml-12 sm:ml-20 glass-container p-6 sm:p-8 rounded-2xl roadmap-card opacity-80 hover:opacity-100 transition-opacity">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="text-[9px] font-bold uppercase tracking-widest text-[var(--accent-gold)] bg-[var(--card-hover)] px-2 py-0.5 rounded-full border border-[var(--glass-border)]">Abgeschlossen</span>
+                            </div>
+                            <h3 class="text-xl sm:text-2xl font-medium text-[var(--text-primary)] mb-3">Erstes Projekt</h3>
                             <p class="text-[var(--text-secondary)] text-sm sm:text-base leading-relaxed">Nach dem erfolgreichen Start in sha ALLAH, werden wir gemeinsam das erste Projekt auswählen, das wir unterstützen möchten.</p>
                         </div>
                     </div>
                     <!-- Timeline Item 3 (AKTIV) -->
                     <div class="relative roadmap-item" data-index="3">
                         <div class="absolute -left-1 sm:-left-1 top-0 flex items-center justify-center">
-                            <div class="w-8 h-8 sm:w-12 sm:h-12 rounded-full border-2 border-[var(--accent-gold)] z-10 flex items-center justify-center text-[var(--bg-primary)] bg-[var(--accent-gold)] font-bold roadmap-dot pulse-active-dot">3</div>
+                            <!-- Triple pulse rings -->
+                            <div class="roadmap-pulse-ring-1 absolute rounded-full roadmap-dot"></div>
+                            <div class="roadmap-pulse-ring-2 absolute rounded-full roadmap-dot"></div>
+                            <div class="w-8 h-8 sm:w-12 sm:h-12 rounded-full border-2 border-[var(--accent-gold)] z-10 flex items-center justify-center text-[var(--bg-primary)] bg-[var(--accent-gold)] font-bold roadmap-dot roadmap-node-active">3</div>
                         </div>
-                        <div class="ml-12 sm:ml-20 glass-container p-6 sm:p-8 rounded-2xl border-l-4 border-l-[var(--accent-gold)] shadow-[0_4px_20px_var(--card-hover)]">
+                        <div class="ml-12 sm:ml-20 glass-container p-6 sm:p-8 rounded-2xl roadmap-card border-l-4 border-l-[var(--accent-gold)] shadow-[0_8px_32px_var(--card-hover)]">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="text-[9px] font-bold uppercase tracking-widest text-[var(--bg-primary)] bg-[var(--accent-gold)] px-2 py-0.5 rounded-full animate-pulse-badge">● Jetzt aktiv</span>
+                            </div>
                             <h3 class="text-xl sm:text-2xl font-medium text-[var(--accent-gold)] mb-3">Laufende Unterstützung</h3>
                             <p class="text-[var(--text-secondary)] text-sm sm:text-base leading-relaxed">In sha ALLAH werden wir weiterhin monatlich spenden und neue Wege finden, um Gutes zu tun.</p>
                         </div>
@@ -478,8 +632,8 @@
                 { text: 'Diejenigen, die ihren Besitz auf Allahs Weg ausgeben und hierauf dem, was sie ausgegeben haben, weder Vorhaltungen noch Beleidigungen nachfolgen lassen, die haben ihren Lohn bei ihrem Herrn, und keine Furcht soll über sie kommen, noch sollen sie traurig sein.', source: '[Qur\'an - 2:262]' },
                 { text: 'Glaubt an Allah und Seinen Gesandten und gebt aus von dem, worüber Er euch zu Statthaltern eingesetzt hat. Diejenigen von euch, die glauben und ausgeben, für sie wird es großen Lohn geben.', source: '[Qur\'an: 57:7]' },
                 { text: 'Und was ist mit euch, daß ihr nicht auf Allahs Weg ausgeben sollt, wo doch das Erbe der Himmel und der Erde Allah gehört.[..]', source: '[Qur\'an - 57:10]' },
-                { text: '[..]„Wohlstand wird nicht durch Spenden verringert, und Allah mehrt einem Diener durch Vergebung nur an Ehre, und niemand demütigt sich vor Allah, außer dass Allah ihn erhöht.“', source: '[Sahih Muslim - 2588]' },
-                { text: '[..]„Allah hat gesagt: "Gib aus, o Sohn Adams, und Ich werde für dich ausgeben."“', source: '[Sahih al-Bukhari - 5352]' }
+                { text: '[..]„Wohlstand wird nicht durch Spenden verringert, und Allah mehrt einem Diener durch Vergebung nur an Ehre, und niemand demütigt sich vor Allah, außer dass Allah ihn erhöht."', source: '[Sahih Muslim - 2588]' },
+                { text: '[..]„Allah hat gesagt: ‚Gib aus, o Sohn Adams, und Ich werde für dich ausgeben.‘“, source: '[Sahih al-Bukhari - 5352]' }
             ];
             const projectsData = [
                 { title: 'Brunnen Reparatur', location: 'Afghanistan', amount: '507,03 €', iconPath: 'M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2.5L8 2.69 9.31 4H20a2 2 0 0 1 2 2v2.5M12 21.5a8.38 8.38 0 0 0 2.5-1.95L12 17l-2.5 2.55A8.38 8.38 0 0 0 12 21.5z', bgIcon: 'M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z' },
@@ -605,20 +759,34 @@
             // Roadmap Specific Observer
             const roadmapSection = document.getElementById('roadmap-section');
             const progressLine = document.getElementById('progress-line');
+            const traveler = document.getElementById('roadmap-traveler');
             const roadmapItems = document.querySelectorAll('.roadmap-item');
             
             if(roadmapSection && progressLine) {
                 const roadmapObserver = new IntersectionObserver((entries) => {
                     if (entries[0].isIntersecting) {
+                        // Animate the progress line growing
                         progressLine.style.height = '100%';
+                        // Animate the traveler bead traveling down
+                        if (traveler) {
+                            traveler.classList.add('active');
+                            setTimeout(() => {
+                                traveler.style.top = '100%';
+                                setTimeout(() => {
+                                    traveler.classList.remove('active');
+                                    traveler.style.opacity = '0';
+                                }, 2900);
+                            }, 50);
+                        }
+                        // Stagger each roadmap item appearing
                         roadmapItems.forEach((item, index) => {
                             setTimeout(() => {
                                 item.classList.add('active');
-                            }, index * 500 + 200);
+                            }, index * 600 + 300);
                         });
                         roadmapObserver.disconnect();
                     }
-                }, { threshold: 0.2 });
+                }, { threshold: 0.15 });
                 roadmapObserver.observe(roadmapSection);
             }
 
