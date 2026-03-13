@@ -242,9 +242,6 @@
             transition: box-shadow 0.4s ease, transform 0.6s cubic-bezier(0.34,1.56,0.64,1);
             position: relative; z-index: 10;
         }
-        .roadmap-item.active .roadmap-node-done {
-            box-shadow: 0 0 0 5px rgba(212,175,55,0.25), 0 0 20px rgba(212,175,55,0.3);
-        }
         .roadmap-node-glow {
             background: radial-gradient(circle, rgba(212,175,55,0.25) 0%, transparent 70%);
             transition: transform 0.6s cubic-bezier(0.34,1.56,0.64,1), opacity 0.4s ease;
@@ -316,7 +313,7 @@
         @keyframes wobble { 0% { transform: scale(1, 1); } 50% { transform: scale(3, 1); } 100% { transform: scale(1, 1) translateX(1.75em); } }
         @keyframes reverse-wobble { 0% { transform: scale(1, 1) translateX(1.75em); } 50% { transform: scale(3, 1); } 100% { transform: scale(1, 1) translateX(0); } }
 
-        /* ===== HEADER EXPANSION (NEW) ===== */
+        /* ===== HEADER EXPANSION - MATHEMATICAL ALIGNMENT ===== */
         .orbital-container {
             position: relative;
             width: 100%;
@@ -338,8 +335,9 @@
             align-items: center;
             cursor: pointer;
             z-index: 30;
-            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
             animation: float 5s ease-in-out infinite alternate;
+            transform: translate(-50%, -50%); /* Center based on position coords */
         }
         .planet-link:nth-child(2) { animation-delay: -1s; }
         .planet-link:nth-child(3) { animation-delay: -2s; }
@@ -347,15 +345,15 @@
         .planet-link:nth-child(5) { animation-delay: -4s; }
 
         @keyframes float {
-            0% { transform: translateY(0px); }
-            100% { transform: translateY(-12px); }
+            0% { transform: translate(-50%, -50%) translateY(0px); }
+            100% { transform: translate(-50%, -50%) translateY(-12px); }
         }
 
         .planet-img {
             width: 80px; height: 80px;
             border-radius: 50%;
             border: 2px solid var(--glass-border);
-            object-cover: cover;
+            object-fit: cover;
             background: var(--bg-primary);
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
@@ -379,20 +377,21 @@
         }
         .planet-link:hover .planet-name { color: var(--accent-gold); }
 
-        /* Positionen der Planeten - Symmetrisch angepasst */
-        .pos-tl { top: 10%; left: 8%; }
-        .pos-tr { top: 10%; right: 8%; }
-        .pos-bl { bottom: 10%; left: 8%; }
-        .pos-br { bottom: 10%; right: 8%; }
+        /* Exakter mathematischer Abstand zum Zentrum (50% Center) */
+        /* Wir nutzen einen Versatz von 35% für Desktop und 42% für Mobile für perfekte Symmetrie */
+        .pos-tl { top: 15%; left: 15%; }
+        .pos-tr { top: 15%; left: 85%; }
+        .pos-bl { top: 85%; left: 15%; }
+        .pos-br { top: 85%; left: 85%; }
 
         @media (max-width: 640px) {
-            .pos-tl { top: 5%; left: 2%; }
-            .pos-tr { top: 5%; right: 2%; }
-            .pos-bl { bottom: 5%; left: 2%; }
-            .pos-br { bottom: 5%; right: 2%; }
+            .pos-tl { top: 18%; left: 12%; }
+            .pos-tr { top: 18%; left: 88%; }
+            .pos-bl { top: 82%; left: 12%; }
+            .pos-br { top: 82%; left: 88%; }
         }
 
-        /* Modal Styles (NEW) */
+        /* Modal Styles */
         #custom-modal {
             display: none;
             position: fixed;
@@ -451,7 +450,7 @@
         <div class="custom-loader"></div>
     </div>
 
-    <!-- Modal (NEW) -->
+    <!-- Modal -->
     <div id="custom-modal">
         <div id="modal-overlay"></div>
         <div class="modal-body">
@@ -483,7 +482,7 @@
                          fetchpriority="high">
                 </div>
 
-                <!-- Floating Channels - Tauschte Positionen für Symmetrie -->
+                <!-- Floating Channels - Mathematisch ausgerichtete Positionen -->
                 <div class="planet-link pos-tl" data-id="2">
                     <img src="https://i.imgur.com/RW14rnM.jpeg" alt="Fawaid" class="planet-img">
                     <span class="planet-name">Fawaid</span>
@@ -671,9 +670,6 @@
             <section class="special-callout-container p-8 md:p-12 rounded-3xl mb-24 fade-in-section" style="--delay: 0.4s;" id="callout-section">
                 <div class="text-center mb-10">
                     <span class="text-[var(--accent-gold)] uppercase tracking-widest text-xs font-bold border-b border-[var(--accent-gold)] pb-1">Ein Aufruf</span>
-                    <h2 class="text-xl md:text-2xl font-medium text-[var(--text-primary)] mt-6 leading-relaxed max-w-2xl mx-auto font-serif">
-                        Einige ausgewählte Worte aus dem Qur'an und der Sunnah, die zur Spende ermutigen in sha ALLAH :
-                    </h2>
                 </div>
                 <div class="space-y-12 md:space-y-16" id="callout-texts"></div>
             </section>
@@ -750,12 +746,12 @@
             const body = document.body;
             toggle.addEventListener('change', () => body.classList.toggle('light-mode', toggle.checked));
 
-            // Modal Logic (NEW)
+            // Modal Logic
             const modalData = {
-                "1": { title: "BayanAlQuran", img: "https://i.imgur.com/nHiBiIF.jpeg", desc: "Du suchst Beiträge zum Qur'an und Themen, die damit verbunden sind. Dann ist dieser Kanal ein Raum für Reflexion und Wissen.", link: "https://t.me/BayanAlQuran" },
-                "2": { title: "Fawaid", img: "https://i.imgur.com/RW14rnM.jpeg", desc: "Du suchst Einblicke in Tafsir, Hadith und Aqeedah. Dann ist dieser Kanal eine Quelle für regelmäßige Wissensperlen.", link: "https://t.me/Fawaid1618" },
-                "3": { title: "DawahGuide", img: "https://i.imgur.com/rx8svop.jpeg", desc: "Du suchst Themen rund um den Islam, Vergleiche der Religionen und Argumente. Dann ist dieser Wegweiser eine Ressource für deine Recherche.", link: "https://t.me/DawahGuide" },
-                "4": { title: "Arabic4Every1", img: "https://i.imgur.com/LDrV58X.jpeg", desc: "Du suchst einen strukturierten Zugang zur arabischen Sprache (ABY & Madinah). Dann ist dieser Fahrplan eine Orientierungshilfe für dein Studium.", link: "https://t.me/Arabic4Every1" }
+                "1": { title: "BayanAlQuran", img: "https://i.imgur.com/nHiBiIF.jpeg", desc: "Beiträge zum Qur'an und Themen, die damit verbunden sind.", link: "https://t.me/BayanAlQuran" },
+                "2": { title: "Fawaid", img: "https://i.imgur.com/RW14rnM.jpeg", desc: "Nützliche Beiträge in den verschiedenen Islamwissenschaften.", link: "https://t.me/Fawaid1618" },
+                "3": { title: "DawahGuide", img: "https://i.imgur.com/rx8svop.jpeg", desc: "Themen rund um den Islam, Vergleiche der Religionen und Argumente. Ein Wegweiser deine Recherche.", link: "https://t.me/DawahGuide" },
+                "4": { title: "Arabic4Every1", img: "https://i.imgur.com/LDrV58X.jpeg", desc: "Strukturierter Zugang zur arabischen Sprache (ABY & Madinah). Orientierungshilfe für deine Reise.", link: "https://t.me/Arabic4Every1" }
             };
 
             const modal = document.getElementById('custom-modal');
