@@ -94,6 +94,7 @@
             position: absolute; left: 15px; top: 0; bottom: 0; width: 2px; background: var(--roadmap-line);
         }
         @media (min-width: 640px) { .roadmap-line-container { left: 19px; } }
+        
         .roadmap-progress-line {
             position: absolute; top: 0; left: 0; width: 100%; height: 0%;
             background: linear-gradient(180deg, var(--accent-gold), var(--accent-gold-light));
@@ -109,18 +110,40 @@
         .roadmap-dot { transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); transform: scale(0); }
         .roadmap-item.active .roadmap-dot { transform: scale(1); }
         
-        .ramadan-progress-fill {
-            transition: width 2.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+        /* ===== TEXT SHINE ANIMATION ===== */
+        .sanaabil-title {
+            position: relative;
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-gold-light) 50%, var(--accent-gold) 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: text-shine 4s linear infinite;
+        }
+        @keyframes text-shine {
+            to { background-position: 200% center; }
         }
 
-        /* Optimierter Shine-Effekt */
-        @keyframes shine-move {
-            0% { transform: translateX(-150%) skewX(-15deg); }
-            100% { transform: translateX(250%) skewX(-15deg); }
+        /* ===== SYNCED CHANNEL GLOW ===== */
+        /* Die Dauer von 4s passt zum Logo-Shine */
+        @keyframes channel-glow-sync {
+            0%, 20%, 80%, 100% { 
+                box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
+                border-color: var(--glass-border); 
+            }
+            40%, 60% { 
+                box-shadow: 0 0 30px var(--accent-gold); 
+                border-color: var(--accent-gold);
+                transform: scale(1.05);
+            }
         }
-        .animate-shine {
-            animation: shine-move 3.5s infinite ease-in-out;
-        }
+        
+        /* Die Verzögerungen simulieren den Strahl, der von links nach rechts läuft */
+        .planet-link.pos-tl.synced .planet-img { animation: channel-glow-sync 4s infinite 0.2s; } /* Bayan */
+        .planet-link.pos-bl.synced .planet-img { animation: channel-glow-sync 4s infinite 0.4s; } /* Fawaid */
+        .planet-link.pos-tr.synced .planet-img { animation: channel-glow-sync 4s infinite 0.7s; } /* Dawah */
+        .planet-link.pos-br.synced .planet-img { animation: channel-glow-sync 4s infinite 0.9s; } /* Arabic */
 
         /* Aufruf-Sektion */
         .special-callout-container {
@@ -298,7 +321,6 @@
             transform: skewX(-20deg) translateX(-150%); transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); pointer-events: none;
         }
         .group:hover .project-shine { transform: skewX(-20deg) translateX(150%); transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
-        .text-gradient-gold { background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
         
         /* Wobble Switch */
         .switch-container { position: absolute; top: 1.5rem; right: 0.5rem; z-index: 100; transform: rotate(90deg); transform-origin: center; }
@@ -312,7 +334,7 @@
         @keyframes wobble { 0% { transform: scale(1, 1); } 50% { transform: scale(3, 1); } 100% { transform: scale(1, 1) translateX(1.75em); } }
         @keyframes reverse-wobble { 0% { transform: scale(1, 1) translateX(1.75em); } 50% { transform: scale(3, 1); } 100% { transform: scale(1, 1) translateX(0); } }
 
-        /* ===== HEADER EXPANSION - MATHEMATICAL ALIGNMENT ===== */
+        /* ===== HEADER EXPANSION - FAN ANIMATION ===== */
         .orbital-container {
             position: relative;
             width: 100%;
@@ -334,18 +356,23 @@
             align-items: center;
             cursor: pointer;
             z-index: 30;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            animation: float 5s ease-in-out infinite alternate;
-            transform: translate(-50%, -50%); /* Center based on position coords */
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 0;
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .planet-link:nth-child(2) { animation-delay: -1s; }
-        .planet-link:nth-child(3) { animation-delay: -2s; }
-        .planet-link:nth-child(4) { animation-delay: -3s; }
-        .planet-link:nth-child(5) { animation-delay: -4s; }
 
-        @keyframes float {
-            0% { transform: translate(-50%, -50%) translateY(0px); }
-            100% { transform: translate(-50%, -50%) translateY(-12px); }
+        /* Positions when active (Fanned out) */
+        .planet-link.fanned.pos-tl { top: 15%; left: 15%; transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        .planet-link.fanned.pos-tr { top: 15%; left: 85%; transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        .planet-link.fanned.pos-bl { top: 85%; left: 15%; transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        .planet-link.fanned.pos-br { top: 85%; left: 85%; transform: translate(-50%, -50%) scale(1); opacity: 1; }
+
+        @media (max-width: 640px) {
+            .planet-link.fanned.pos-tl { top: 18%; left: 12%; }
+            .planet-link.fanned.pos-tr { top: 18%; left: 88%; }
+            .planet-link.fanned.pos-bl { top: 82%; left: 12%; }
+            .planet-link.fanned.pos-br { top: 82%; left: 88%; }
         }
 
         .planet-img {
@@ -354,28 +381,17 @@
             border: 2px solid var(--glass-border);
             object-fit: cover;
             background: var(--bg-primary);
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
         @media (max-width: 640px) {
             .planet-img { width: 65px; height: 65px; }
         }
+
         .planet-link:hover .planet-img {
             transform: scale(1.1);
-            box-shadow: 0 0 20px var(--profile-glow);
-            border-color: var(--accent-gold);
-        }
-        
-        .pos-tl { top: 15%; left: 15%; }
-        .pos-tr { top: 15%; left: 85%; }
-        .pos-bl { top: 85%; left: 15%; }
-        .pos-br { top: 85%; left: 85%; }
-
-        @media (max-width: 640px) {
-            .pos-tl { top: 18%; left: 12%; }
-            .pos-tr { top: 18%; left: 88%; }
-            .pos-bl { top: 82%; left: 12%; }
-            .pos-br { top: 82%; left: 88%; }
+            box-shadow: 0 0 20px var(--profile-glow) !important;
+            border-color: var(--accent-gold) !important;
         }
 
         /* Modal Styles */
@@ -453,7 +469,7 @@
         </div>
     </div>
 
-    <!-- Modal QR Code (STATISCH) -->
+    <!-- Modal QR Code -->
     <div id="qr-modal">
         <div class="modal-overlay" id="qr-modal-overlay"></div>
         <div class="modal-body">
@@ -477,9 +493,9 @@
     <div id="content-container" class="hidden opacity-0 transition-opacity duration-1000 ease-out">
         
         <header class="text-center pt-20 pb-14 px-4 fade-in-section" style="--delay: 0.1s;">
-            <!-- Expanded Orbital Header -->
+            <!-- Fanning Orbital Header -->
             <div class="orbital-container">
-                <!-- Center Logo as WhatsApp Link -->
+                <!-- Center Logo -->
                 <div class="relative inline-flex flex-col items-center justify-center z-20">
                     <a href="https://chat.whatsapp.com/IJ2prCPPeU2ApH4MVcMBcq" target="_blank" class="relative inline-flex items-center justify-center group/logo">
                         <div class="profile-ring-outer absolute rounded-full" style="width:calc(100% + 8px);height:calc(100% + 8px);top:-4px;left:-4px;"></div>
@@ -492,14 +508,14 @@
                     <span class="mt-4 text-[9px] uppercase tracking-[0.2em] text-[var(--text-secondary)] opacity-40 font-medium">Klick zum Gruppenbeitritt</span>
                 </div>
 
-                <!-- Floating Channels - Fixed aspect ratio and z-index -->
-                <div class="planet-link pos-tl w-16 sm:w-20 aspect-square" data-id="2">
-                    <img src="https://i.imgur.com/RW14rnM.jpeg" alt="Fawaid" class="planet-img w-full h-full rounded-full">
-                </div>
-                <div class="planet-link pos-tr w-16 sm:w-20 aspect-square" data-id="1">
+                <!-- Floating Channels -->
+                <div class="planet-link pos-tl w-16 sm:w-20 aspect-square" data-id="1">
                     <img src="https://i.imgur.com/nHiBiIF.jpeg" alt="BayanAlQuran" class="planet-img w-full h-full rounded-full">
                 </div>
-                <div class="planet-link pos-bl w-16 sm:w-20 aspect-square" data-id="3">
+                <div class="planet-link pos-bl w-16 sm:w-20 aspect-square" data-id="2">
+                    <img src="https://i.imgur.com/RW14rnM.jpeg" alt="Fawaid" class="planet-img w-full h-full rounded-full">
+                </div>
+                <div class="planet-link pos-tr w-16 sm:w-20 aspect-square" data-id="3">
                     <img src="https://i.imgur.com/rx8svop.jpeg" alt="DawahGuide" class="planet-img w-full h-full rounded-full">
                 </div>
                 <div class="planet-link pos-br w-16 sm:w-20 aspect-square" data-id="4">
@@ -508,7 +524,7 @@
             </div>
             
             <div class="mt-8">
-                <h1 class="text-4xl md:text-6xl font-bold mb-4 tracking-widest uppercase text-gradient-gold drop-shadow-sm">
+                <h1 class="text-4xl md:text-6xl font-bold mb-4 tracking-widest uppercase sanaabil-title drop-shadow-sm">
                     SANAABIL
                 </h1>
                 <p class="text-xs md:text-sm font-medium tracking-[0.25em] text-[var(--text-secondary)] uppercase">
@@ -612,7 +628,6 @@
 
             <!-- Projects Slider -->
             <section class="fade-in-section relative group/slider mb-24" style="--delay: 0.5s;" id="projects-section">
-                <!-- Flex adjustment for mobile centering -->
                 <h2 class="text-2xl md:text-3xl font-medium text-[var(--accent-gold)] mb-8 flex flex-wrap items-center justify-center md:justify-start gap-y-2">
                     <span class="flex items-center">
                         <svg class="w-6 h-6 mr-3 text-[var(--accent-gold)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
@@ -650,7 +665,7 @@
                 <div id="faq-container" class="space-y-4"></div>
             </section>
             
-            <!-- Share Section (STATISCH MIT DEINEM QR BILD) -->
+            <!-- Share Section -->
             <section class="text-center py-16 border-t border-[var(--glass-border)] fade-in-section" style="--delay: 0.7s;">
                 <h2 class="text-2xl md:text-3xl font-medium text-[var(--accent-gold)] mb-6 font-serif">Teile die Initiative</h2>
                 <p class="text-[var(--text-secondary)] text-sm md:text-base max-w-lg mx-auto mb-10 leading-relaxed">
@@ -846,6 +861,21 @@
                         loader.style.display = 'none';
                         content.classList.remove('hidden');
                         requestAnimationFrame(() => content.classList.remove('opacity-0'));
+                        
+                        // Start Header Fan Animation
+                        setTimeout(() => {
+                            planetLinks.forEach((link, idx) => {
+                                setTimeout(() => {
+                                    link.classList.add('fanned');
+                                    // Start synced glow after all have arrived
+                                    if(idx === planetLinks.length - 1) {
+                                        setTimeout(() => {
+                                            planetLinks.forEach(l => l.classList.add('synced'));
+                                        }, 1000);
+                                    }
+                                }, idx * 200);
+                            });
+                        }, 500);
                     }, 700);
                 }, 500);
             });
@@ -888,7 +918,7 @@
                     if (entries[0].isIntersecting) {
                         let count = 0;
                         const target = projectsData.length;
-                        const duration = 2000; // 2 seconds
+                        const duration = 2000;
                         const step = duration / target;
                         const counterInterval = setInterval(() => {
                             count++;
