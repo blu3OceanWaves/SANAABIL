@@ -88,7 +88,6 @@
             will-change: opacity, transform; position: relative; z-index: 20;
         }
         .fade-in-section.is-visible { opacity: 1; transform: translateY(0); }
-
         /* Roadmap Styles */
         .roadmap-line-container {
             position: absolute; left: 15px; top: 0; bottom: 0; width: 2px; background: var(--roadmap-line);
@@ -124,25 +123,25 @@
         @keyframes text-shine {
             to { background-position: 200% center; }
         }
-
-        /* ===== SYNCED CHANNEL GLOW ===== */
+        /* ===== SYNCED CHANNEL GLOW (Umgekehrte Richtung) ===== */
         @keyframes channel-glow-sync {
-            0%, 20%, 80%, 100% { 
+            0%, 100% { 
                 box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
-                border-color: var(--glass-border); 
+                border-color: var(--glass-border);
+                transform: scale(1);
             }
-            40%, 60% { 
-                box-shadow: 0 0 30px var(--accent-gold); 
+            50% { 
+                box-shadow: 0 0 35px var(--accent-gold); 
                 border-color: var(--accent-gold);
-                transform: scale(1.05);
+                transform: scale(1.08);
             }
         }
         
-        /* Korrigierte Reihenfolge (Start mit Arabic4Every1) */
-        .planet-link.pos-br.synced .planet-img { animation: channel-glow-sync 4s infinite 0.2s; } /* Arabic4Every1 als erstes */
-        .planet-link.pos-bl.synced .planet-img { animation: channel-glow-sync 4s infinite 0.4s; } /* Fawaid */
-        .planet-link.pos-tl.synced .planet-img { animation: channel-glow-sync 4s infinite 0.6s; } /* Bayan */
-        .planet-link.pos-tr.synced .planet-img { animation: channel-glow-sync 4s infinite 0.8s; } /* Dawah */
+        /* Animationsreihenfolge umgekehrt für Links-nach-Rechts-Fluss */
+        .planet-link.pos-tl.synced .planet-img { animation: channel-glow-sync 4s infinite 0.0s; } /* Oben Links Start */
+        .planet-link.pos-bl.synced .planet-img { animation: channel-glow-sync 4s infinite 0.5s; } /* Unten Links */
+        .planet-link.pos-br.synced .planet-img { animation: channel-glow-sync 4s infinite 1.0s; } /* Unten Rechts */
+        .planet-link.pos-tr.synced .planet-img { animation: channel-glow-sync 4s infinite 1.5s; } /* Oben Rechts */
 
         /* Aufruf-Sektion */
         .special-callout-container {
@@ -218,7 +217,6 @@
             transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         .profile-img-inner:hover { transform: scale(1.04); }
-
         /* ===== ROADMAP - Upgraded ===== */
         .roadmap-line-container {
             position: absolute; left: 15px; top: 0; bottom: 0; width: 2px;
@@ -241,20 +239,17 @@
             transition: top 2.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
         }
         .roadmap-traveler.active { opacity: 1; }
-
         .roadmap-item {
             opacity: 0; transform: translateX(-20px);
             transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.34, 1.3, 0.64, 1);
             position: relative; z-index: 20;
         }
         .roadmap-item.active { opacity: 1; transform: translateX(0); }
-
         .roadmap-dot { transform: scale(0); }
         .roadmap-item.active .roadmap-dot { 
             transform: scale(1);
             transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-
         /* Fixed center alignment on mobile */
         .roadmap-node-wrapper {
             position: absolute;
@@ -266,7 +261,6 @@
             justify-content: center;
         }
         @media (min-width: 640px) { .roadmap-node-wrapper { left: 19px; } }
-
         .roadmap-node-done {
             background: var(--accent-gold);
             border-color: var(--accent-gold);
@@ -281,7 +275,6 @@
             opacity: 0;
         }
         .roadmap-item.active .roadmap-node-glow { opacity: 1; }
-
         .roadmap-node-active {
             box-shadow: 0 0 0 4px rgba(212,175,55,0.3), 0 0 24px rgba(212,175,55,0.4);
         }
@@ -304,20 +297,17 @@
             0%   { transform: scale(1);   opacity: 0.7; }
             100% { transform: scale(2.2); opacity: 0; }
         }
-
         .roadmap-card {
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .roadmap-item.active .roadmap-card {
             box-shadow: -4px 0 20px -4px rgba(212,175,55,0.3), 0 10px 40px -10px rgba(0,0,0,0.1);
         }
-
         @keyframes badge-pulse {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.7; }
         }
         .animate-pulse-badge { animation: badge-pulse 2s ease-in-out infinite; }
-
         .logo-static {
             box-shadow: 0 0 30px var(--profile-glow);
             animation: gentle-breathe 4s ease-in-out infinite alternate;
@@ -344,7 +334,7 @@
         .switch input:not(:checked) + .slider::before { transform-origin: right; animation: reverse-wobble var(--OVERALL-TRANSITION-DURATION) cubic-bezier(0.075, 0.82, 0.165, 1); }
         @keyframes wobble { 0% { transform: scale(1, 1); } 50% { transform: scale(3, 1); } 100% { transform: scale(1, 1) translateX(1.75em); } }
         @keyframes reverse-wobble { 0% { transform: scale(1, 1) translateX(1.75em); } 50% { transform: scale(3, 1); } 100% { transform: scale(1, 1) translateX(0); } }
-
+        
         /* ===== HEADER EXPANSION - FAN ANIMATION ===== */
         .orbital-container {
             position: relative;
@@ -359,7 +349,6 @@
         @media (max-width: 768px) {
             .orbital-container { height: 320px; }
         }
-
         .planet-link {
             position: absolute;
             display: flex;
@@ -372,20 +361,17 @@
             opacity: 0;
             transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
         }
-
         /* Positions when active (Fanned out) */
         .planet-link.fanned.pos-tl { top: 15%; left: 15%; transform: translate(-50%, -50%) scale(1); opacity: 1; }
         .planet-link.fanned.pos-tr { top: 15%; left: 85%; transform: translate(-50%, -50%) scale(1); opacity: 1; }
         .planet-link.fanned.pos-bl { top: 85%; left: 15%; transform: translate(-50%, -50%) scale(1); opacity: 1; }
         .planet-link.fanned.pos-br { top: 85%; left: 85%; transform: translate(-50%, -50%) scale(1); opacity: 1; }
-
         @media (max-width: 640px) {
             .planet-link.fanned.pos-tl { top: 18%; left: 12%; }
             .planet-link.fanned.pos-tr { top: 18%; left: 88%; }
             .planet-link.fanned.pos-bl { top: 82%; left: 12%; }
             .planet-link.fanned.pos-br { top: 82%; left: 88%; }
         }
-
         .planet-img {
             width: 80px; height: 80px;
             border-radius: 50%;
@@ -398,13 +384,11 @@
         @media (max-width: 640px) {
             .planet-img { width: 65px; height: 65px; }
         }
-
         .planet-link:hover .planet-img {
             transform: scale(1.1);
             box-shadow: 0 0 20px var(--profile-glow) !important;
             border-color: var(--accent-gold) !important;
         }
-
         /* Modal Styles */
         #custom-modal, #qr-modal {
             display: none;
@@ -463,7 +447,6 @@
     <div id="loader-container" class="fixed inset-0 bg-[var(--bg-primary)] flex justify-center items-center z-50 transition-opacity duration-700">
         <div class="custom-loader"></div>
     </div>
-
     <!-- Modal Channel Info -->
     <div id="custom-modal">
         <div class="modal-overlay" id="modal-overlay"></div>
@@ -479,7 +462,6 @@
             </a>
         </div>
     </div>
-
     <!-- Modal QR Code -->
     <div id="qr-modal">
         <div class="modal-overlay" id="qr-modal-overlay"></div>
@@ -499,7 +481,6 @@
             </button>
         </div>
     </div>
-
     <!-- Main Content -->
     <div id="content-container" class="hidden opacity-0 transition-opacity duration-1000 ease-out">
         
@@ -518,7 +499,6 @@
                     </a>
                     <span class="mt-4 text-[9px] uppercase tracking-[0.2em] text-[var(--text-secondary)] opacity-40 font-medium">Klick zum Gruppenbeitritt</span>
                 </div>
-
                 <!-- Floating Channels -->
                 <div class="planet-link pos-tl w-16 sm:w-20 aspect-square" data-id="1">
                     <img src="https://i.imgur.com/nHiBiIF.jpeg" alt="BayanAlQuran" class="planet-img w-full h-full rounded-full">
@@ -543,7 +523,6 @@
                 </p>
             </div>
         </header>
-
         <main class="max-w-4xl mx-auto px-5 pb-24 relative z-20">
             <!-- About Section -->
             <section class="glass-container p-8 md:p-10 rounded-2xl mb-14 fade-in-section" style="--delay: 0.2s;">
@@ -570,7 +549,6 @@
                     </div>
                 </div>
             </section>
-
             <!-- Timeline Section -->
             <section id="roadmap-section" class="mb-24 fade-in-section" style="--delay: 0.3s;">
                 <h2 class="text-2xl md:text-3xl font-medium text-[var(--accent-gold)] text-center mb-16 tracking-wide">Unsere Roadmap</h2>
@@ -579,7 +557,6 @@
                         <div class="roadmap-progress-line" id="progress-line"></div>
                         <div class="roadmap-traveler" id="roadmap-traveler"></div>
                     </div>
-
                     <!-- Roadmap Item 1 -->
                     <div class="mb-14 relative roadmap-item" data-index="1">
                         <div class="roadmap-node-wrapper">
@@ -596,7 +573,6 @@
                             <p class="text-[var(--text-secondary)] text-sm sm:text-base leading-relaxed">Der offizielle Start unserer Sadaqa-Initiative ist für Rabi' al-Thani 1447 in sha ALLAH geplant. Wir beginnen mit der Sammlung der ersten monatlichen Beiträge.</p>
                         </div>
                     </div>
-
                     <!-- Roadmap Item 2 -->
                     <div class="mb-14 relative roadmap-item" data-index="2">
                         <div class="roadmap-node-wrapper">
@@ -613,7 +589,6 @@
                             <p class="text-[var(--text-secondary)] text-sm sm:text-base leading-relaxed">Nach dem erfolgreichen Start in sha ALLAH, werden wir gemeinsam das erste Projekt auswählen, das wir unterstützen möchten.</p>
                         </div>
                     </div>
-
                     <!-- Roadmap Item 3 -->
                     <div class="relative roadmap-item" data-index="3">
                         <div class="roadmap-node-wrapper">
@@ -631,7 +606,6 @@
                     </div>
                 </div>
             </section>
-
             <!-- Callout Section -->
             <section class="special-callout-container p-8 md:p-12 rounded-3xl mb-24 fade-in-section" style="--delay: 0.4s;" id="callout-section">
                 <div class="text-center mb-10">
@@ -639,7 +613,6 @@
                 </div>
                 <div class="space-y-12 md:space-y-16" id="callout-texts"></div>
             </section>
-
             <!-- Projects Slider -->
             <section class="fade-in-section relative group/slider mb-24" style="--delay: 0.5s;" id="projects-section">
                 <h2 class="text-2xl md:text-3xl font-medium text-[var(--accent-gold)] mb-8 flex flex-wrap items-center justify-center md:justify-start gap-y-2">
@@ -706,26 +679,22 @@
                 <p>SANAABIL &copy; 1447 AH</p>
             </footer>
         </main>
-
         <div id="toast-message" class="toast fixed bottom-8 left-1/2 -translate-x-1/2 px-6 py-4 bg-[var(--bg-primary)] border border-[var(--accent-gold)] rounded-full shadow-2xl transition-all duration-500 ease-out opacity-0 translate-y-8 pointer-events-none z-50 flex items-center gap-3">
             <svg class="w-5 h-5 text-[var(--accent-gold)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
             <span class="text-sm font-medium text-[var(--text-primary)]">Link in die Zwischenablage kopiert</span>
         </div>
     </div>
-
     <style>
         @keyframes bounce-x { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(-25%); } }
         @keyframes bounce-x-reverse { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(25%); } }
         .animate-bounce-x { animation: bounce-x 1.5s infinite; }
         .animate-bounce-x-reverse { animation: bounce-x-reverse 1.5s infinite; }
     </style>
-
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const toggle = document.getElementById('theme-toggle');
             const body = document.body;
             toggle.addEventListener('change', () => body.classList.toggle('light-mode', toggle.checked));
-
             // Modal Logic für Kanäle
             const modalData = {
                 "1": { title: "BayanAlQurān", img: "https://i.imgur.com/nHiBiIF.jpeg", desc: "Themen rund um den Qur'an", link: "https://t.me/BayanAlQuran" },
@@ -733,7 +702,6 @@
                 "3": { title: "DawahGuide", img: "https://i.imgur.com/rx8svop.jpeg", desc: "Wegweiser deiner Recherche", link: "https://t.me/DawahGuide" },
                 "4": { title: "Arabic4Every1", img: "https://i.imgur.com/s4A6CW6.jpeg", desc: "Strukturierter Zugang zu Arabisch", link: "https://t.me/Arabic4Every1" }
             };
-
             const modal = document.getElementById('custom-modal');
             const qrModal = document.getElementById('qr-modal');
             const planetLinks = document.querySelectorAll('.planet-link');
@@ -750,17 +718,14 @@
                     setTimeout(() => modal.classList.add('active'), 10);
                 });
             });
-
             const closeModal = () => {
                 modal.classList.remove('active');
                 setTimeout(() => modal.style.display = 'none', 400);
             };
-
             const closeQrModal = () => {
                 qrModal.classList.remove('active');
                 setTimeout(() => qrModal.style.display = 'none', 400);
             };
-
             document.getElementById('modal-close').addEventListener('click', closeModal);
             document.getElementById('modal-overlay').addEventListener('click', closeModal);
             
@@ -768,18 +733,15 @@
                 qrModal.style.display = 'flex';
                 setTimeout(() => qrModal.classList.add('active'), 10);
             });
-
             document.getElementById('qr-modal-close').addEventListener('click', closeQrModal);
             document.getElementById('qr-modal-overlay').addEventListener('click', closeQrModal);
             document.getElementById('qr-close-btn').addEventListener('click', closeQrModal);
-
             window.addEventListener('keydown', (e) => { 
                 if(e.key === 'Escape') {
                     closeModal();
                     closeQrModal();
                 }
             });
-
             const calloutData = [
                 { text: 'O die ihr glaubt, gebt aus von dem, womit Wir euch versorgt haben, bevor ein Tag kommt, an dem es keinen Verkauf, keine Freundschaft und keine Fürsprache gibt! Die Ungläubigen sind die Ungerechten.', source: '[Qur\'an - 2:254]' },
                 { text: 'Diejenigen, die ihren Besitz auf Allahs Weg ausgeben und hierauf dem, was sie ausgegeben haben, weder Vorhaltungen noch Beleidigungen nachfolgen lassen, die haben ihren Lohn bei ihrem Herrn, und keine Furcht soll über sie kommen, noch sollen sie traurig sein.', source: '[Qur\'an - 2:262]' },
@@ -788,7 +750,6 @@
                 { text: '[..]„Wohlstand wird nicht durch Spenden verringert, und Allah mehrt einem Diener durch Vergebung nur an Ehre, und niemand demütigt sich vor Allah, außer dass Allah ihn erhöht."', source: '[Sahih Muslim - 2588]' },
                 { text: '[..]„Allah hat gesagt: ‚Gib aus, o Sohn Adams, und Ich werde für dich ausgeben.‘“', source: '[Sahih al-Bukhari - 5352]' }
             ];
-
             const projectsData = [
                 { title: 'Brunnen Reparatur', location: 'Afghanistan', amount: '507,03 €', iconPath: 'M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2.5L8 2.69 9.31 4H20a2 2 0 0 1 2 2v2.5M12 21.5a8.38 8.38 0 0 0 2.5-1.95L12 17l-2.5 2.55A8.38 8.38 0 0 0 12 21.5z', bgIcon: 'M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z' },
                 { title: 'Unterstützung eines Bruders', location: 'Gambia', amount: '166,00 €', iconPath: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z', bgIcon: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' },
@@ -799,7 +760,6 @@
                 { title: 'Brunnenbau', location: 'Togo', amount: '600,00 €', iconPath: 'M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z', bgIcon: 'M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z' },
                 { title: 'Unterstützung - Schwestern', location: 'Marokko', amount: '600,00 €', iconPath: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z', bgIcon: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' }
             ];
-
             const faqData = [
                 { q: "Wie kann ich teilnehmen?", a: "Die Teilnahme an unserer Initiative erfolgt über den Gruppen-Link, der von einem bestehenden Mitglied geteilt wird. Dort können Sie sich mit der Community verbinden, um Ihren monatlichen Beitrag von 1 € für die Bedürftigen zu leisten." },
                 { q: "Wofür werden Spenden verwendet?", a: "Die gesammelten Beiträge werden ausschließlich für die Unterstützung von Bedürftigen eingesetzt, in sha ALLAH. Der genaue Verwendungszweck wird in der Community transparent kommuniziert." },
@@ -962,7 +922,6 @@
             const slider = document.getElementById('projects-slider');
             document.getElementById('slide-left').addEventListener('click', () => slider.scrollBy({ left: -300, behavior: 'smooth' }));
             document.getElementById('slide-right').addEventListener('click', () => slider.scrollBy({ left: 300, behavior: 'smooth' }));
-
             document.getElementById('copy-link-btn').addEventListener('click', async () => {
                 const text = "SANAABIL: https://blu3oceanwaves.github.io/SANAABIL/";
                 try { await navigator.clipboard.writeText(text); } catch (err) {}
@@ -978,7 +937,6 @@
             function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
             window.addEventListener('resize', resize);
             resize();
-
             class Particle {
                 constructor() { this.reset(); }
                 reset() {
