@@ -109,7 +109,6 @@
         .roadmap-dot { transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); transform: scale(0); }
         .roadmap-item.active .roadmap-dot { transform: scale(1); }
         
-        /* Progress Bar Animationen */
         .ramadan-progress-fill {
             transition: width 2.5s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
@@ -377,8 +376,6 @@
         }
         .planet-link:hover .planet-name { color: var(--accent-gold); }
 
-        /* Exakter mathematischer Abstand zum Zentrum (50% Center) */
-        /* Wir nutzen einen Versatz von 35% für Desktop und 42% für Mobile für perfekte Symmetrie */
         .pos-tl { top: 15%; left: 15%; }
         .pos-tr { top: 15%; left: 85%; }
         .pos-bl { top: 85%; left: 15%; }
@@ -392,7 +389,7 @@
         }
 
         /* Modal Styles */
-        #custom-modal {
+        #custom-modal, #qr-modal {
             display: none;
             position: fixed;
             inset: 0;
@@ -401,7 +398,7 @@
             justify-content: center;
             padding: 20px;
         }
-        #modal-overlay {
+        .modal-overlay {
             position: absolute;
             inset: 0;
             background: rgba(15, 23, 42, 0.85);
@@ -421,7 +418,7 @@
             opacity: 0;
             transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-        #custom-modal.active .modal-body {
+        #custom-modal.active .modal-body, #qr-modal.active .modal-body {
             transform: translateY(0);
             opacity: 1;
         }
@@ -450,9 +447,9 @@
         <div class="custom-loader"></div>
     </div>
 
-    <!-- Modal -->
+    <!-- Modal Channel Info -->
     <div id="custom-modal">
-        <div id="modal-overlay"></div>
+        <div class="modal-overlay" id="modal-overlay"></div>
         <div class="modal-body">
             <div class="modal-close" id="modal-close">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
@@ -466,23 +463,48 @@
         </div>
     </div>
 
+    <!-- Modal QR Code (STATISCH) -->
+    <div id="qr-modal">
+        <div class="modal-overlay" id="qr-modal-overlay"></div>
+        <div class="modal-body">
+            <div class="modal-close" id="qr-modal-close">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </div>
+            <!-- Hier dein statisches Bild eingebunden -->
+            <div class="bg-white p-4 rounded-xl inline-block mb-6 shadow-inner mx-auto overflow-hidden">
+                <img src="https://i.imgur.com/9GoR7tl.png" alt="SANAABIL QR Code" class="w-48 h-48 sm:w-64 sm:h-64 object-contain">
+            </div>
+            <h3 class="text-2xl font-bold text-[var(--accent-gold)] mb-2 tracking-wide">Initiative teilen</h3>
+            <p class="text-[var(--text-secondary)] text-sm mb-6 leading-relaxed">
+                Lass andere den QR-Code scannen,<br>um Teil der Gemeinschaft zu werden in sha ALLAH
+            </p>
+            <button id="qr-close-btn" class="w-full py-3 bg-[var(--glass-border)] text-[var(--text-primary)] font-medium rounded-full hover:bg-[var(--card-hover)] transition-all">
+                Schließen
+            </button>
+        </div>
+    </div>
+
     <!-- Main Content -->
     <div id="content-container" class="hidden opacity-0 transition-opacity duration-1000 ease-out">
         
         <header class="text-center pt-20 pb-14 px-4 fade-in-section" style="--delay: 0.1s;">
             <!-- Expanded Orbital Header -->
             <div class="orbital-container">
-                <!-- Center Logo -->
-                <div class="relative inline-flex items-center justify-center z-20">
-                    <div class="profile-ring-outer absolute rounded-full" style="width:calc(100% + 8px);height:calc(100% + 8px);top:-4px;left:-4px;"></div>
-                    <div class="absolute rounded-full profile-halo w-40 h-40 md:w-56 md:h-56"></div>
-                    <img src="https://i.imgur.com/7GqbuO4.jpeg" 
-                         alt="SANAABIL Community Logo" 
-                         class="w-32 h-32 md:w-48 md:h-48 mx-auto rounded-full object-cover relative z-10 profile-img-inner" 
-                         fetchpriority="high">
+                <!-- Center Logo as WhatsApp Link -->
+                <div class="relative inline-flex flex-col items-center justify-center z-20">
+                    <a href="https://chat.whatsapp.com/IJ2prCPPeU2ApH4MVcMBcq" target="_blank" class="relative inline-flex items-center justify-center group/logo">
+                        <div class="profile-ring-outer absolute rounded-full" style="width:calc(100% + 8px);height:calc(100% + 8px);top:-4px;left:-4px;"></div>
+                        <div class="absolute rounded-full profile-halo w-40 h-40 md:w-56 md:h-56"></div>
+                        <img src="https://i.imgur.com/7GqbuO4.jpeg" 
+                             alt="SANAABIL Community Logo" 
+                             class="w-32 h-32 md:w-48 md:h-48 mx-auto rounded-full object-cover relative z-10 profile-img-inner group-hover/logo:scale-[1.02] transition-transform duration-500" 
+                             fetchpriority="high">
+                    </a>
+                    <!-- Subtle info text under image -->
+                    <span class="mt-4 text-[9px] uppercase tracking-[0.2em] text-[var(--text-secondary)] opacity-40 font-medium">Klick zum Gruppenbeitritt</span>
                 </div>
 
-                <!-- Floating Channels - Mathematisch ausgerichtete Positionen -->
+                <!-- Floating Channels -->
                 <div class="planet-link pos-tl" data-id="2">
                     <img src="https://i.imgur.com/RW14rnM.jpeg" alt="Fawaid" class="planet-img">
                     <span class="planet-name">Fawaid</span>
@@ -534,76 +556,6 @@
                         <p class="text-sm md:text-base text-[var(--text-secondary)] leading-relaxed">
                             Wir sind eine private Gemeinschaft, die gemeinsam durch kleine, monatliche Beiträge Gutes bewirken möchte. Diese Seite dient ausschließlich zur Präsentation unserer Arbeit, damit wir transparent zeigen können, was wir gemeinsam erreichen wollen in sha ALLAH.
                         </p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Ramadan Status Section -->
-            <section class="glass-container p-8 md:p-10 rounded-2xl mb-24 fade-in-section" style="--delay: 0.25s;" id="ramadan-status-section">
-                <div class="flex items-center space-x-6 mb-4">
-                    <div class="h-px flex-1 bg-gradient-to-r from-transparent to-[var(--accent-gold)] opacity-50"></div>
-                    <h2 class="text-2xl md:text-3xl font-medium text-[var(--accent-gold)] text-center tracking-wide flex items-center gap-3">
-                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
-                        Ramadan Ziele
-                    </h2>
-                    <div class="h-px flex-1 bg-gradient-to-l from-transparent to-[var(--accent-gold)] opacity-50"></div>
-                </div>
-                
-                <p class="text-center text-[var(--text-secondary)] mb-10 max-w-xl mx-auto text-sm md:text-base">
-                    Verfolge unseren Fortschritt für unsere drei Spendenprojekte in diesem Monat ― Jeder Euro bringt uns dem Ziel näher, in sha ALLAH 
-                </p>
-
-                <div class="mb-12">
-                    <div class="flex justify-between items-end mb-3">
-                        <span class="text-[var(--text-primary)] font-medium text-sm md:text-base">
-                            Bisher gesammelt: <span class="text-[var(--accent-gold)] text-2xl font-bold ml-1 tracking-wider">950,70</span>
-                        </span>
-                        <span class="text-[var(--text-secondary)] font-medium text-sm md:text-base">Ziel: 1.500</span>
-                    </div>
-                    <div class="h-7 w-full bg-[var(--bg-primary)] rounded-full border border-[var(--glass-border)] overflow-hidden relative shadow-inner">
-                        <div class="ramadan-progress-fill absolute left-0 top-0 h-full bg-gradient-to-r from-[var(--accent-gold-light)] to-[var(--accent-gold)] shadow-[0_0_20px_var(--accent-gold)]" style="width: 0%;" data-target="63.38%">
-                            <div class="absolute inset-0 w-full h-full overflow-hidden">
-                                <div class="absolute inset-0 w-[40%] h-full bg-gradient-to-r from-transparent via-white/40 to-transparent animate-shine"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-                    <div class="p-5 md:p-6 rounded-xl border-2 border-[var(--accent-gold)] bg-[var(--card-hover)] relative overflow-hidden shadow-[0_0_25px_var(--profile-glow)] transition-transform hover:-translate-y-1">
-                        <div class="absolute inset-0 bg-gradient-to-br from-[var(--accent-gold)] to-transparent opacity-10"></div>
-                        <div class="absolute top-4 right-4 bg-[var(--accent-gold)] text-[var(--bg-primary)] text-[9px] md:text-[10px] font-bold px-2 py-1 rounded-full flex items-center shadow-lg">
-                            <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
-                            ERFOLGREICH
-                        </div>
-                        <h3 class="text-xl font-bold text-[var(--text-primary)] mb-1 relative z-10">Mushaf</h3>
-                        <p class="text-[var(--text-secondary)] font-medium text-sm mb-4 relative z-10">300 € / 300 €</p>
-                        <div class="h-2 w-full bg-[var(--bg-primary)] rounded-full overflow-hidden relative z-10">
-                            <div class="h-full bg-[var(--accent-gold)] w-full"></div>
-                        </div>
-                        <p class="text-xs text-[var(--accent-gold)] mt-3 font-serif text-right relative z-10 opacity-90 tracking-wide">wa lillahi-l hamd</p>
-                    </div>
-
-                    <div class="p-5 md:p-6 rounded-xl border-2 border-[var(--accent-gold)] bg-[var(--card-hover)] relative overflow-hidden shadow-[0_0_25px_var(--profile-glow)] transition-transform hover:-translate-y-1">
-                        <div class="absolute inset-0 bg-gradient-to-br from-[var(--accent-gold)] to-transparent opacity-10"></div>
-                        <div class="absolute top-4 right-4 bg-[var(--accent-gold)] text-[var(--bg-primary)] text-[9px] md:text-[10px] font-bold px-2 py-1 rounded-full flex items-center shadow-lg">
-                            <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
-                            ERFOLGREICH
-                        </div>
-                        <h3 class="text-xl font-bold text-[var(--text-primary)] mb-1 relative z-10">Brunnen</h3>
-                        <p class="text-[var(--text-secondary)] font-medium text-sm mb-4 relative z-10">600 € / 600 €</p>
-                        <div class="h-2 w-full bg-[var(--bg-primary)] rounded-full overflow-hidden relative z-10">
-                            <div class="h-full bg-[var(--accent-gold)] w-full"></div>
-                        </div>
-                        <p class="text-xs text-[var(--accent-gold)] mt-3 font-serif text-right relative z-10 opacity-90 tracking-wide">wa lillahi-l hamd</p>
-                    </div>
-
-                    <div class="p-5 md:p-6 rounded-xl border border-[var(--glass-border)] bg-[var(--glass-bg)] relative transition-transform hover:-translate-y-1">
-                        <h3 class="text-xl font-semibold text-[var(--text-primary)] mb-1">Marrakesch</h3>
-                        <p class="text-[var(--text-secondary)] font-medium text-sm mb-4">50,70 € / 600 €</p>
-                        <div class="h-2 w-full bg-[var(--bg-primary)] rounded-full overflow-hidden relative">
-                            <div class="ramadan-progress-fill absolute left-0 top-0 h-full bg-[var(--accent-gold)] rounded-full shadow-[0_0_5px_var(--accent-gold)]" style="width: 0%;" data-target="8.45%"></div>
-                        </div>
                     </div>
                 </div>
             </section>
@@ -707,19 +659,28 @@
                 <div id="faq-container" class="space-y-4"></div>
             </section>
             
-            <!-- Share Section -->
+            <!-- Share Section (STATISCH MIT DEINEM QR BILD) -->
             <section class="text-center py-16 border-t border-[var(--glass-border)] fade-in-section" style="--delay: 0.7s;">
                 <h2 class="text-2xl md:text-3xl font-medium text-[var(--accent-gold)] mb-6 font-serif">Teile die Initiative</h2>
                 <p class="text-[var(--text-secondary)] text-sm md:text-base max-w-lg mx-auto mb-10 leading-relaxed">
                     „[...] Wer auf Gutes hinweist, erhält den gleichen Lohn wie derjenige, der es tut."
                     <span class="block text-[var(--accent-gold)] mt-2 font-serif text-sm opacity-80">[Sahih Muslim - 1893]</span>
                 </p>
-                <button id="copy-link-btn" aria-label="Link kopieren" class="group relative inline-flex items-center justify-center px-10 py-4 text-base font-semibold text-[var(--bg-primary)] bg-[var(--accent-gold)] rounded-full overflow-hidden transition-all duration-300 hover:opacity-90 hover:shadow-[0_0_30px_rgba(212,175,55,0.4)] hover:-translate-y-1">
-                    <span class="relative z-10 flex items-center">
-                        Link kopieren
-                        <svg class="ml-3 w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
-                    </span>
-                </button>
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <button id="copy-link-btn" aria-label="Link kopieren" class="w-full sm:w-auto group relative inline-flex items-center justify-center px-10 py-4 text-base font-semibold text-[var(--bg-primary)] bg-[var(--accent-gold)] rounded-full overflow-hidden transition-all duration-300 hover:opacity-90 hover:shadow-[0_0_30px_rgba(212,175,55,0.4)] hover:-translate-y-1">
+                        <span class="relative z-10 flex items-center">
+                            Link kopieren
+                            <svg class="ml-3 w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                        </span>
+                    </button>
+                    <!-- Button zum Öffnen deines statischen QR Codes -->
+                    <button id="show-qr-btn" aria-label="QR Code anzeigen" class="w-full sm:w-auto group relative inline-flex items-center justify-center px-10 py-4 text-base font-semibold text-[var(--text-primary)] border-2 border-[var(--accent-gold)] rounded-full overflow-hidden transition-all duration-300 hover:bg-[var(--card-hover)] hover:-translate-y-1">
+                        <span class="relative z-10 flex items-center">
+                            QR Code
+                            <svg class="ml-3 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path></svg>
+                        </span>
+                    </button>
+                </div>
             </section>
             
             <footer class="text-center text-[var(--text-secondary)] text-sm mt-12 pb-8 opacity-70">
@@ -746,7 +707,7 @@
             const body = document.body;
             toggle.addEventListener('change', () => body.classList.toggle('light-mode', toggle.checked));
 
-            // Modal Logic
+            // Modal Logic für Kanäle
             const modalData = {
                 "1": { title: "BayanAlQuran", img: "https://i.imgur.com/nHiBiIF.jpeg", desc: "Beiträge zum Qur'an und Themen, die damit verbunden sind.", link: "https://t.me/BayanAlQuran" },
                 "2": { title: "Fawaid", img: "https://i.imgur.com/RW14rnM.jpeg", desc: "Nützliche Beiträge in den verschiedenen Islamwissenschaften, basierend auf authentischen Quellen aus ALDORAR ALSANIYYAH.", link: "https://t.me/Fawaid1618" },
@@ -755,6 +716,7 @@
             };
 
             const modal = document.getElementById('custom-modal');
+            const qrModal = document.getElementById('qr-modal');
             const planetLinks = document.querySelectorAll('.planet-link');
             
             planetLinks.forEach(link => {
@@ -775,9 +737,30 @@
                 setTimeout(() => modal.style.display = 'none', 400);
             };
 
+            const closeQrModal = () => {
+                qrModal.classList.remove('active');
+                setTimeout(() => qrModal.style.display = 'none', 400);
+            };
+
             document.getElementById('modal-close').addEventListener('click', closeModal);
             document.getElementById('modal-overlay').addEventListener('click', closeModal);
-            window.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeModal(); });
+            
+            // Öffnen des statischen QR Modals
+            document.getElementById('show-qr-btn').addEventListener('click', () => {
+                qrModal.style.display = 'flex';
+                setTimeout(() => qrModal.classList.add('active'), 10);
+            });
+
+            document.getElementById('qr-modal-close').addEventListener('click', closeQrModal);
+            document.getElementById('qr-modal-overlay').addEventListener('click', closeQrModal);
+            document.getElementById('qr-close-btn').addEventListener('click', closeQrModal);
+
+            window.addEventListener('keydown', (e) => { 
+                if(e.key === 'Escape') {
+                    closeModal();
+                    closeQrModal();
+                }
+            });
 
             const calloutData = [
                 { text: 'O die ihr glaubt, gebt aus von dem, womit Wir euch versorgt haben, bevor ein Tag kommt, an dem es keinen Verkauf, keine Freundschaft und keine Fürsprache gibt! Die Ungläubigen sind die Ungerechten.', source: '[Qur\'an - 2:254]' },
@@ -793,7 +776,10 @@
                 { title: 'Unterstützung eines Bruders', location: 'Gambia', amount: '166,00 €', iconPath: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z', bgIcon: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' },
                 { title: 'Nothilfe Gaza-Nahost', location: 'Palästina', amount: '493,00 €', iconPath: 'M12 5v10m0 4h.01', bgIcon: 'M12 4v11m0 4h.01', isStroke: true },
                 { title: 'Unterstützung eines Bruders', location: 'Deutschland', amount: '400,00 €', iconPath: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z', bgIcon: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' },
-                { title: 'Unterstützung Hochzeit', location: 'Gambia', amount: '225,91 €', iconPath: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z', bgIcon: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' }
+                { title: 'Unterstützung Hochzeit', location: 'Gambia', amount: '225,91 €', iconPath: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z', bgIcon: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' },
+                { title: '150 Masahif Druck', location: 'Afghanistan', amount: '300,00 €', iconPath: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5s3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18s-3.332.477-4.5 1.253', bgIcon: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5s3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18s-3.332.477-4.5 1.253', isStroke: true },
+                { title: 'Brunnenbau', location: 'Togo', amount: '600,00 €', iconPath: 'M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z', bgIcon: 'M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z' },
+                { title: 'Unterstützung - Schwestern', location: 'Marokko', amount: '600,00 €', iconPath: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z', bgIcon: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' }
             ];
 
             const faqData = [
@@ -884,20 +870,6 @@
                 });
             }, { threshold: 0.1 });
             document.querySelectorAll('.fade-in-section').forEach(el => observer.observe(el));
-
-            const ramadanSection = document.getElementById('ramadan-status-section');
-            const progressBars = document.querySelectorAll('.ramadan-progress-fill');
-            if(ramadanSection) {
-                const ramadanObserver = new IntersectionObserver((entries) => {
-                    if (entries[0].isIntersecting) {
-                        progressBars.forEach(bar => {
-                            setTimeout(() => { bar.style.width = bar.getAttribute('data-target'); }, 500);
-                        });
-                        ramadanObserver.disconnect();
-                    }
-                }, { threshold: 0.3 });
-                ramadanObserver.observe(ramadanSection);
-            }
 
             const roadmapSection = document.getElementById('roadmap-section');
             if(roadmapSection) {
