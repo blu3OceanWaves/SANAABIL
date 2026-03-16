@@ -126,7 +126,6 @@
         }
 
         /* ===== SYNCED CHANNEL GLOW ===== */
-        /* Die Dauer von 4s passt zum Logo-Shine */
         @keyframes channel-glow-sync {
             0%, 20%, 80%, 100% { 
                 box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
@@ -139,11 +138,11 @@
             }
         }
         
-        /* Die Verzögerungen simulieren den Strahl, der von links nach rechts läuft */
-        .planet-link.pos-tl.synced .planet-img { animation: channel-glow-sync 4s infinite 0.2s; } /* Bayan */
+        /* Korrigierte Reihenfolge (Start mit Arabic4Every1) */
+        .planet-link.pos-br.synced .planet-img { animation: channel-glow-sync 4s infinite 0.2s; } /* Arabic4Every1 als erstes */
         .planet-link.pos-bl.synced .planet-img { animation: channel-glow-sync 4s infinite 0.4s; } /* Fawaid */
-        .planet-link.pos-tr.synced .planet-img { animation: channel-glow-sync 4s infinite 0.7s; } /* Dawah */
-        .planet-link.pos-br.synced .planet-img { animation: channel-glow-sync 4s infinite 0.9s; } /* Arabic */
+        .planet-link.pos-tl.synced .planet-img { animation: channel-glow-sync 4s infinite 0.6s; } /* Bayan */
+        .planet-link.pos-tr.synced .planet-img { animation: channel-glow-sync 4s infinite 0.8s; } /* Dawah */
 
         /* Aufruf-Sektion */
         .special-callout-container {
@@ -255,6 +254,18 @@
             transform: scale(1);
             transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
+
+        /* Fixed center alignment on mobile */
+        .roadmap-node-wrapper {
+            position: absolute;
+            left: 15px; /* Same as line */
+            top: 0;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        @media (min-width: 640px) { .roadmap-node-wrapper { left: 19px; } }
 
         .roadmap-node-done {
             background: var(--accent-gold);
@@ -569,8 +580,9 @@
                         <div class="roadmap-traveler" id="roadmap-traveler"></div>
                     </div>
 
+                    <!-- Roadmap Item 1 -->
                     <div class="mb-14 relative roadmap-item" data-index="1">
-                        <div class="absolute -left-1 sm:-left-1 top-0 flex items-center justify-center">
+                        <div class="roadmap-node-wrapper">
                             <div class="roadmap-node-glow roadmap-dot absolute w-10 h-10 sm:w-14 sm:h-14 rounded-full"></div>
                             <div class="w-8 h-8 sm:w-12 sm:h-12 rounded-full border-2 z-10 flex items-center justify-center font-bold roadmap-dot roadmap-node-done">
                                 <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
@@ -585,8 +597,9 @@
                         </div>
                     </div>
 
+                    <!-- Roadmap Item 2 -->
                     <div class="mb-14 relative roadmap-item" data-index="2">
-                        <div class="absolute -left-1 sm:-left-1 top-0 flex items-center justify-center">
+                        <div class="roadmap-node-wrapper">
                             <div class="roadmap-node-glow roadmap-dot absolute w-10 h-10 sm:w-14 sm:h-14 rounded-full"></div>
                             <div class="w-8 h-8 sm:w-12 sm:h-12 rounded-full border-2 z-10 flex items-center justify-center font-bold roadmap-dot roadmap-node-done">
                                 <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
@@ -601,8 +614,9 @@
                         </div>
                     </div>
 
+                    <!-- Roadmap Item 3 -->
                     <div class="relative roadmap-item" data-index="3">
-                        <div class="absolute -left-1 sm:-left-1 top-0 flex items-center justify-center">
+                        <div class="roadmap-node-wrapper">
                             <div class="roadmap-pulse-ring-1 absolute rounded-full roadmap-dot"></div>
                             <div class="roadmap-pulse-ring-2 absolute rounded-full roadmap-dot"></div>
                             <div class="w-8 h-8 sm:w-12 sm:h-12 rounded-full border-2 border-[var(--accent-gold)] z-10 flex items-center justify-center text-[var(--bg-primary)] bg-[var(--accent-gold)] font-bold roadmap-dot roadmap-node-active">3</div>
