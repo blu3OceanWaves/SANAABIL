@@ -365,16 +365,8 @@
             box-shadow: 0 0 20px var(--profile-glow);
             border-color: var(--accent-gold);
         }
-        .planet-name {
-            margin-top: 8px;
-            font-size: 0.7rem;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--text-secondary);
-            transition: color 0.3s ease;
-        }
-        .planet-link:hover .planet-name { color: var(--accent-gold); }
+        
+        /* Removed planet-name styling since text is gone */
 
         .pos-tl { top: 15%; left: 15%; }
         .pos-tr { top: 15%; left: 85%; }
@@ -470,7 +462,6 @@
             <div class="modal-close" id="qr-modal-close">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </div>
-            <!-- Hier dein statisches Bild eingebunden -->
             <div class="bg-white p-4 rounded-xl inline-block mb-6 shadow-inner mx-auto overflow-hidden">
                 <img src="https://i.imgur.com/9GoR7tl.png" alt="SANAABIL QR Code" class="w-48 h-48 sm:w-64 sm:h-64 object-contain">
             </div>
@@ -500,26 +491,21 @@
                              class="w-32 h-32 md:w-48 md:h-48 mx-auto rounded-full object-cover relative z-10 profile-img-inner group-hover/logo:scale-[1.02] transition-transform duration-500" 
                              fetchpriority="high">
                     </a>
-                    <!-- Subtle info text under image -->
                     <span class="mt-4 text-[9px] uppercase tracking-[0.2em] text-[var(--text-secondary)] opacity-40 font-medium">Klick zum Gruppenbeitritt</span>
                 </div>
 
-                <!-- Floating Channels -->
+                <!-- Floating Channels - Name text removed as requested -->
                 <div class="planet-link pos-tl" data-id="2">
                     <img src="https://i.imgur.com/RW14rnM.jpeg" alt="Fawaid" class="planet-img">
-                    <span class="planet-name">Fawaid</span>
                 </div>
                 <div class="planet-link pos-tr" data-id="1">
                     <img src="https://i.imgur.com/nHiBiIF.jpeg" alt="BayanAlQuran" class="planet-img">
-                    <span class="planet-name">BayanAlQurān</span>
                 </div>
                 <div class="planet-link pos-bl" data-id="3">
                     <img src="https://i.imgur.com/rx8svop.jpeg" alt="DawahGuide" class="planet-img">
-                    <span class="planet-name">DawahGuide</span>
                 </div>
                 <div class="planet-link pos-br" data-id="4">
                     <img src="https://i.imgur.com/s4A6CW6.jpeg" alt="Arabic4Every1" class="planet-img">
-                    <span class="planet-name">Arabic4Every1</span>
                 </div>
             </div>
             
@@ -627,10 +613,10 @@
             </section>
 
             <!-- Projects Slider -->
-            <section class="fade-in-section relative group/slider mb-24" style="--delay: 0.5s;">
+            <section class="fade-in-section relative group/slider mb-24" style="--delay: 0.5s;" id="projects-section">
                 <h2 class="text-2xl md:text-3xl font-medium text-[var(--accent-gold)] mb-8 flex items-center justify-center md:justify-start">
-                    <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    Abgeschlossene Projekte
+                    <svg class="w-6 h-6 mr-3 text-[var(--accent-gold)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    Abgeschlossene Projekte: <span id="project-counter" class="ml-2 mr-2">0</span> الحمد لله
                 </h2>
                 
                 <button id="slide-left" aria-label="Vorheriges Projekt" class="absolute -left-5 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-[var(--glass-bg)] border border-[var(--glass-border)] text-[var(--accent-gold)] opacity-0 group-hover/slider:opacity-100 transition-all hidden md:flex hover:bg-[var(--accent-gold)] hover:text-[var(--bg-primary)] hover:scale-110 backdrop-blur-md">
@@ -673,7 +659,6 @@
                             <svg class="ml-3 w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
                         </span>
                     </button>
-                    <!-- Button zum Öffnen deines statischen QR Codes -->
                     <button id="show-qr-btn" aria-label="QR Code anzeigen" class="w-full sm:w-auto group relative inline-flex items-center justify-center px-10 py-4 text-base font-semibold text-[var(--text-primary)] border-2 border-[var(--accent-gold)] rounded-full overflow-hidden transition-all duration-300 hover:bg-[var(--card-hover)] hover:-translate-y-1">
                         <span class="relative z-10 flex items-center">
                             QR Code
@@ -745,7 +730,6 @@
             document.getElementById('modal-close').addEventListener('click', closeModal);
             document.getElementById('modal-overlay').addEventListener('click', closeModal);
             
-            // Öffnen des statischen QR Modals
             document.getElementById('show-qr-btn').addEventListener('click', () => {
                 qrModal.style.display = 'flex';
                 setTimeout(() => qrModal.classList.add('active'), 10);
@@ -889,6 +873,27 @@
                     }
                 }, { threshold: 0.15 });
                 roadmapObserver.observe(roadmapSection);
+            }
+
+            // Project Count Animation
+            const projectCounter = document.getElementById('project-counter');
+            const projectSection = document.getElementById('projects-section');
+            if(projectSection) {
+                const projectObserver = new IntersectionObserver((entries) => {
+                    if (entries[0].isIntersecting) {
+                        let count = 0;
+                        const target = projectsData.length;
+                        const duration = 2000; // 2 seconds
+                        const step = duration / target;
+                        const counterInterval = setInterval(() => {
+                            count++;
+                            projectCounter.innerText = count;
+                            if (count >= target) clearInterval(counterInterval);
+                        }, step);
+                        projectObserver.disconnect();
+                    }
+                }, { threshold: 0.2 });
+                projectObserver.observe(projectSection);
             }
 
             faqContainer.addEventListener('click', (e) => {
