@@ -88,26 +88,6 @@
             will-change: opacity, transform; position: relative; z-index: 20;
         }
         .fade-in-section.is-visible { opacity: 1; transform: translateY(0); }
-        /* Roadmap Styles */
-        .roadmap-line-container {
-            position: absolute; left: 15px; top: 0; bottom: 0; width: 2px; background: var(--roadmap-line);
-        }
-        @media (min-width: 640px) { .roadmap-line-container { left: 19px; } }
-        
-        .roadmap-progress-line {
-            position: absolute; top: 0; left: 0; width: 100%; height: 0%;
-            background: linear-gradient(180deg, var(--accent-gold), var(--accent-gold-light));
-            box-shadow: 0 0 12px rgba(212, 175, 55, 0.6);
-            transition: height 2.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .roadmap-item {
-            opacity: 0; transform: translateX(-15px);
-            transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative; z-index: 20;
-        }
-        .roadmap-item.active { opacity: 1; transform: translateX(0); }
-        .roadmap-dot { transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); transform: scale(0); }
-        .roadmap-item.active .roadmap-dot { transform: scale(1); }
         
         /* ===== TEXT SHINE ANIMATION ===== */
         .sanaabil-title {
@@ -138,26 +118,36 @@
         }
         
         /* Animationsreihenfolge umgekehrt für Links-nach-Rechts-Fluss */
-        .planet-link.pos-tl.synced .planet-img { animation: channel-glow-sync 4s infinite 0.0s; } /* Oben Links Start */
-        .planet-link.pos-bl.synced .planet-img { animation: channel-glow-sync 4s infinite 0.5s; } /* Unten Links */
-        .planet-link.pos-br.synced .planet-img { animation: channel-glow-sync 4s infinite 1.0s; } /* Unten Rechts */
-        .planet-link.pos-tr.synced .planet-img { animation: channel-glow-sync 4s infinite 1.5s; } /* Oben Rechts */
+        .planet-link.pos-tl.synced .planet-img { animation: channel-glow-sync 4s infinite 0.0s; }
+        .planet-link.pos-bl.synced .planet-img { animation: channel-glow-sync 4s infinite 0.5s; }
+        .planet-link.pos-br.synced .planet-img { animation: channel-glow-sync 4s infinite 1.0s; }
+        .planet-link.pos-tr.synced .planet-img { animation: channel-glow-sync 4s infinite 1.5s; }
 
-        /* Aufruf-Sektion */
+        /* Aufruf-Sektion (Masonry-Style) */
         .special-callout-container {
             background: linear-gradient(145deg, var(--glass-bg), transparent);
             border: 1px solid var(--glass-border);
             box-shadow: inset 0 0 30px var(--card-hover);
             position: relative; overflow: hidden; z-index: 20; transition: background 0.6s ease;
         }
-        .special-callout-container::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
-            background: linear-gradient(90deg, transparent, var(--accent-gold), transparent); opacity: 0.6;
+        .callout-item {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            height: fit-content;
+            transition: all 0.4s ease;
+        }
+        .callout-item:hover {
+            border-color: var(--accent-gold);
+            transform: translateY(-5px);
+            background: var(--card-hover);
         }
         .quote-text {
-            font-size: 1.15rem; line-height: 1.8; color: var(--text-primary); font-style: italic; transition: color 0.5s ease;
+            font-size: 1rem; line-height: 1.6; color: var(--text-primary); font-style: italic; transition: color 0.5s ease;
         }
-        @media (min-width: 768px) { .quote-text { font-size: 1.35rem; } }
+        @media (min-width: 768px) { .quote-text { font-size: 1.1rem; } }
+
         /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
@@ -283,12 +273,13 @@
             transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         .profile-img-inner:hover { transform: scale(1.04); }
-        /* ===== ROADMAP - Upgraded ===== */
+
+        /* ===== ROADMAP - EXACTLY CENTERED & BISECTED ===== */
         .roadmap-line-container {
-            position: absolute; left: 15px; top: 0; bottom: 0; width: 2px;
+            position: absolute; left: 7%; top: 0; bottom: 0; width: 2px;
             background: var(--roadmap-line); overflow: visible;
+            transform: translateX(-50%); 
         }
-        @media (min-width: 640px) { .roadmap-line-container { left: 19px; } }
         
         .roadmap-progress-line {
             position: absolute; top: 0; left: 0; width: 100%; height: 0%;
@@ -297,14 +288,16 @@
             transition: height 2.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .roadmap-traveler {
-            position: absolute; left: 50%; top: 0%; transform: translate(-50%, 0);
+            position: absolute; left: 50%; top: 0%; transform: translate(-50%, -50%);
             width: 10px; height: 10px; border-radius: 50%;
             background: var(--accent-gold-light);
             box-shadow: 0 0 12px 4px var(--accent-gold), 0 0 24px 8px rgba(212,175,55,0.3);
             opacity: 0;
             transition: top 2.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+            z-index: 40;
         }
         .roadmap-traveler.active { opacity: 1; }
+        
         .roadmap-item {
             opacity: 0; transform: translateX(-20px);
             transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.34, 1.3, 0.64, 1);
@@ -316,17 +309,17 @@
             transform: scale(1);
             transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-        /* Fixed center alignment on mobile */
         .roadmap-node-wrapper {
             position: absolute;
-            left: 15px; /* Same as line */
+            left: 7%;
             top: 0;
-            transform: translateX(-50%);
+            transform: translate(-50%, 0); 
             display: flex;
             align-items: center;
             justify-content: center;
+            width: 0; height: 0;
+            z-index: 30;
         }
-        @media (min-width: 640px) { .roadmap-node-wrapper { left: 19px; } }
         .roadmap-node-done {
             background: var(--accent-gold);
             border-color: var(--accent-gold);
@@ -349,6 +342,7 @@
             background: transparent;
             border: 2px solid var(--accent-gold);
             opacity: 0;
+            position: absolute;
         }
         @media (min-width: 640px) {
             .roadmap-pulse-ring-1, .roadmap-pulse-ring-2 { width: 3.5rem; height: 3.5rem; }
@@ -365,6 +359,10 @@
         }
         .roadmap-card {
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-left: calc(7% + 1.5rem);
+        }
+        @media (min-width: 640px) {
+            .roadmap-card { margin-left: calc(7% + 2.5rem); }
         }
         .roadmap-item.active .roadmap-card {
             box-shadow: -4px 0 20px -4px rgba(212,175,55,0.3), 0 10px 40px -10px rgba(0,0,0,0.1);
@@ -427,7 +425,6 @@
             opacity: 0;
             transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        /* Positions when active (Fanned out) */
         .planet-link.fanned.pos-tl { top: 15%; left: 15%; transform: translate(-50%, -50%) scale(1); opacity: 1; }
         .planet-link.fanned.pos-tr { top: 15%; left: 85%; transform: translate(-50%, -50%) scale(1); opacity: 1; }
         .planet-link.fanned.pos-bl { top: 85%; left: 15%; transform: translate(-50%, -50%) scale(1); opacity: 1; }
@@ -510,7 +507,7 @@
     <!-- Background Canvas -->
     <canvas id="particle-canvas" aria-hidden="true"></canvas>
     
-    <!-- NEW Loader UI From Uiverse.io by dovatgabriel -->
+    <!-- Loader UI -->
     <div id="loader-container" class="fixed inset-0 bg-[var(--bg-primary)] flex justify-center items-center z-50 transition-opacity duration-700">
         <div class="three-body">
             <div class="three-body__dot"></div>
@@ -557,7 +554,6 @@
     <div id="content-container" class="hidden opacity-0 transition-opacity duration-1000 ease-out">
         
         <header class="text-center pt-20 pb-14 px-4 fade-in-section" style="--delay: 0.1s;">
-            <!-- Fanning Orbital Header -->
             <div class="orbital-container">
                 <!-- Center Logo -->
                 <div class="relative inline-flex flex-col items-center justify-center z-20">
@@ -624,20 +620,20 @@
             <!-- Timeline Section -->
             <section id="roadmap-section" class="mb-24 fade-in-section" style="--delay: 0.3s;">
                 <h2 class="text-2xl md:text-3xl font-medium text-[var(--accent-gold)] text-center mb-16 tracking-wide">Unsere Roadmap</h2>
-                <div class="relative pl-4 sm:pl-10 py-2">
+                <div class="relative py-2">
                     <div class="roadmap-line-container">
                         <div class="roadmap-progress-line" id="progress-line"></div>
                         <div class="roadmap-traveler" id="roadmap-traveler"></div>
                     </div>
                     <!-- Roadmap Item 1 -->
                     <div class="mb-14 relative roadmap-item" data-index="1">
-                        <div class="roadmap-node-wrapper">
+                        <div class="roadmap-node-wrapper" style="top: 2rem;">
                             <div class="roadmap-node-glow roadmap-dot absolute w-10 h-10 sm:w-14 sm:h-14 rounded-full"></div>
                             <div class="w-8 h-8 sm:w-12 sm:h-12 rounded-full border-2 z-10 flex items-center justify-center font-bold roadmap-dot roadmap-node-done">
                                 <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
                             </div>
                         </div>
-                        <div class="ml-12 sm:ml-20 glass-container p-6 sm:p-8 rounded-2xl roadmap-card opacity-80 hover:opacity-100 transition-opacity">
+                        <div class="glass-container p-6 sm:p-8 rounded-2xl roadmap-card opacity-80 hover:opacity-100 transition-opacity">
                             <div class="flex items-center gap-2 mb-2">
                                 <span class="text-[9px] font-bold uppercase tracking-widest text-[var(--accent-gold)] bg-[var(--card-hover)] px-2 py-0.5 rounded-full border border-[var(--glass-border)]">Abgeschlossen</span>
                             </div>
@@ -647,13 +643,13 @@
                     </div>
                     <!-- Roadmap Item 2 -->
                     <div class="mb-14 relative roadmap-item" data-index="2">
-                        <div class="roadmap-node-wrapper">
+                        <div class="roadmap-node-wrapper" style="top: 2rem;">
                             <div class="roadmap-node-glow roadmap-dot absolute w-10 h-10 sm:w-14 sm:h-14 rounded-full"></div>
                             <div class="w-8 h-8 sm:w-12 sm:h-12 rounded-full border-2 z-10 flex items-center justify-center font-bold roadmap-dot roadmap-node-done">
                                 <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
                             </div>
                         </div>
-                        <div class="ml-12 sm:ml-20 glass-container p-6 sm:p-8 rounded-2xl roadmap-card opacity-80 hover:opacity-100 transition-opacity">
+                        <div class="glass-container p-6 sm:p-8 rounded-2xl roadmap-card opacity-80 hover:opacity-100 transition-opacity">
                             <div class="flex items-center gap-2 mb-2">
                                 <span class="text-[9px] font-bold uppercase tracking-widest text-[var(--accent-gold)] bg-[var(--card-hover)] px-2 py-0.5 rounded-full border border-[var(--glass-border)]">Abgeschlossen</span>
                             </div>
@@ -663,12 +659,12 @@
                     </div>
                     <!-- Roadmap Item 3 -->
                     <div class="relative roadmap-item" data-index="3">
-                        <div class="roadmap-node-wrapper">
+                        <div class="roadmap-node-wrapper" style="top: 2rem;">
                             <div class="roadmap-pulse-ring-1 absolute rounded-full roadmap-dot"></div>
                             <div class="roadmap-pulse-ring-2 absolute rounded-full roadmap-dot"></div>
                             <div class="w-8 h-8 sm:w-12 sm:h-12 rounded-full border-2 border-[var(--accent-gold)] z-10 flex items-center justify-center text-[var(--bg-primary)] bg-[var(--accent-gold)] font-bold roadmap-dot roadmap-node-active">3</div>
                         </div>
-                        <div class="ml-12 sm:ml-20 glass-container p-6 sm:p-8 rounded-2xl roadmap-card border-l-4 border-l-[var(--accent-gold)] shadow-[0_8px_32px_var(--card-hover)]">
+                        <div class="glass-container p-6 sm:p-8 rounded-2xl roadmap-card border-l-4 border-l-[var(--accent-gold)] shadow-[0_8px_32px_var(--card-hover)]">
                             <div class="flex items-center gap-2 mb-2">
                                 <span class="text-[9px] font-bold uppercase tracking-widest text-[var(--bg-primary)] bg-[var(--accent-gold)] px-2 py-0.5 rounded-full animate-pulse-badge">● Jetzt aktiv</span>
                             </div>
@@ -678,12 +674,13 @@
                     </div>
                 </div>
             </section>
-            <!-- Callout Section -->
+            <!-- Callout Section (Masonry Grid) -->
             <section class="special-callout-container p-8 md:p-12 rounded-3xl mb-24 fade-in-section" style="--delay: 0.4s;" id="callout-section">
                 <div class="text-center mb-10">
                     <span class="text-[var(--accent-gold)] uppercase tracking-widest text-xs font-bold border-b border-[var(--accent-gold)] pb-1">Ein Aufruf</span>
                 </div>
-                <div class="space-y-12 md:space-y-16" id="callout-texts"></div>
+                <!-- Grid Container for Masonry effect -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start" id="callout-texts"></div>
             </section>
             <!-- Projects Slider -->
             <section class="fade-in-section relative group/slider mb-24" style="--delay: 0.5s;" id="projects-section">
@@ -756,18 +753,12 @@
             <span class="text-sm font-medium text-[var(--text-primary)]">Link in die Zwischenablage kopiert</span>
         </div>
     </div>
-    <style>
-        @keyframes bounce-x { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(-25%); } }
-        @keyframes bounce-x-reverse { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(25%); } }
-        .animate-bounce-x { animation: bounce-x 1.5s infinite; }
-        .animate-bounce-x-reverse { animation: bounce-x-reverse 1.5s infinite; }
-    </style>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const toggle = document.getElementById('theme-toggle');
             const body = document.body;
             toggle.addEventListener('change', () => body.classList.toggle('light-mode', toggle.checked));
-            // Modal Logic für Kanäle
+            
             const modalData = {
                 "1": { title: "BayanAlQurān", img: "https://i.imgur.com/nHiBiIF.jpeg", desc: "Themen rund um den Qur'an", link: "https://t.me/BayanAlQuran" },
                 "2": { title: "Fawaid", img: "https://i.imgur.com/RW14rnM.jpeg", desc: "Authentisches Islamisches Wissen", link: "https://t.me/Fawaid1618" },
@@ -814,9 +805,10 @@
                     closeQrModal();
                 }
             });
+
             const calloutData = [
-                { text: 'O die ihr glaubt, gebt aus von dem, womit Wir euch versorgt haben, bevor ein Tag kommt, an dem es keinen Verkauf, keine Freundschaft und keine Fürsprache gibt! Die Ungläubigen sind die Ungerechten.', source: '[Qur\'an - 2:254]' },
-                { text: 'Diejenigen, die ihren Besitz auf Allahs Weg ausgeben und hierauf dem, was sie ausgegeben haben, weder Vorhaltungen noch Beleidigungen nachfolgen lassen, die haben ihren Lohn bei ihrem Herrn, und keine Furcht soll über sie kommen, noch sollen sie traurig sein.', source: '[Qur\'an - 2:262]' },
+                { text: 'O die ihr glaubt, gebt aus von dem, womit Wir euch versorgt haben, bevor ein Tag kommt, an dem es keinen Verkauf, keine Freundschaft und keine Fürsprache gibt!', source: '[Qur\'an - 2:254]' },
+                { text: 'Diejenigen, die ihren Besitz auf Allahs Weg ausgeben und weder Vorhaltungen noch Beleidigungen nachfolgen lassen, die haben ihren Lohn bei ihrem Herrn.', source: '[Qur\'an - 2:262]' },
                 { text: 'Glaubt an Allah und Seinen Gesandten und gebt aus von dem, worüber Er euch zu Statthaltern eingesetzt hat. Diejenigen von euch, die glauben und ausgeben, für sie wird es großen Lohn geben.', source: '[Qur\'an: 57:7]' },
                 { text: 'Und was ist mit euch, daß ihr nicht auf Allahs Weg ausgeben sollt, wo doch das Erbe der Himmel und der Erde Allah gehört.[..]', source: '[Qur\'an - 57:10]' },
                 { text: '[..]„Wohlstand wird nicht durch Spenden verringert, und Allah mehrt einem Diener durch Vergebung nur an Ehre, und niemand demütigt sich vor Allah, außer dass Allah ihn erhöht."', source: '[Sahih Muslim - 2588]' },
@@ -833,25 +825,24 @@
                 { title: 'Unterstützung - Schwestern', location: 'Marokko', amount: '600,00 €', iconPath: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z', bgIcon: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' }
             ];
             const faqData = [
-                { q: "Wie kann ich teilnehmen?", a: "Die Teilnahme an unserer Initiative erfolgt über den Gruppen-Link, der von einem bestehenden Mitglied geteilt wird. Dort können Sie sich mit der Community verbinden, um Ihren monatlichen Beitrag von 1 € für die Bedürftigen zu leisten." },
-                { q: "Wofür werden Spenden verwendet?", a: "Die gesammelten Beiträge werden ausschließlich für die Unterstützung von Bedürftigen eingesetzt, in sha ALLAH. Der genaue Verwendungszweck wird in der Community transparent kommuniziert." },
-                { q: "Bedeutung des Namens \"SANAABIL\"?", a: "\"SANAABIL\" (arabisch für Ähren) bezieht sich auf das Gleichnis im Qur'an (2:261), in dem eine Spende auf ALLAHs Weg mit einem Saatkorn verglichen wird, aus dem sieben Ähren wachsen, wobei jede Ähre hundert Körner trägt. Der Name erinnert daran, dass selbst die kleinste aufrichtige Gabe um ALLAHs willen zu einem großen, segensreichen Handel heranwachsen kann." },
-                { q: "Wie werden Projekte ausgewählt?", a: "Die Auswahl erfolgt in Absprache innerhalb der Community. Informationen zu den jeweiligen Spendenprojekten werden in der Community bereitgestellt." },
-                { q: "Gibt es eine Übersicht über die Beträge?", a: "Ja, eine transparente Übersicht über die gesammelten und gespendeten Beträge wird am Ende des Monats oder auf Anfrage bereitgestellt. Dies dient dazu, die Nachvollziehbaren und das Vertrauen innerhalb der Community zu gewährleisten." },
-                { q: "Ist die Teilnahme bindend?", a: "Nein, die Teilnahme ist absolut freiwillig. Sie können die monatliche Spende jederzeit stoppen, indem Sie einem der Ansprechpartner Bescheid geben." },
-                { q: "Wie wird das Geld (Amana) verwendet?", a: "Jeder gespendete Betrag ist für uns eine Amana – ein uns von ALLAH anvertrautes Gut. Die korrekte Verwendung wird durch interne Rücksprache und eine sorgfältige Dokumentation sichergestellt." },
-                { q: "Gibt es Bilder oder Videos als Nachweis?", a: "Ja, entsprechende Nachweise werden intern in der Gruppe geteilt. Auf Wunsch können diese auch privat zur Verfügung gestellt werden, um Transparenz zu gewährleisten und gleichzeitig die Privatsphäre zu wahren." }
+                { q: "Wie kann ich teilnehmen?", a: "Die Teilnahme an unserer Initiative erfolgt über den Gruppen-Link, der von einem bestehenden Mitglied geteilt wird." },
+                { q: "Wofür werden Spenden verwendet?", a: "Die gesammelten Beiträge werden ausschließlich für die Unterstützung von Bedürftigen eingesetzt, in sha ALLAH." },
+                { q: "Bedeutung des Namens \"SANAABIL\"?", a: "\"SANAABIL\" (arabisch für Ähren) bezieht sich auf das Gleichnis im Qur'an (2:261), in dem eine Spende auf ALLAHs Weg mit einem Saatkorn verglichen wird." },
+                { q: "Wie werden Projekte ausgewählt?", a: "Die Auswahl erfolgt in Absprache innerhalb der Community." },
+                { q: "Gibt es eine Übersicht über die Beträge?", a: "Ja, eine transparente Übersicht über die gesammelten und gespendeten Beträge wird am Ende des Monats bereitgestellt." },
+                { q: "Ist die Teilnahme bindend?", a: "Nein, die Teilnahme ist absolut freiwillig." },
+                { q: "Wie wird das Geld (Amana) verwendet?", a: "Jeder gespendete Betrag ist für uns eine Amana – ein uns von ALLAH anvertrautes Gut." },
+                { q: "Gibt es Bilder oder Videos als Nachweis?", a: "Ja, entsprechende Nachweise werden intern in der Gruppe geteilt." }
             ];
 
-            // Render Callouts
+            // Render Callout items in Grid
             document.getElementById('callout-texts').innerHTML = calloutData.map(item => `
-                <div class="callout-item relative pl-6 md:pl-8 border-l-2 border-[var(--accent-gold)] opacity-80 hover:opacity-100 transition-opacity duration-300">
+                <div class="callout-item group">
                     <blockquote class="quote-text mb-4">"${item.text}"</blockquote>
-                    <p class="text-xs md:text-sm text-[var(--accent-gold)] font-serif tracking-widest uppercase text-right opacity-90">${item.source}</p>
+                    <p class="text-[10px] md:text-xs text-[var(--accent-gold)] font-serif tracking-widest uppercase text-right opacity-80 group-hover:opacity-100 transition-opacity">${item.source}</p>
                 </div>
             `).join('');
 
-            // Render Projects
             document.getElementById('projects-slider').innerHTML = projectsData.map((p, i) => `
                 <div class="snap-center flex-shrink-0 w-[85%] sm:w-[320px] group relative overflow-hidden rounded-2xl bg-[var(--glass-bg)] border border-[var(--glass-border)] transition-all duration-300 hover:shadow-[0_10px_30px_var(--card-hover)] hover:-translate-y-1">
                     <div class="absolute -right-6 -top-6 text-[var(--accent-gold)] opacity-[0.03] transform ${i%2===0?'rotate-12':'-rotate-6'} group-hover:scale-110 transition-transform duration-700">
@@ -881,7 +872,6 @@
                 </div>
             `).join('');
 
-            // Render FAQ
             const faqContainer = document.getElementById('faq-container');
             faqContainer.innerHTML = faqData.map((f, i) => `
                 <div class="faq-item cursor-pointer group" tabindex="0" role="button" aria-expanded="false">
@@ -897,7 +887,6 @@
                 </div>
             `).join('');
 
-            // Animations and Logic
             window.addEventListener('load', () => {
                 const loader = document.getElementById('loader-container');
                 const content = document.getElementById('content-container');
@@ -908,12 +897,10 @@
                         content.classList.remove('hidden');
                         requestAnimationFrame(() => content.classList.remove('opacity-0'));
                         
-                        // Start Header Fan Animation
                         setTimeout(() => {
                             planetLinks.forEach((link, idx) => {
                                 setTimeout(() => {
                                     link.classList.add('fanned');
-                                    // Start synced glow after all have arrived
                                     if(idx === planetLinks.length - 1) {
                                         setTimeout(() => {
                                             planetLinks.forEach(l => l.classList.add('synced'));
@@ -956,7 +943,6 @@
                 roadmapObserver.observe(roadmapSection);
             }
 
-            // Project Count Animation
             const projectCounter = document.getElementById('project-counter');
             const projectSection = document.getElementById('projects-section');
             if(projectSection) {
@@ -1002,7 +988,6 @@
                 setTimeout(() => toast.classList.add('opacity-0', 'translate-y-8'), 3000);
             });
 
-            // Particles
             const canvas = document.getElementById('particle-canvas');
             const ctx = canvas.getContext('2d');
             let particles = [];
