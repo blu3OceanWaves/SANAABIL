@@ -190,7 +190,7 @@
         .three-body__dot:nth-child(1)::after {
             bottom: 0;
             left: 0;
-            animation: wobble1 var(--uib-speed) infinite ease-in-out;
+            animation: wobble1 var(--uib-speed) infinite;
             animation-delay: calc(var(--uib-speed) * -0.3);
         }
         .three-body__dot:nth-child(2) {
@@ -567,18 +567,23 @@
                     </a>
                     <span class="mt-4 text-[9px] uppercase tracking-[0.2em] text-[var(--text-secondary)] opacity-40 font-medium">Klick zum Gruppenbeitritt</span>
                 </div>
-                <!-- Floating Channels -->
-                <div class="planet-link pos-tl w-16 sm:w-20 aspect-square" data-id="1">
+                
+                <!-- Floating Channels - VERTOPAUSCHTE POSITIONEN -->
+                <!-- DawahGuide jetzt oben links -->
+                <div class="planet-link pos-tl w-16 sm:w-20 aspect-square" data-id="3">
+                    <img src="https://i.imgur.com/8zs13N3.jpeg" alt="DawahGuide" class="planet-img w-full h-full rounded-full">
+                </div>
+                <!-- BayanAlQuran jetzt oben rechts -->
+                <div class="planet-link pos-tr w-16 sm:w-20 aspect-square" data-id="1">
                     <img src="https://i.imgur.com/nHiBiIF.jpeg" alt="BayanAlQuran" class="planet-img w-full h-full rounded-full">
                 </div>
+                <!-- Fawaid unten links -->
                 <div class="planet-link pos-bl w-16 sm:w-20 aspect-square" data-id="2">
                     <img src="https://i.imgur.com/RW14rnM.jpeg" alt="Fawaid" class="planet-img w-full h-full rounded-full">
                 </div>
-                <div class="planet-link pos-tr w-16 sm:w-20 aspect-square" data-id="3">
-                    <img src="https://i.imgur.com/rx8svop.jpeg" alt="DawahGuide" class="planet-img w-full h-full rounded-full">
-                </div>
+                <!-- Arabic4Every1 unten rechts -->
                 <div class="planet-link pos-br w-16 sm:w-20 aspect-square" data-id="4">
-                    <img src="https://i.imgur.com/s4A6CW6.jpeg" alt="Arabic4Every1" class="planet-img w-full h-full rounded-full">
+                    <img src="https://i.imgur.com/FCjtIZi.jpeg" alt="Arabic4Every1" class="planet-img w-full h-full rounded-full">
                 </div>
             </div>
             
@@ -605,7 +610,7 @@
                 </p>
                 <div class="text-[var(--text-primary)] space-y-6 leading-relaxed font-light text-[1.05rem]">
                     <p class="text-center italic opacity-90">
-                        Das Gleichnis derjenigen, die ihren Besitz auf Allahs Weg ausgeben, ist das eines Saatkorns, das sieben Ähren wachsen läßt, (und) in jeder Ähre hundert Körner. Allah vervielfacht, wem Er will. Und Allah ist Allumfassend und Allwissend.
+                            Das Gleichnis derjenigen, die ihren Besitz auf dem Weg Allahs ausgeben, ist das eines Saatkorns, das sieben Ähren wachsen lässt, (und) in jeder Ähre (befinden sich) hundert Körner. Und Allah vervielfacht, wem Er will, und Allah ist (all)umfassend und (all)wissend.
                     </p>
                     <div class="bg-[var(--card-hover)] p-6 rounded-xl border border-[var(--glass-border)] mt-6 shadow-inner">
                         <div class="flex items-center gap-2 mb-3">
@@ -738,7 +743,7 @@
                     <button id="show-qr-btn" aria-label="QR Code anzeigen" class="w-full sm:w-auto group relative inline-flex items-center justify-center px-10 py-4 text-base font-semibold text-[var(--text-primary)] border-2 border-[var(--accent-gold)] rounded-full overflow-hidden transition-all duration-300 hover:bg-[var(--card-hover)] hover:-translate-y-1">
                         <span class="relative z-10 flex items-center">
                             QR Code
-                            <svg class="ml-3 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path></svg>
+                            <svg class="ml-3 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1v-2a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1z"></path></svg>
                         </span>
                     </button>
                 </div>
@@ -762,8 +767,8 @@
             const modalData = {
                 "1": { title: "BayanAlQurān", img: "https://i.imgur.com/nHiBiIF.jpeg", desc: "Themen rund um den Qur'an", link: "https://t.me/BayanAlQuran" },
                 "2": { title: "Fawaid", img: "https://i.imgur.com/RW14rnM.jpeg", desc: "Authentisches Islamisches Wissen", link: "https://t.me/Fawaid1618" },
-                "3": { title: "DawahGuide", img: "https://i.imgur.com/rx8svop.jpeg", desc: "Wegweiser deiner Recherche", link: "https://t.me/DawahGuide" },
-                "4": { title: "Arabic4Every1", img: "https://i.imgur.com/s4A6CW6.jpeg", desc: "Strukturierter Zugang zu Arabisch", link: "https://t.me/Arabic4Every1" }
+                "3": { title: "DawahGuide", img: "https://i.imgur.com/8zs13N3.jpeg", desc: "Wegweiser deiner Recherche", link: "https://t.me/DawahGuide" },
+                "4": { title: "Arabic4Every1", img: "https://i.imgur.com/FCjtIZi.jpeg", desc: "Strukturierter Zugang zu Arabisch", link: "https://t.me/Arabic4Every1" }
             };
             const modal = document.getElementById('custom-modal');
             const qrModal = document.getElementById('qr-modal');
@@ -807,10 +812,10 @@
             });
 
             const calloutData = [
-                { text: 'O die ihr glaubt, gebt aus von dem, womit Wir euch versorgt haben, bevor ein Tag kommt, an dem es keinen Verkauf, keine Freundschaft und keine Fürsprache gibt!', source: '[Qur\'an - 2:254]' },
-                { text: 'Diejenigen, die ihren Besitz auf Allahs Weg ausgeben und weder Vorhaltungen noch Beleidigungen nachfolgen lassen, die haben ihren Lohn bei ihrem Herrn.', source: '[Qur\'an - 2:262]' },
-                { text: 'Glaubt an Allah und Seinen Gesandten und gebt aus von dem, worüber Er euch zu Statthaltern eingesetzt hat. Diejenigen von euch, die glauben und ausgeben, für sie wird es großen Lohn geben.', source: '[Qur\'an: 57:7]' },
-                { text: 'Und was ist mit euch, daß ihr nicht auf Allahs Weg ausgeben sollt, wo doch das Erbe der Himmel und der Erde Allah gehört.[..]', source: '[Qur\'an - 57:10]' },
+                { text: 'O die ihr glaubt, gebt aus von dem, womit Wir euch versorgt haben, bevor ein Tag kommt, an dem es keinen Verkauf, keine Freundschaft und keine Fürsprache gibt! Und die Ungläubigen sind die Ungerechten.', source: '[Qur\'an - 2:254]' },
+                { text: 'Diejenigen, die ihren Besitz auf dem Weg Allahs ausgeben und hierauf dem, was sie ausgegeben haben, weder (Dankbarkeit einfordernde) Vorhaltung (ihrer Gabe) noch Ungemach nachfolgen lassen, für sie wird es ihren Lohn bei ihrem Herrn geben, und keine Furcht soll über sie kommen, noch sollen sie traurig sein.', source: '[Qur\'an - 2:262]' },
+                { text: 'Glaubt an Allah und Seinen Gesandten und gebt aus von dem, worüber Er euch als Statthalter eingesetzt hat. Diejenigen von euch, die nun glauben und ausgeben, für sie wird es großen Lohn geben.', source: '[Qur\'an: 57:7]' },
+                { text: 'Und was ist mit euch, dass ihr nicht auf dem Weg Allahs ausgeben sollt, wo doch das Erbe der Himmel und der Erde Allah gehört.[..]', source: '[Qur\'an - 57:10]' },
                 { text: '[..]„Wohlstand wird nicht durch Spenden verringert, und Allah mehrt einem Diener durch Vergebung nur an Ehre, und niemand demütigt sich vor Allah, außer dass Allah ihn erhöht."', source: '[Sahih Muslim - 2588]' },
                 { text: '[..]„Allah hat gesagt: ‚Gib aus, o Sohn Adams, und Ich werde für dich ausgeben.‘“', source: '[Sahih al-Bukhari - 5352]' }
             ];
@@ -822,17 +827,17 @@
                 { title: 'Unterstützung Hochzeit', location: 'Gambia', amount: '225,91 €', iconPath: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z', bgIcon: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' },
                 { title: '150 Masahif Druck', location: 'Afghanistan', amount: '300,00 €', iconPath: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5s3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18s-3.332.477-4.5 1.253', bgIcon: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5s3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18s-3.332.477-4.5 1.253', isStroke: true },
                 { title: 'Brunnenbau', location: 'Togo', amount: '600,00 €', iconPath: 'M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z', bgIcon: 'M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z' },
-                { title: 'Unterstützung - Schwestern', location: 'Marokko', amount: '600,00 €', iconPath: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z', bgIcon: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' }
+                { title: 'Unterstützung - Schwestern', location: 'Marokko', amount: '526,30 €', iconPath: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z', bgIcon: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' }
             ];
             const faqData = [
-                { q: "Wie kann ich teilnehmen?", a: "Die Teilnahme an unserer Initiative erfolgt über den Gruppen-Link, der von einem bestehenden Mitglied geteilt wird." },
-                { q: "Wofür werden Spenden verwendet?", a: "Die gesammelten Beiträge werden ausschließlich für die Unterstützung von Bedürftigen eingesetzt, in sha ALLAH." },
-                { q: "Bedeutung des Namens \"SANAABIL\"?", a: "\"SANAABIL\" (arabisch für Ähren) bezieht sich auf das Gleichnis im Qur'an (2:261), in dem eine Spende auf ALLAHs Weg mit einem Saatkorn verglichen wird." },
+                { q: "Wie kann ich teilnehmen?", a: "Ein Klick auf das SANAABIL Logo genügt, um direkt zur Gruppe zu gelangen und Teil unserer Initiative zu werden in sha ALLAH" },
+                { q: "Wofür werden Spenden verwendet?", a: "Sämtliche Beiträge fließen in Projekte, die der Ummah zu Gute kommen, in sha ALLAH" },
+                { q: "Bedeutung des Namens \"SANAABIL\"?", a: "\"SANAABIL\" (arabisch für Ähren) bezieht sich auf das Gleichnis im Qur'an (2:261), in dem eine Spende auf ALLAHs Weg mit einem Saatkorn verglichen wird. Kleine Gabe, großer Handel bi idhnillah" },
                 { q: "Wie werden Projekte ausgewählt?", a: "Die Auswahl erfolgt in Absprache innerhalb der Community." },
-                { q: "Gibt es eine Übersicht über die Beträge?", a: "Ja, eine transparente Übersicht über die gesammelten und gespendeten Beträge wird am Ende des Monats bereitgestellt." },
+                { q: "Gibt es eine Übersicht über die Beträge?", a: "Transparenz ist uns wichtig. Eine detaillierte Aufstellung der Spendengelder wird erstellt und kann bei Bedarf gerne eingesehen werden, in sha ALLAH" },
                 { q: "Ist die Teilnahme bindend?", a: "Nein, die Teilnahme ist absolut freiwillig." },
-                { q: "Wie wird das Geld (Amana) verwendet?", a: "Jeder gespendete Betrag ist für uns eine Amana – ein uns von ALLAH anvertrautes Gut." },
-                { q: "Gibt es Bilder oder Videos als Nachweis?", a: "Ja, entsprechende Nachweise werden intern in der Gruppe geteilt." }
+                { q: "Wie wird das Geld (Amana) verwendet?", a: "Jeder gespendete Betrag ist für uns eine Amana – ein uns von ALLAH anvertrautes Gut, dessen Verwaltung wir mit größter Sorgfalt begegnen in sha ALLAH" },
+                { q: "Gibt es Bilder oder Videos als Nachweis?", a: "Ja, entsprechende Nachweise werden intern in der Community, oder auf Anfrage geteilt in sha ALLAH" }
             ];
 
             // Render Callout items in Grid
