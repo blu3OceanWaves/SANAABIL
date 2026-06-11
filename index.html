@@ -103,25 +103,6 @@
         @keyframes text-shine {
             to { background-position: 200% center; }
         }
-        /* ===== SYNCED CHANNEL GLOW (Umgekehrte Richtung) ===== */
-        @keyframes channel-glow-sync {
-            0%, 100% { 
-                box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
-                border-color: var(--glass-border);
-                transform: scale(1);
-            }
-            50% { 
-                box-shadow: 0 0 35px var(--accent-gold); 
-                border-color: var(--accent-gold);
-                transform: scale(1.08);
-            }
-        }
-        
-        /* Animationsreihenfolge umgekehrt für Links-nach-Rechts-Fluss */
-        .planet-link.pos-tl.synced .planet-img { animation: channel-glow-sync 4s infinite 0.0s; }
-        .planet-link.pos-bl.synced .planet-img { animation: channel-glow-sync 4s infinite 0.5s; }
-        .planet-link.pos-br.synced .planet-img { animation: channel-glow-sync 4s infinite 1.0s; }
-        .planet-link.pos-tr.synced .planet-img { animation: channel-glow-sync 4s infinite 1.5s; }
 
         /* Aufruf-Sektion (Masonry-Style) */
         .special-callout-container {
@@ -156,7 +137,6 @@
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         
-        /* NEW Three-Body Loader Styles */
         .three-body {
             --uib-size: 45px;
             --uib-speed: 0.8s;
@@ -399,59 +379,6 @@
         @keyframes wobble { 0% { transform: scale(1, 1); } 50% { transform: scale(3, 1); } 100% { transform: scale(1, 1) translateX(1.75em); } }
         @keyframes reverse-wobble { 0% { transform: scale(1, 1) translateX(1.75em); } 50% { transform: scale(3, 1); } 100% { transform: scale(1, 1) translateX(0); } }
         
-        /* ===== HEADER EXPANSION - FAN ANIMATION ===== */
-        .orbital-container {
-            position: relative;
-            width: 100%;
-            max-width: 600px;
-            margin: 0 auto;
-            height: 400px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        @media (max-width: 768px) {
-            .orbital-container { height: 320px; }
-        }
-        .planet-link {
-            position: absolute;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            cursor: pointer;
-            z-index: 30;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%) scale(0);
-            opacity: 0;
-            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .planet-link.fanned.pos-tl { top: 15%; left: 15%; transform: translate(-50%, -50%) scale(1); opacity: 1; }
-        .planet-link.fanned.pos-tr { top: 15%; left: 85%; transform: translate(-50%, -50%) scale(1); opacity: 1; }
-        .planet-link.fanned.pos-bl { top: 85%; left: 15%; transform: translate(-50%, -50%) scale(1); opacity: 1; }
-        .planet-link.fanned.pos-br { top: 85%; left: 85%; transform: translate(-50%, -50%) scale(1); opacity: 1; }
-        @media (max-width: 640px) {
-            .planet-link.fanned.pos-tl { top: 18%; left: 12%; }
-            .planet-link.fanned.pos-tr { top: 18%; left: 88%; }
-            .planet-link.fanned.pos-bl { top: 82%; left: 12%; }
-            .planet-link.fanned.pos-br { top: 82%; left: 88%; }
-        }
-        .planet-img {
-            width: 80px; height: 80px;
-            border-radius: 50%;
-            border: 2px solid var(--glass-border);
-            object-fit: cover;
-            background: var(--bg-primary);
-            transition: all 0.4s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
-        @media (max-width: 640px) {
-            .planet-img { width: 65px; height: 65px; }
-        }
-        .planet-link:hover .planet-img {
-            transform: scale(1.1);
-            box-shadow: 0 0 20px var(--profile-glow) !important;
-            border-color: var(--accent-gold) !important;
-        }
         /* Modal Styles */
         #custom-modal, #qr-modal {
             display: none;
@@ -516,7 +443,7 @@
         </div>
     </div>
 
-    <!-- Modal Channel Info -->
+    <!-- Modal Channel Info (kept for secondary actions if needed, safely ignored) -->
     <div id="custom-modal">
         <div class="modal-overlay" id="modal-overlay"></div>
         <div class="modal-body">
@@ -550,52 +477,51 @@
             </button>
         </div>
     </div>
+    
     <!-- Main Content -->
     <div id="content-container" class="hidden opacity-0 transition-opacity duration-1000 ease-out">
         
-        <header class="text-center pt-20 pb-14 px-4 fade-in-section" style="--delay: 0.1s;">
-            <div class="orbital-container">
-                <!-- Center Logo -->
-                <div class="relative inline-flex flex-col items-center justify-center z-20">
-                    <a href="https://chat.whatsapp.com/IJ2prCPPeU2ApH4MVcMBcq" target="_blank" class="relative inline-flex items-center justify-center group/logo">
-                        <div class="profile-ring-outer absolute rounded-full" style="width:calc(100% + 8px);height:calc(100% + 8px);top:-4px;left:-4px;"></div>
-                        <div class="absolute rounded-full profile-halo w-40 h-40 md:w-56 md:h-56"></div>
-                        <img src="https://i.imgur.com/7GqbuO4.jpeg" 
-                             alt="SANAABIL Community Logo" 
-                             class="w-32 h-32 md:w-48 md:h-48 mx-auto rounded-full object-cover relative z-10 profile-img-inner group-hover/logo:scale-[1.02] transition-transform duration-500" 
-                             fetchpriority="high">
-                    </a>
-                    <span class="mt-4 text-[9px] uppercase tracking-[0.2em] text-[var(--text-secondary)] opacity-40 font-medium">Klick zum Gruppenbeitritt</span>
-                </div>
-                
-                <!-- Floating Channels - VERTOPAUSCHTE POSITIONEN -->
-                <!-- DawahGuide jetzt oben links -->
-                <div class="planet-link pos-tl w-16 sm:w-20 aspect-square" data-id="3">
-                    <img src="https://i.imgur.com/8zs13N3.jpeg" alt="DawahGuide" class="planet-img w-full h-full rounded-full">
-                </div>
-                <!-- BayanAlQuran jetzt oben rechts -->
-                <div class="planet-link pos-tr w-16 sm:w-20 aspect-square" data-id="1">
-                    <img src="https://i.imgur.com/nHiBiIF.jpeg" alt="BayanAlQuran" class="planet-img w-full h-full rounded-full">
-                </div>
-                <!-- Fawaid unten links -->
-                <div class="planet-link pos-bl w-16 sm:w-20 aspect-square" data-id="2">
-                    <img src="https://i.imgur.com/RW14rnM.jpeg" alt="Fawaid" class="planet-img w-full h-full rounded-full">
-                </div>
-                <!-- Arabic4Every1 unten rechts -->
-                <div class="planet-link pos-br w-16 sm:w-20 aspect-square" data-id="4">
-                    <img src="https://i.imgur.com/FCjtIZi.jpeg" alt="Arabic4Every1" class="planet-img w-full h-full rounded-full">
-                </div>
+        <!-- Header with Center Logo and Elegant Button below SANAABIL -->
+        <header class="text-center pt-24 pb-14 px-4 fade-in-section" style="--delay: 0.1s;">
+            <!-- Center Logo -->
+            <div class="relative inline-flex flex-col items-center justify-center z-20 mb-8">
+                <a href="https://chat.whatsapp.com/IJ2prCPPeU2ApH4MVcMBcq" target="_blank" class="relative inline-flex items-center justify-center group/logo">
+                    <div class="profile-ring-outer absolute rounded-full" style="width:calc(100% + 8px);height:calc(100% + 8px);top:-4px;left:-4px;"></div>
+                    <div class="absolute rounded-full profile-halo w-40 h-40 md:w-56 md:h-56"></div>
+                    <img src="https://i.imgur.com/7GqbuO4.jpeg" 
+                         alt="SANAABIL Community Logo" 
+                         class="w-32 h-32 md:w-48 md:h-48 mx-auto rounded-full object-cover relative z-10 profile-img-inner group-hover/logo:scale-[1.02] transition-transform duration-500" 
+                         fetchpriority="high">
+                </a>
+                <span class="mt-4 text-[9px] uppercase tracking-[0.2em] text-[var(--text-secondary)] opacity-40 font-medium">Klick zum Gruppenbeitritt</span>
             </div>
             
-            <div class="mt-8">
-                <h1 class="text-4xl md:text-6xl font-bold mb-4 tracking-widest uppercase sanaabil-title drop-shadow-sm">
+            <div class="mt-4">
+                <h1 class="text-4xl md:text-6xl font-bold mb-3 tracking-widest uppercase sanaabil-title drop-shadow-sm">
                     SANAABIL
                 </h1>
-                <p class="text-xs md:text-sm font-medium tracking-[0.25em] text-[var(--text-secondary)] uppercase">
+                <p class="text-xs md:text-sm font-medium tracking-[0.25em] text-[var(--text-secondary)] uppercase mb-8">
                     Mit wenig viel bewirken
                 </p>
+                
+                <!-- Elegant BayanAlQur'an Button -->
+                <div class="inline-block">
+                    <a href="https://t.me/BayanAlQuran" target="_blank" class="group relative inline-flex items-center justify-center px-6 py-3 rounded-full overflow-hidden border border-[var(--glass-border)] bg-[var(--glass-bg)] hover:border-[var(--accent-gold)] transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.15)] hover:shadow-[0_0_25px_rgba(212,175,55,0.25)] hover:-translate-y-0.5">
+                        <span class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-[var(--card-hover)] to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
+                        
+                        <img src="https://i.imgur.com/nHiBiIF.jpeg" alt="BayanAlQuran" class="w-6 h-6 rounded-full border border-[var(--accent-gold)] mr-3 object-cover shadow-sm group-hover:scale-105 transition-transform duration-300">
+                        
+                        <span class="text-xs md:text-sm font-medium tracking-wide text-[var(--text-primary)] group-hover:text-[var(--accent-gold)] transition-colors flex items-center">
+                            BayanAlQurān auf Telegram
+                            <svg class="ml-2.5 w-3.5 h-3.5 text-[var(--accent-gold)]" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.02-1.96 1.24-5.54 3.65-.52.36-.99.53-1.41.52-.46-.01-1.35-.26-2.01-.48-.81-.27-1.46-.42-1.4-.88.03-.24.36-.49.99-.75 3.88-1.69 6.47-2.8 7.77-3.32 3.7-1.5 4.46-1.76 4.96-1.77.11 0 .36.03.52.16.13.1.17.24.19.34.02.07.02.21.01.28z"/>
+                            </svg>
+                        </span>
+                    </a>
+                </div>
             </div>
         </header>
+
         <main class="max-w-4xl mx-auto px-5 pb-24 relative z-20">
             <!-- About Section -->
             <section class="glass-container p-8 md:p-10 rounded-2xl mb-14 fade-in-section" style="--delay: 0.2s;">
@@ -622,6 +548,7 @@
                     </div>
                 </div>
             </section>
+
             <!-- Timeline Section -->
             <section id="roadmap-section" class="mb-24 fade-in-section" style="--delay: 0.3s;">
                 <h2 class="text-2xl md:text-3xl font-medium text-[var(--accent-gold)] text-center mb-16 tracking-wide">Unsere Roadmap</h2>
@@ -679,6 +606,7 @@
                     </div>
                 </div>
             </section>
+
             <!-- Callout Section (Masonry Grid) -->
             <section class="special-callout-container p-8 md:p-12 rounded-3xl mb-24 fade-in-section" style="--delay: 0.4s;" id="callout-section">
                 <div class="text-center mb-10">
@@ -687,6 +615,7 @@
                 <!-- Grid Container for Masonry effect -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start" id="callout-texts"></div>
             </section>
+
             <!-- Projects Slider -->
             <section class="fade-in-section relative group/slider mb-24" style="--delay: 0.5s;" id="projects-section">
                 <h2 class="text-2xl md:text-3xl font-medium text-[var(--accent-gold)] mb-8 flex flex-wrap items-center justify-center md:justify-start gap-y-2">
@@ -709,9 +638,9 @@
                 <div id="projects-slider" class="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-6 no-scrollbar scroll-smooth px-2"></div>
                 
                 <div class="text-center mt-4 md:hidden flex justify-center items-center gap-2 text-[var(--text-secondary)] opacity-60">
-                    <svg class="w-4 h-4 animate-bounce-x" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
                     <span class="text-xs font-medium uppercase tracking-wider">Wischen für mehr</span>
-                    <svg class="w-4 h-4 animate-bounce-x-reverse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                 </div>
             </section>
             
@@ -753,39 +682,26 @@
                 <p>SANAABIL &copy; 1447 AH</p>
             </footer>
         </main>
+        
         <div id="toast-message" class="toast fixed bottom-8 left-1/2 -translate-x-1/2 px-6 py-4 bg-[var(--bg-primary)] border border-[var(--accent-gold)] rounded-full shadow-2xl transition-all duration-500 ease-out opacity-0 translate-y-8 pointer-events-none z-50 flex items-center gap-3">
             <svg class="w-5 h-5 text-[var(--accent-gold)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
             <span class="text-sm font-medium text-[var(--text-primary)]">Link in die Zwischenablage kopiert</span>
         </div>
     </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const toggle = document.getElementById('theme-toggle');
             const body = document.body;
             toggle.addEventListener('change', () => body.classList.toggle('light-mode', toggle.checked));
             
+            // BayanAlQurān modal dataset kept safe for any interactive extensions
             const modalData = {
-                "1": { title: "BayanAlQurān", img: "https://i.imgur.com/nHiBiIF.jpeg", desc: "Themen rund um den Qur'an", link: "https://t.me/BayanAlQuran" },
-                "2": { title: "Fawaid", img: "https://i.imgur.com/RW14rnM.jpeg", desc: "Authentisches Islamisches Wissen", link: "https://t.me/Fawaid1618" },
-                "3": { title: "DawahGuide", img: "https://i.imgur.com/8zs13N3.jpeg", desc: "Wegweiser deiner Recherche", link: "https://t.me/DawahGuide" },
-                "4": { title: "Arabic4Every1", img: "https://i.imgur.com/FCjtIZi.jpeg", desc: "Strukturierter Zugang zu Arabisch", link: "https://t.me/Arabic4Every1" }
+                "1": { title: "BayanAlQurān", img: "https://i.imgur.com/nHiBiIF.jpeg", desc: "Themen rund um den Qur'an", link: "https://t.me/BayanAlQuran" }
             };
             const modal = document.getElementById('custom-modal');
             const qrModal = document.getElementById('qr-modal');
-            const planetLinks = document.querySelectorAll('.planet-link');
             
-            planetLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    const id = link.getAttribute('data-id');
-                    const data = modalData[id];
-                    document.getElementById('modal-img').src = data.img;
-                    document.getElementById('modal-title').innerText = data.title;
-                    document.getElementById('modal-desc').innerText = data.desc;
-                    document.getElementById('modal-link').href = data.link;
-                    modal.style.display = 'flex';
-                    setTimeout(() => modal.classList.add('active'), 10);
-                });
-            });
             const closeModal = () => {
                 modal.classList.remove('active');
                 setTimeout(() => modal.style.display = 'none', 400);
@@ -819,6 +735,7 @@
                 { text: '[..]„Wohlstand wird nicht durch Spenden verringert, und Allah mehrt einem Diener durch Vergebung nur an Ehre, und niemand demütigt sich vor Allah, außer dass Allah ihn erhöht."', source: '[Sahih Muslim - 2588]' },
                 { text: '[..]„Allah hat gesagt: ‚Gib aus, o Sohn Adams, und Ich werde für dich ausgeben.‘“', source: '[Sahih al-Bukhari - 5352]' }
             ];
+
             const projectsData = [
                 { title: 'Brunnen Reparatur', location: 'Afghanistan', amount: '507,03 €', iconPath: 'M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2.5L8 2.69 9.31 4H20a2 2 0 0 1 2 2v2.5M12 21.5a8.38 8.38 0 0 0 2.5-1.95L12 17l-2.5 2.55A8.38 8.38 0 0 0 12 21.5z', bgIcon: 'M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z' },
                 { title: 'Unterstützung eines Bruders', location: 'Gambia', amount: '166,00 €', iconPath: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z', bgIcon: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' },
@@ -827,8 +744,11 @@
                 { title: 'Unterstützung Hochzeit', location: 'Gambia', amount: '225,91 €', iconPath: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z', bgIcon: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' },
                 { title: '150 Masahif Druck', location: 'Afghanistan', amount: '300,00 €', iconPath: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5s3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18s-3.332.477-4.5 1.253', bgIcon: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5s3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18s-3.332.477-4.5 1.253', isStroke: true },
                 { title: 'Brunnenbau', location: 'Togo', amount: '600,00 €', iconPath: 'M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z', bgIcon: 'M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z' },
-                { title: 'Unterstützung - Schwestern', location: 'Marokko', amount: '526,30 €', iconPath: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z', bgIcon: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' }
+                { title: 'Unterstützung - Schwestern', location: 'Marokko', amount: '526,30 €', iconPath: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z', bgIcon: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' },
+                { title: 'Madrasa-Bau', location: 'Afghanistan', amount: 'ca. 500 € offen', iconPath: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5s3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18s-3.332.477-4.5 1.253', bgIcon: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5s3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18s-3.332.477-4.5 1.253', isStroke: true, isPending: true },
+                { title: 'Schuldenhilfe für Bruder', location: 'Deutschland', amount: '450,00 €', iconPath: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z', bgIcon: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' }
             ];
+
             const faqData = [
                 { q: "Wie kann ich teilnehmen?", a: "Ein Klick auf das SANAABIL Logo genügt, um direkt zur Gruppe zu gelangen und Teil unserer Initiative zu werden in sha ALLAH" },
                 { q: "Wofür werden Spenden verwendet?", a: "Sämtliche Beiträge fließen in Projekte, die der Ummah zu Gute kommen, in sha ALLAH" },
@@ -861,15 +781,23 @@
                         <p class="text-sm text-[var(--text-secondary)] font-serif italic mb-6">${p.location}</p>
                         <div class="mt-auto pt-5 border-t border-[var(--glass-border)] flex flex-col gap-2">
                             <div>
-                                <p class="text-[var(--text-secondary)] text-[10px] font-semibold uppercase tracking-widest mb-1">Gespendet</p>
+                                <p class="text-[var(--text-secondary)] text-[10px] font-semibold uppercase tracking-widest mb-1">${p.isPending ? 'Status' : 'Gespendet'}</p>
                                 <p class="text-[var(--text-primary)] font-bold text-xl">${p.amount}</p>
                             </div>
                             <div class="mt-2">
+                                ${p.isPending ? `
+                                <span class="inline-flex items-center px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wide bg-amber-500/10 text-amber-500 border border-amber-500/30 w-full animate-pulse-badge">
+                                    <svg class="mr-1.5 h-3 w-3 flex-shrink-0 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>
+                                    In Arbeit
+                                    <span class="ml-1 opacity-75 font-serif normal-case tracking-normal text-xs flex-1 text-right">| in sha ALLAH</span>
+                                </span>
+                                ` : `
                                 <span class="inline-flex items-center px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wide bg-[var(--success-bg)] text-[var(--success-text)] border border-[var(--success-border)] w-full">
                                     <svg class="mr-1.5 h-3 w-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
                                     Erfolgreich
                                     <span class="ml-1 opacity-75 font-serif normal-case tracking-normal text-xs flex-1 text-right">| wa lillahi-l hamd</span>
                                 </span>
+                                `}
                             </div>
                         </div>
                     </div>
@@ -901,19 +829,6 @@
                         loader.style.display = 'none';
                         content.classList.remove('hidden');
                         requestAnimationFrame(() => content.classList.remove('opacity-0'));
-                        
-                        setTimeout(() => {
-                            planetLinks.forEach((link, idx) => {
-                                setTimeout(() => {
-                                    link.classList.add('fanned');
-                                    if(idx === planetLinks.length - 1) {
-                                        setTimeout(() => {
-                                            planetLinks.forEach(l => l.classList.add('synced'));
-                                        }, 1000);
-                                    }
-                                }, idx * 200);
-                            });
-                        }, 500);
                     }, 700);
                 }, 500);
             });
