@@ -8,9 +8,14 @@
     
     <!-- Favicon -->
     <link rel="icon" href="https://i.imgur.com/7GqbuO4.jpeg" type="image/jpeg">
-    
-    <!-- Tailwind CSS via CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Performance: warm up the image CDN and get the hero (LCP) image downloading immediately -->
+    <link rel="preconnect" href="https://i.imgur.com">
+    <link rel="dns-prefetch" href="https://i.imgur.com">
+    <link rel="preload" as="image" href="https://i.imgur.com/7GqbuO4.jpeg" fetchpriority="high">
+
+    <!-- Tailwind CSS via CDN - deferred so it no longer blocks HTML parsing (the loader screen hides any FOUC) -->
+    <script src="https://cdn.tailwindcss.com" defer></script>
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -71,7 +76,7 @@
         #particle-canvas {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1; opacity: 0.4; pointer-events: none;
+            z-index: -1; opacity: 0.28; pointer-events: none;
         }
         .glass-container {
             background-color: var(--glass-bg);
@@ -117,12 +122,15 @@
             border-radius: 1rem;
             padding: 1.5rem;
             height: fit-content;
-            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateY(16px);
+            transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
         }
+        .callout-item.is-visible { opacity: 1; transform: translateY(0); }
         .callout-item:hover {
             border-color: var(--accent-gold);
-            transform: translateY(-5px);
             background: var(--card-hover);
+            transform: translateY(-5px);
         }
         .quote-text {
             font-size: 1rem; line-height: 1.6; color: var(--text-primary); font-style: italic; transition: color 0.5s ease;
@@ -211,9 +219,17 @@
         /* FAQ Modernisierung */
         .faq-item {
             background-color: var(--glass-bg); border: 1px solid var(--glass-border);
-            border-radius: 0.75rem; transition: all 0.3s ease; overflow: hidden; position: relative; z-index: 20;
+            border-radius: 0.75rem; overflow: hidden; position: relative; z-index: 20;
+            opacity: 0;
+            transform: translateY(18px) scale(0.98);
+            transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.34, 1.3, 0.64, 1),
+                        border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
         }
-        .faq-item:hover { border-color: var(--accent-gold); background-color: var(--card-hover); }
+        .faq-item.is-visible { opacity: 1; transform: translateY(0) scale(1); }
+        .faq-item:hover {
+            border-color: var(--accent-gold);
+            background-color: var(--card-hover);
+        }
         .faq-item.active { border-color: var(--accent-gold); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); }
         .faq-content-wrapper { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
         .faq-item.active .faq-content-wrapper { grid-template-rows: 1fr; }
@@ -421,6 +437,140 @@
             transition: color 0.2s;
         }
         .modal-close:hover { color: var(--accent-gold); }
+
+        /* ===== LIQUID GLASS MATERIAL (restrained) ===== */
+        :root {
+            --glass-spec: rgba(255, 255, 255, 0.4);
+            --glass-edge: rgba(255, 255, 255, 0.14);
+            --glass-shadow: 0 20px 50px -22px rgba(0, 0, 0, 0.5);
+        }
+        body.light-mode {
+            --glass-spec: rgba(255, 255, 255, 0.75);
+            --glass-edge: rgba(255, 255, 255, 0.5);
+            --glass-shadow: 0 20px 45px -22px rgba(93, 64, 55, 0.16);
+        }
+        /* Primary panels: the About card, roadmap cards and modals get the full glass treatment */
+        .glass-container,
+        .modal-body {
+            backdrop-filter: blur(20px) saturate(160%);
+            -webkit-backdrop-filter: blur(20px) saturate(160%);
+            box-shadow: var(--glass-shadow), inset 0 1px 0 0 var(--glass-spec);
+            contain: layout style paint;
+        }
+        .modal-body { position: relative; z-index: 0; overflow: hidden; }
+        .glass-container::before,
+        .modal-body::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            border-radius: inherit;
+            padding: 1px;
+            background: linear-gradient(135deg, var(--glass-edge), transparent 45%, transparent 65%, var(--glass-edge));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+        /* Small, repeated cards: same soft glass feel, but calm - no edge glow, no tilt, no motion tricks */
+        .callout-item,
+        .faq-item,
+        #projects-slider > div {
+            backdrop-filter: blur(12px) saturate(140%);
+            -webkit-backdrop-filter: blur(12px) saturate(140%);
+            box-shadow: 0 12px 30px -16px rgba(0, 0, 0, 0.35);
+            contain: layout style paint;
+        }
+        .callout-item,
+        #projects-slider > div {
+            position: relative;
+            overflow: hidden;
+        }
+        /* Project cards: gentle staggered entrance only - no tilt, no glow */
+        #projects-slider > div {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1), transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
+        }
+        #projects-slider > div.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Glass sheen cap on solid CTA controls */
+        #copy-link-btn, #show-qr-btn, #qr-close-btn, #modal-link {
+            position: relative;
+            overflow: hidden;
+        }
+        #copy-link-btn::before, #show-qr-btn::before, #qr-close-btn::before, #modal-link::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 55%;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.35), transparent);
+            border-radius: inherit;
+            pointer-events: none;
+        }
+        #slide-left, #slide-right {
+            backdrop-filter: blur(16px) saturate(170%);
+            -webkit-backdrop-filter: blur(16px) saturate(170%);
+        }
+        /* Tactile press feedback - physical, spring-back feel */
+        #copy-link-btn, #show-qr-btn, #qr-close-btn, #slide-left, #slide-right {
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
+        }
+        #copy-link-btn:hover, #show-qr-btn:hover {
+            transform: translateY(-4px);
+        }
+        #copy-link-btn:active, #show-qr-btn:active, #qr-close-btn:active {
+            transform: scale(0.96);
+        }
+        #slide-left:active, #slide-right:active {
+            transform: scale(0.9);
+        }
+        .switch .slider {
+            backdrop-filter: blur(10px) saturate(160%);
+            -webkit-backdrop-filter: blur(10px) saturate(160%);
+        }
+        .slider::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 50%;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.3), transparent);
+            pointer-events: none;
+        }
+        .modal-overlay {
+            backdrop-filter: blur(14px) saturate(140%);
+            -webkit-backdrop-filter: blur(14px) saturate(140%);
+        }
+
+        /* ===== PERFORMANCE & MOTION PREFERENCES ===== */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.001ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.001ms !important;
+            }
+            .fade-in-section { opacity: 1; transform: none; }
+            .faq-item { opacity: 1; transform: none; }
+        }
+
+        /* ===== RENDERING PERFORMANCE: skip layout/paint work for off-screen sections ===== */
+        #roadmap-section, #callout-section, #projects-section, #faq-section, #share-section {
+            content-visibility: auto;
+        }
+        #roadmap-section { contain-intrinsic-size: 1100px; }
+        #callout-section { contain-intrinsic-size: 650px; }
+        #projects-section { contain-intrinsic-size: 520px; }
+        #faq-section { contain-intrinsic-size: 620px; }
+        #share-section { contain-intrinsic-size: 340px; }
+
+        /* Theme switch: let our own clip-path circle drive the reveal, not the browser's default crossfade */
+        ::view-transition-old(root),
+        ::view-transition-new(root) {
+            animation: none;
+            mix-blend-mode: normal;
+        }
     </style>
 </head>
 <body class="antialiased selection:bg-[var(--accent-gold)] selection:text-[var(--bg-primary)]">
@@ -466,7 +616,7 @@
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </div>
             <div class="bg-white p-4 rounded-xl inline-block mb-6 shadow-inner mx-auto overflow-hidden">
-                <img src="https://i.imgur.com/9GoR7tl.png" alt="SANAABIL QR Code" class="w-48 h-48 sm:w-64 sm:h-64 object-contain">
+                <img src="https://i.imgur.com/9GoR7tl.png" alt="SANAABIL QR Code" loading="lazy" decoding="async" class="w-48 h-48 sm:w-64 sm:h-64 object-contain">
             </div>
             <h3 class="text-2xl font-bold text-[var(--accent-gold)] mb-2 tracking-wide">Initiative teilen</h3>
             <p class="text-[var(--text-secondary)] text-sm mb-6 leading-relaxed">
@@ -503,22 +653,6 @@
                 <p class="text-xs md:text-sm font-medium tracking-[0.25em] text-[var(--text-secondary)] uppercase mb-8">
                     Mit wenig viel bewirken
                 </p>
-                
-                <!-- Elegant BayanAlQur'an Button -->
-                <div class="inline-block">
-                    <a href="https://t.me/BayanAlQuran" target="_blank" class="group relative inline-flex items-center justify-center px-6 py-3 rounded-full overflow-hidden border border-[var(--glass-border)] bg-[var(--glass-bg)] hover:border-[var(--accent-gold)] transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.15)] hover:shadow-[0_0_25px_rgba(212,175,55,0.25)] hover:-translate-y-0.5">
-                        <span class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-[var(--card-hover)] to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></span>
-                        
-                        <img src="https://i.imgur.com/nHiBiIF.jpeg" alt="BayanAlQuran" class="w-6 h-6 rounded-full border border-[var(--accent-gold)] mr-3 object-cover shadow-sm group-hover:scale-105 transition-transform duration-300">
-                        
-                        <span class="text-xs md:text-sm font-medium tracking-wide text-[var(--text-primary)] group-hover:text-[var(--accent-gold)] transition-colors flex items-center">
-                            BayanAlQurān auf Telegram
-                            <svg class="ml-2.5 w-3.5 h-3.5 text-[var(--accent-gold)]" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.02-1.96 1.24-5.54 3.65-.52.36-.99.53-1.41.52-.46-.01-1.35-.26-2.01-.48-.81-.27-1.46-.42-1.4-.88.03-.24.36-.49.99-.75 3.88-1.69 6.47-2.8 7.77-3.32 3.7-1.5 4.46-1.76 4.96-1.77.11 0 .36.03.52.16.13.1.17.24.19.34.02.07.02.21.01.28z"/>
-                            </svg>
-                        </span>
-                    </a>
-                </div>
             </div>
         </header>
 
@@ -645,7 +779,7 @@
             </section>
             
             <!-- FAQ Section -->
-            <section class="fade-in-section mb-20" style="--delay: 0.6s;">
+            <section id="faq-section" class="fade-in-section mb-20" style="--delay: 0.6s;">
                 <div class="flex items-center justify-center md:justify-start mb-10">
                     <h2 class="text-2xl md:text-3xl font-medium text-[var(--accent-gold)] flex items-center">
                         <svg class="w-7 h-7 mr-3 text-[var(--accent-gold)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
@@ -656,7 +790,7 @@
             </section>
             
             <!-- Share Section -->
-            <section class="text-center py-16 border-t border-[var(--glass-border)] fade-in-section" style="--delay: 0.7s;">
+            <section id="share-section" class="text-center py-16 border-t border-[var(--glass-border)] fade-in-section" style="--delay: 0.7s;">
                 <h2 class="text-2xl md:text-3xl font-medium text-[var(--accent-gold)] mb-6 font-serif">Teile die Initiative</h2>
                 <p class="text-[var(--text-secondary)] text-sm md:text-base max-w-lg mx-auto mb-10 leading-relaxed">
                     „[...] Wer auf Gutes hinweist, erhält den gleichen Lohn wie derjenige, der es tut."
@@ -693,12 +827,53 @@
         document.addEventListener('DOMContentLoaded', () => {
             const toggle = document.getElementById('theme-toggle');
             const body = document.body;
-            toggle.addEventListener('change', () => body.classList.toggle('light-mode', toggle.checked));
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            // Respect a saved choice, otherwise follow the system's light/dark preference
+            let savedTheme = null;
+            try { savedTheme = localStorage.getItem('sanaabil-theme'); } catch (err) { /* storage unavailable - fall back to system preference */ }
+            const systemPrefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+            const initialIsLight = savedTheme ? savedTheme === 'light' : systemPrefersLight;
+            body.classList.toggle('light-mode', initialIsLight);
+            toggle.checked = initialIsLight;
+
+            let lastToggleX = window.innerWidth - 40;
+            let lastToggleY = 40;
+            toggle.addEventListener('click', (e) => {
+                // Keyboard-triggered clicks report no real coordinates - fall back to the switch's own position
+                if (e.detail === 0) {
+                    const r = toggle.getBoundingClientRect();
+                    lastToggleX = r.left + r.width / 2;
+                    lastToggleY = r.top + r.height / 2;
+                } else {
+                    lastToggleX = e.clientX;
+                    lastToggleY = e.clientY;
+                }
+            });
+            toggle.addEventListener('change', () => {
+                const isLight = toggle.checked;
+                try { localStorage.setItem('sanaabil-theme', isLight ? 'light' : 'dark'); } catch (err) { /* ignore */ }
+
+                const applyTheme = () => body.classList.toggle('light-mode', isLight);
+
+                if (prefersReducedMotion || !document.startViewTransition) {
+                    applyTheme();
+                    return;
+                }
+                // Innovative touch: the theme sweeps outward from the switch itself, like light spreading through glass
+                const endRadius = Math.hypot(
+                    Math.max(lastToggleX, window.innerWidth - lastToggleX),
+                    Math.max(lastToggleY, window.innerHeight - lastToggleY)
+                );
+                const transition = document.startViewTransition(applyTheme);
+                transition.ready.then(() => {
+                    document.documentElement.animate(
+                        { clipPath: [`circle(0px at ${lastToggleX}px ${lastToggleY}px)`, `circle(${endRadius}px at ${lastToggleX}px ${lastToggleY}px)`] },
+                        { duration: 650, easing: 'cubic-bezier(0.65, 0, 0.35, 1)', pseudoElement: '::view-transition-new(root)' }
+                    );
+                }).catch(() => {});
+            });
             
-            // BayanAlQurān modal dataset kept safe for any interactive extensions
-            const modalData = {
-                "1": { title: "BayanAlQurān", img: "https://i.imgur.com/nHiBiIF.jpeg", desc: "Themen rund um den Qur'an", link: "https://t.me/BayanAlQuran" }
-            };
             const modal = document.getElementById('custom-modal');
             const qrModal = document.getElementById('qr-modal');
             
@@ -745,8 +920,9 @@
                 { title: '150 Masahif Druck', location: 'Afghanistan', amount: '300,00 €', iconPath: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5s3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18s-3.332.477-4.5 1.253', bgIcon: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5s3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18s-3.332.477-4.5 1.253', isStroke: true },
                 { title: 'Brunnenbau', location: 'Togo', amount: '600,00 €', iconPath: 'M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z', bgIcon: 'M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z' },
                 { title: 'Unterstützung - Schwestern', location: 'Marokko', amount: '526,30 €', iconPath: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z', bgIcon: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' },
-                { title: 'Madrasa-Bau', location: 'Afghanistan', amount: 'ca. 500 € offen', iconPath: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5s3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18s-3.332.477-4.5 1.253', bgIcon: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5s3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18s-3.332.477-4.5 1.253', isStroke: true, isPending: true },
-                { title: 'Schuldenhilfe für Bruder', location: 'Deutschland', amount: '180,00 €', iconPath: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z', bgIcon: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' }
+                { title: 'Schuldenhilfe für Bruder', location: 'Deutschland', amount: '180,00 €', iconPath: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z', bgIcon: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' },
+                { title: 'Madrasa-Bau', location: 'Afghanistan', amount: '1.171,99 €', iconPath: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5s3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18s-3.332.477-4.5 1.253', bgIcon: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5s3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18s-3.332.477-4.5 1.253', isStroke: true },
+                { title: 'Finanzielle Unterstützung eines Bruders', location: 'Deutschland', amount: '100,00 €', iconPath: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z', bgIcon: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' }
             ];
 
             const faqData = [
@@ -868,19 +1044,66 @@
             if(projectSection) {
                 const projectObserver = new IntersectionObserver((entries) => {
                     if (entries[0].isIntersecting) {
-                        let count = 0;
                         const target = projectsData.length;
-                        const duration = 2000;
-                        const step = duration / target;
-                        const counterInterval = setInterval(() => {
-                            count++;
-                            projectCounter.innerText = count;
-                            if (count >= target) clearInterval(counterInterval);
-                        }, step);
+                        const cards = document.querySelectorAll('#projects-slider > div');
+                        if (prefersReducedMotion) {
+                            projectCounter.innerText = target;
+                            cards.forEach(card => card.classList.add('is-visible'));
+                        } else {
+                            // Eased count-up (fast start, gentle settle) instead of a flat metronome tick
+                            const start = performance.now();
+                            const duration = 1400;
+                            function tickCounter(now) {
+                                const t = Math.min((now - start) / duration, 1);
+                                const eased = 1 - Math.pow(1 - t, 3);
+                                projectCounter.innerText = Math.round(eased * target);
+                                if (t < 1) requestAnimationFrame(tickCounter);
+                            }
+                            requestAnimationFrame(tickCounter);
+                            cards.forEach((card, index) => {
+                                setTimeout(() => card.classList.add('is-visible'), index * 90 + 120 + Math.random() * 60);
+                            });
+                        }
                         projectObserver.disconnect();
                     }
                 }, { threshold: 0.2 });
                 projectObserver.observe(projectSection);
+            }
+
+            // Stagger the callout quotes in one after another
+            const calloutSection = document.getElementById('callout-section');
+            if (calloutSection) {
+                if (prefersReducedMotion) {
+                    document.querySelectorAll('.callout-item').forEach(item => item.classList.add('is-visible'));
+                } else {
+                    const calloutObserver = new IntersectionObserver((entries) => {
+                        if (entries[0].isIntersecting) {
+                            document.querySelectorAll('.callout-item').forEach((item, index) => {
+                                setTimeout(() => item.classList.add('is-visible'), index * 110 + 100 + Math.random() * 60);
+                            });
+                            calloutObserver.disconnect();
+                        }
+                    }, { threshold: 0.15 });
+                    calloutObserver.observe(calloutSection);
+                }
+            }
+
+            // Stagger the FAQ items in one after another, like the roadmap reveal
+            const faqSection = faqContainer.closest('section');
+            if (faqSection) {
+                if (prefersReducedMotion) {
+                    document.querySelectorAll('.faq-item').forEach(item => item.classList.add('is-visible'));
+                } else {
+                    const faqObserver = new IntersectionObserver((entries) => {
+                        if (entries[0].isIntersecting) {
+                            document.querySelectorAll('.faq-item').forEach((item, index) => {
+                                setTimeout(() => item.classList.add('is-visible'), index * 100 + 150 + Math.random() * 60);
+                            });
+                            faqObserver.disconnect();
+                        }
+                    }, { threshold: 0.15 });
+                    faqObserver.observe(faqSection);
+                }
             }
 
             faqContainer.addEventListener('click', (e) => {
@@ -911,8 +1134,13 @@
             const canvas = document.getElementById('particle-canvas');
             const ctx = canvas.getContext('2d');
             let particles = [];
+            let particleColor = getComputedStyle(body).getPropertyValue('--particle-color').trim();
+            let resizeTimer;
             function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-            window.addEventListener('resize', resize);
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(resize, 150);
+            }, { passive: true });
             resize();
             class Particle {
                 constructor() { this.reset(); }
@@ -920,28 +1148,60 @@
                     this.x = Math.random() * canvas.width;
                     this.y = Math.random() * canvas.height;
                     this.size = Math.random() * 2 + 0.5;
-                    this.vx = (Math.random() - 0.5) * 0.3;
-                    this.vy = (Math.random() - 0.5) * 0.3;
-                    this.op = Math.random() * 0.4 + 0.1;
+                    this.vx = (Math.random() - 0.5) * 0.25;
+                    this.vy = (Math.random() - 0.5) * 0.25;
+                    this.baseOp = Math.random() * 0.35 + 0.1;
+                    this.op = this.baseOp;
+                    this.twinklePhase = Math.random() * Math.PI * 2;
+                    this.twinkleSpeed = 0.006 + Math.random() * 0.01;
                 }
                 update() {
+                    // Gentle random drift instead of straight bounces - feels like floating dust in light
+                    this.vx += (Math.random() - 0.5) * 0.015;
+                    this.vy += (Math.random() - 0.5) * 0.015;
+                    const maxSpeed = 0.35;
+                    const speed = Math.hypot(this.vx, this.vy) || 1;
+                    if (speed > maxSpeed) { this.vx = (this.vx / speed) * maxSpeed; this.vy = (this.vy / speed) * maxSpeed; }
                     this.x += this.vx; this.y += this.vy;
                     if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
                     if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+                    // Slow breathing twinkle
+                    this.twinklePhase += this.twinkleSpeed;
+                    this.op = this.baseOp + Math.sin(this.twinklePhase) * this.baseOp * 0.5;
                 }
                 draw(color) {
                     ctx.fillStyle = `rgba(${color}, ${this.op})`;
                     ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI*2); ctx.fill();
                 }
             }
-            for(let i=0; i<40; i++) particles.push(new Particle());
+            const particleCount = prefersReducedMotion ? 0 : 28;
+            for(let i=0; i<particleCount; i++) particles.push(new Particle());
+            let rafId = null;
             function animate() {
                 ctx.clearRect(0,0,canvas.width,canvas.height);
-                const color = getComputedStyle(body).getPropertyValue('--particle-color').trim();
-                particles.forEach(p => { p.update(); p.draw(color); });
-                requestAnimationFrame(animate);
+                particles.forEach(p => { p.update(); p.draw(particleColor); });
+                rafId = requestAnimationFrame(animate);
             }
-            animate();
+            // Recompute the tint only when the theme actually changes, not every frame
+            toggle.addEventListener('change', () => {
+                particleColor = getComputedStyle(body).getPropertyValue('--particle-color').trim();
+            });
+            // Pause the canvas loop while the tab isn't visible to save CPU/battery
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden) {
+                    if (rafId) cancelAnimationFrame(rafId);
+                    rafId = null;
+                } else if (!rafId && particles.length) {
+                    animate();
+                }
+            });
+            // Defer non-critical, purely decorative work until the browser is idle
+            function onIdle(cb) {
+                if ('requestIdleCallback' in window) requestIdleCallback(cb, { timeout: 1500 });
+                else setTimeout(cb, 200);
+            }
+
+            onIdle(() => { if (particles.length) animate(); });
         });
     </script>
 </body>
