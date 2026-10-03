@@ -12,9 +12,10 @@
     <!-- Performance: warm up the image CDN and get the hero (LCP) image downloading immediately -->
     <link rel="preconnect" href="https://i.imgur.com">
     <link rel="dns-prefetch" href="https://i.imgur.com">
-    <link rel="preload" as="image" href="https://i.imgur.com/7GqbuO4.jpeg" fetchpriority="high">
+    <link rel="preload" as="image" href="https://i.imgur.com/4rrmnBh.jpeg" fetchpriority="high">
 
     <!-- Tailwind CSS via CDN - deferred so it no longer blocks HTML parsing (the loader screen hides any FOUC) -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
     <script src="https://cdn.tailwindcss.com" defer></script>
     
     <!-- Fonts -->
@@ -83,7 +84,7 @@
             backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--glass-border);
             box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease, opacity 0.4s ease;
             position: relative; z-index: 20;
         }
         .fade-in-section {
@@ -124,7 +125,7 @@
             height: fit-content;
             opacity: 0;
             transform: translateY(16px);
-            transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+            transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1), transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease, background-color 0.3s ease;
         }
         .callout-item.is-visible { opacity: 1; transform: translateY(0); }
         .callout-item:hover {
@@ -354,7 +355,7 @@
             100% { transform: scale(2.2); opacity: 0; }
         }
         .roadmap-card {
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: box-shadow 0.4s ease, opacity 0.4s ease;
             margin-left: calc(7% + 1.5rem);
         }
         @media (min-width: 640px) {
@@ -571,6 +572,64 @@
             animation: none;
             mix-blend-mode: normal;
         }
+    
+        /* ===== GLASS v2 + PERFORMANCE LAYER ===== */
+        :root {
+            --glass-sheen: linear-gradient(135deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.025) 45%, rgba(255,255,255,0.06) 100%);
+            --glass-modal: rgba(15, 23, 42, 0.62);
+            --orb-a: rgba(212, 175, 55, 0.26);
+            --orb-b: rgba(71, 105, 160, 0.20);
+            --orb-c: rgba(212, 175, 55, 0.14);
+        }
+        body.light-mode {
+            --glass-sheen: linear-gradient(135deg, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.18) 50%, rgba(255,255,255,0.40) 100%);
+            --glass-modal: rgba(254, 252, 232, 0.72);
+            --orb-a: rgba(217, 119, 6, 0.20);
+            --orb-b: rgba(251, 191, 36, 0.30);
+            --orb-c: rgba(180, 83, 9, 0.12);
+        }
+        /* Static colour fields: give the glass something to refract (one cheap, non-animated layer) */
+        body::before {
+            content: ''; position: fixed; inset: 0; z-index: -2; pointer-events: none;
+            background:
+                radial-gradient(42vmax 42vmax at 10% 6%, var(--orb-a), transparent 70%),
+                radial-gradient(38vmax 38vmax at 94% 40%, var(--orb-b), transparent 70%),
+                radial-gradient(46vmax 46vmax at 22% 96%, var(--orb-c), transparent 70%);
+        }
+        .glass-container, .callout-item, .faq-item, #projects-slider > div { background-image: var(--glass-sheen); }
+        .glass-container, .modal-body {
+            backdrop-filter: blur(24px) saturate(185%);
+            -webkit-backdrop-filter: blur(24px) saturate(185%);
+            box-shadow: var(--glass-shadow), inset 0 1px 0 0 var(--glass-spec), inset 0 -1px 0 0 var(--glass-edge), inset 0 0 40px -18px var(--glass-edge);
+        }
+        .callout-item, .faq-item, #projects-slider > div {
+            backdrop-filter: blur(14px) saturate(165%);
+            -webkit-backdrop-filter: blur(14px) saturate(165%);
+            box-shadow: 0 12px 30px -16px rgba(0, 0, 0, 0.35), inset 0 1px 0 0 var(--glass-spec), inset 0 -1px 0 0 var(--glass-edge);
+        }
+        .special-callout-container { box-shadow: inset 0 0 30px var(--card-hover), inset 0 1px 0 0 var(--glass-spec); }
+        .modal-body { background: var(--glass-modal); background-image: var(--glass-sheen); }
+        #toast-message {
+            background: var(--glass-modal); background-image: var(--glass-sheen);
+            backdrop-filter: blur(18px) saturate(170%); -webkit-backdrop-filter: blur(18px) saturate(170%);
+            box-shadow: var(--glass-shadow), inset 0 1px 0 0 var(--glass-spec);
+        }
+        #show-qr-btn {
+            background-image: var(--glass-sheen);
+            backdrop-filter: blur(12px) saturate(165%); -webkit-backdrop-filter: blur(12px) saturate(165%);
+            box-shadow: inset 0 1px 0 0 var(--glass-spec);
+        }
+        /* Performance */
+        .fade-in-section.is-visible { will-change: auto; }
+        .profile-ring-outer, .profile-halo { will-change: transform; }
+        .anim-paused, .anim-paused *, .anim-paused *::before, .anim-paused *::after { animation-play-state: paused !important; }
+        @media (max-width: 640px) {
+            .glass-container, .modal-body { backdrop-filter: blur(16px) saturate(170%); -webkit-backdrop-filter: blur(16px) saturate(170%); }
+            .callout-item, .faq-item, #projects-slider > div { backdrop-filter: blur(10px) saturate(150%); -webkit-backdrop-filter: blur(10px) saturate(150%); }
+        }
+        @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+            .glass-container, .callout-item, .faq-item, #projects-slider > div, .modal-body { background-color: var(--bg-primary); }
+        }
     </style>
 </head>
 <body class="antialiased selection:bg-[var(--accent-gold)] selection:text-[var(--bg-primary)]">
@@ -638,8 +697,8 @@
                 <a href="https://chat.whatsapp.com/IJ2prCPPeU2ApH4MVcMBcq" target="_blank" class="relative inline-flex items-center justify-center group/logo">
                     <div class="profile-ring-outer absolute rounded-full" style="width:calc(100% + 8px);height:calc(100% + 8px);top:-4px;left:-4px;"></div>
                     <div class="absolute rounded-full profile-halo w-40 h-40 md:w-56 md:h-56"></div>
-                    <img src="https://i.imgur.com/7GqbuO4.jpeg" 
-                         alt="SANAABIL Community Logo" 
+                    <img src="https://i.imgur.com/4rrmnBh.jpeg" 
+                         alt="SANAABIL Community Logo" width="192" height="192" decoding="async" 
                          class="w-32 h-32 md:w-48 md:h-48 mx-auto rounded-full object-cover relative z-10 profile-img-inner group-hover/logo:scale-[1.02] transition-transform duration-500" 
                          fetchpriority="high">
                 </a>
@@ -922,7 +981,8 @@
                 { title: 'Unterstützung - Schwestern', location: 'Marokko', amount: '526,30 €', iconPath: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z', bgIcon: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' },
                 { title: 'Schuldenhilfe für Bruder', location: 'Deutschland', amount: '180,00 €', iconPath: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z', bgIcon: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' },
                 { title: 'Madrasa-Bau', location: 'Afghanistan', amount: '1.171,99 €', iconPath: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5s3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18s-3.332.477-4.5 1.253', bgIcon: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5s3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18s-3.332.477-4.5 1.253', isStroke: true },
-                { title: 'Finanzielle Unterstützung eines Bruders', location: 'Deutschland', amount: '100,00 €', iconPath: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z', bgIcon: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' }
+                { title: 'Finanzielle Unterstützung eines Bruders', location: 'Deutschland', amount: '100,00 €', iconPath: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z', bgIcon: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' },
+                { title: 'Unterstützung von Waisenkindern', location: 'Weltweit', amount: '500,00 €', iconPath: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z', bgIcon: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' }
             ];
 
             const faqData = [
@@ -1006,7 +1066,7 @@
                         content.classList.remove('hidden');
                         requestAnimationFrame(() => content.classList.remove('opacity-0'));
                     }, 700);
-                }, 500);
+                }, 150);
             });
 
             const observer = new IntersectionObserver((entries, obs) => {
@@ -1170,16 +1230,18 @@
                     this.op = this.baseOp + Math.sin(this.twinklePhase) * this.baseOp * 0.5;
                 }
                 draw(color) {
-                    ctx.fillStyle = `rgba(${color}, ${this.op})`;
+                    ctx.globalAlpha = this.op;
                     ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI*2); ctx.fill();
                 }
             }
-            const particleCount = prefersReducedMotion ? 0 : 28;
+            const particleCount = prefersReducedMotion ? 0 : (window.innerWidth < 640 ? 18 : 28);
             for(let i=0; i<particleCount; i++) particles.push(new Particle());
             let rafId = null;
             function animate() {
                 ctx.clearRect(0,0,canvas.width,canvas.height);
+                ctx.fillStyle = 'rgb(' + particleColor + ')';
                 particles.forEach(p => { p.update(); p.draw(particleColor); });
+                ctx.globalAlpha = 1;
                 rafId = requestAnimationFrame(animate);
             }
             // Recompute the tint only when the theme actually changes, not every frame
@@ -1195,6 +1257,12 @@
                     animate();
                 }
             });
+            // Pause endless decorative animations while their section is off-screen (saves GPU/battery)
+            const animObserver = new IntersectionObserver((entries) => {
+                entries.forEach(en => en.target.classList.toggle('anim-paused', !en.isIntersecting));
+            }, { rootMargin: '120px' });
+            document.querySelectorAll('header, #roadmap-section, #projects-section').forEach(el => animObserver.observe(el));
+
             // Defer non-critical, purely decorative work until the browser is idle
             function onIdle(cb) {
                 if ('requestIdleCallback' in window) requestIdleCallback(cb, { timeout: 1500 });
