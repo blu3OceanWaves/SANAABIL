@@ -1,29 +1,43 @@
 <!DOCTYPE html>
-<html lang="de" class="scroll-smooth">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="SANAABIL - Mit wenig viel bewirken. Eine private Spenden-Gemeinschaft.">
+    <meta name="color-scheme" content="dark light">
+    <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#FEFCE8" media="(prefers-color-scheme: light)">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="SANAABIL">
+    <meta property="og:title" content="SANAABIL">
+    <meta property="og:description" content="SANAABIL - Mit wenig viel bewirken. Eine private Spenden-Gemeinschaft.">
+    <meta property="og:url" content="https://blu3oceanwaves.github.io/SANAABIL/">
+    <meta property="og:image" content="https://i.imgur.com/4rrmnBh.jpeg">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://i.imgur.com/4rrmnBh.jpeg">
     <title>SANAABIL</title>
-    
+
     <!-- Favicon -->
-    <link rel="icon" href="https://i.imgur.com/7GqbuO4.jpeg" type="image/jpeg">
+    <link rel="icon" href="https://i.imgur.com/4rrmnBh.jpeg" type="image/jpeg">
 
     <!-- Performance: warm up the image CDN and get the hero (LCP) image downloading immediately -->
     <link rel="preconnect" href="https://i.imgur.com">
     <link rel="dns-prefetch" href="https://i.imgur.com">
     <link rel="preload" as="image" href="https://i.imgur.com/4rrmnBh.jpeg" fetchpriority="high">
 
-    <!-- Tailwind CSS via CDN - deferred so it no longer blocks HTML parsing (the loader screen hides any FOUC) -->
-    <link rel="preconnect" href="https://cdn.tailwindcss.com">
-    <script src="https://cdn.tailwindcss.com" defer></script>
-    
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
-    
+    <!-- Fonts load without blocking the first paint -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap"></noscript>
+
     <style>
+        /* ================================================================
+           DESIGN TOKENS (palette unchanged)
+           ================================================================ */
         :root {
             /* --- Dark Mode (Default / Seed State) --- */
             --bg-primary: #0f172a;
@@ -37,15 +51,45 @@
             --roadmap-line: rgba(255, 255, 255, 0.05);
             --particle-color: 212, 175, 55;
             --profile-glow: rgba(212, 175, 55, 0.3);
-            
-            /* Success Badge Colors (Dark Mode) */
             --success-bg: rgba(20, 83, 45, 0.4);
             --success-text: #4ade80;
             --success-border: #166534;
+
+            /* Glass material */
+            --glass-spec: rgba(255, 255, 255, 0.4);
+            --glass-edge: rgba(255, 255, 255, 0.14);
+            --glass-shadow: 0 20px 50px -22px rgba(0, 0, 0, 0.5);
+            --glass-sheen: linear-gradient(135deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.025) 45%, rgba(255,255,255,0.06) 100%);
+            --glass-modal: rgba(15, 23, 42, 0.62);
+            --orb-a: rgba(212, 175, 55, 0.26);
+            --orb-b: rgba(71, 105, 160, 0.20);
+            --orb-c: rgba(212, 175, 55, 0.14);
+
+            /* Card deck */
+            --sheet-base: #111a2e;
+            --sheet-tint: rgba(212, 175, 55, 0.06);
+            --sheet-border: rgba(212, 175, 55, 0.18);
+            --sheet-shadow: 0 -24px 60px -24px rgba(0, 0, 0, 0.9);
+            --shade-rgb: 3, 7, 18;
+            --blob-gold: rgba(212, 175, 55, 0.28);
+            --blob-blue: rgba(59, 100, 170, 0.34);
+            --pc-base: rgba(19, 29, 52, 0.94);
+
+            /* Deck geometry (mobile first) */
+            --sheet-top: 26px;
+            --sheet-bottom: 10px;
+            --sheet-x: 8px;
+            --sheet-radius: 26px;
+            /* Stack depth: how far cards under the top card move up and shrink */
+            --d1-y: -8px;  --d1-s: 0.955;
+            --d2-y: -16px; --d2-s: 0.91;
+            --d3-y: -24px; --d3-s: 0.865;
+            --d4-y: -32px; --d4-s: 0.82;
         }
-        /* --- Light Mode (Plant State / Weizen-Gelb) --- */
-        body.light-mode {
-            --bg-primary: #FEFCE8; 
+        /* --- Light Mode (Plant State / Weizen-Gelb) - follows the phone's light/dark setting --- */
+        @media (prefers-color-scheme: light) {
+        :root {
+            --bg-primary: #FEFCE8;
             --text-primary: #3E2723;
             --text-secondary: #5D4037;
             --accent-gold: #B45309;
@@ -56,96 +100,675 @@
             --roadmap-line: rgba(62, 39, 35, 0.1);
             --particle-color: 180, 83, 9;
             --profile-glow: rgba(180, 83, 9, 0.25);
-            
-            /* Success Badge Colors (Light Mode) */
-            --success-bg: #dcfce7; 
-            --success-text: #14532d; 
-            --success-border: #86efac; 
+            --success-bg: #dcfce7;
+            --success-text: #14532d;
+            --success-border: #86efac;
+
+            --glass-spec: rgba(255, 255, 255, 0.75);
+            --glass-edge: rgba(255, 255, 255, 0.5);
+            --glass-shadow: 0 20px 45px -22px rgba(93, 64, 55, 0.16);
+            --glass-sheen: linear-gradient(135deg, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.18) 50%, rgba(255,255,255,0.40) 100%);
+            --glass-modal: rgba(254, 252, 232, 0.72);
+            --orb-a: rgba(217, 119, 6, 0.20);
+            --orb-b: rgba(251, 191, 36, 0.30);
+            --orb-c: rgba(180, 83, 9, 0.12);
+
+            --sheet-base: #FFFDF3;
+            --sheet-tint: rgba(251, 191, 36, 0.10);
+            --sheet-border: rgba(180, 83, 9, 0.16);
+            --sheet-shadow: 0 -20px 50px -22px rgba(93, 64, 55, 0.35);
+            --shade-rgb: 62, 39, 35;
+            --blob-gold: rgba(251, 191, 36, 0.40);
+            --blob-blue: rgba(234, 88, 12, 0.14);
+            --pc-base: rgba(255, 255, 255, 0.92);
         }
+        }
+        @media (min-width: 768px) {
+            :root {
+                --sheet-top: 40px;
+                --sheet-bottom: 18px;
+                --sheet-x: max(20px, calc((100% - 1120px) / 2));
+                --sheet-radius: 32px;
+                --d1-y: -12px; --d1-s: 0.965;
+                --d2-y: -24px; --d2-s: 0.93;
+                --d3-y: -36px; --d3-s: 0.895;
+                --d4-y: -48px; --d4-s: 0.86;
+            }
+        }
+
+        /* ================================================================
+           BASE
+           ================================================================ */
+        *, *::before, *::after { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        html, body { height: 100%; margin: 0; }
+        html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
             background-color: var(--bg-primary);
             color: var(--text-primary);
-            overflow-x: hidden;
+            overflow: hidden;
             overscroll-behavior: none;
-            transition: background-color 0.6s cubic-bezier(0.4, 0, 0.2, 1), color 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
-        h1, h2, h3, blockquote {
-            font-family: 'Playfair Display', serif;
+        /* No double-tap zoom on controls (fast taps on arrows would zoom on iPhone) */
+        button, a, .faq-item { touch-action: manipulation; }
+        ::selection { background: var(--accent-gold); color: var(--bg-primary); }
+        h1, h2, h3, blockquote { font-family: 'Playfair Display', Georgia, serif; margin: 0; font-weight: 600; }
+        p { margin: 0; }
+        button { font: inherit; color: inherit; background: none; border: 0; padding: 0; margin: 0; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+        a { color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
+        svg { display: block; flex-shrink: 0; }
+        img { display: block; max-width: 100%; }
+        :focus { outline: none; }
+        :focus-visible { outline: 2px solid var(--accent-gold); outline-offset: 3px; }
+
+        /* Static colour fields behind the deck */
+        body::before {
+            content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+            background:
+                radial-gradient(42vmax 42vmax at 10% 6%, var(--orb-a), transparent 70%),
+                radial-gradient(38vmax 38vmax at 94% 40%, var(--orb-b), transparent 70%),
+                radial-gradient(46vmax 46vmax at 22% 96%, var(--orb-c), transparent 70%);
         }
-        /* Hintergrund-Partikel-Canvas */
+
+        /* Floating gold dust - drawn above the cards, never catches clicks */
         #particle-canvas {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1; opacity: 0.28; pointer-events: none;
+            position: fixed; inset: 0; width: 100%; height: 100%;
+            z-index: 2; opacity: 0.35; pointer-events: none;
         }
-        .glass-container {
-            background-color: var(--glass-bg);
-            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+
+        /* ================================================================
+           CARD DECK - every section is a full-screen card.
+           Cards stick to the top and the next card slides over them.
+           ================================================================ */
+        .deck {
+            position: fixed; inset: 0; z-index: 1;
+            overflow-x: hidden; overflow-y: auto;
+            scroll-snap-type: y mandatory;
+            overscroll-behavior: contain;
+            scrollbar-width: none; -ms-overflow-style: none;
+        }
+        .deck::-webkit-scrollbar { display: none; }
+        .deck-track { position: relative; height: calc(var(--n, 7) * 100%); }
+        /* Invisible snap points: one per card, so every swipe lands on exactly one card */
+        .snap-rail { position: absolute; inset: 0; display: flex; flex-direction: column; pointer-events: none; }
+        .snap-rail > span { flex: 1 1 0; scroll-snap-align: start; scroll-snap-stop: always; }
+        .deck-card {
+            position: sticky; top: 0; height: calc(100% / var(--n, 7));
+            transform-origin: 50% var(--sheet-top);
+            transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .deck-card.is-gone { visibility: hidden; }
+        /* Only the card on top runs its looping animations */
+        .deck-card:not(.is-active) .profile-ring-outer,
+        .deck-card:not(.is-active) .profile-halo,
+        .deck-card:not(.is-active) .scroll-cue,
+        .deck-card:not(.is-active) .sheet-fade svg,
+        .deck-card:not(.is-active) .roadmap-pulse-ring-1,
+        .deck-card:not(.is-active) .roadmap-pulse-ring-2,
+        .deck-card:not(.is-active) .rm-badge.live,
+        .deck-card:not(.is-active) .project-shine,
+        .deck-card:not(.is-active) .p-badge,
+        .deck-card:not(.is-active) .p-badge svg,
+        .deck-card:not(.is-active) .count-glow::before { animation-play-state: paused; }
+        /* Cards under the top card drop back into the stack */
+        .deck-card[data-depth="1"] { transform: translateY(var(--d1-y)) scale(var(--d1-s)); }
+        .deck-card[data-depth="2"] { transform: translateY(var(--d2-y)) scale(var(--d2-s)); }
+        .deck-card[data-depth="3"] { transform: translateY(var(--d3-y)) scale(var(--d3-s)); }
+        .deck-card[data-depth="4"] { transform: translateY(var(--d4-y)) scale(var(--d4-s)); }
+        .deck-card[data-depth="1"] .sheet-shade { opacity: 0.22; }
+        .deck-card[data-depth="2"] .sheet-shade { opacity: 0.44; }
+        .deck-card[data-depth="3"] .sheet-shade { opacity: 0.62; }
+        .deck-card[data-depth="4"] .sheet-shade { opacity: 0.8; }
+
+        .sheet {
+            position: absolute;
+            top: var(--sheet-top); bottom: var(--sheet-bottom);
+            left: var(--sheet-x); right: var(--sheet-x);
+            border-radius: var(--sheet-radius);
+            overflow: hidden;
+            background: linear-gradient(180deg, var(--sheet-tint), transparent 38%), var(--sheet-base);
+            border: 1px solid var(--sheet-border);
+            box-shadow: var(--sheet-shadow), inset 0 1px 0 var(--glass-edge);
+        }
+        .sheet--glow { box-shadow: var(--sheet-shadow), inset 0 1px 0 var(--glass-edge), inset 0 0 60px var(--card-hover); }
+        .sheet-scroll {
+            position: absolute; inset: 0; z-index: 1;
+            overflow-x: hidden; overflow-y: auto;
+            overscroll-behavior-y: auto;
+            scrollbar-width: thin; scrollbar-color: var(--glass-border) transparent;
+        }
+        .sheet-scroll::-webkit-scrollbar { width: 4px; }
+        .sheet-scroll::-webkit-scrollbar-track { background: transparent; }
+        .sheet-scroll::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 10px; }
+        .sheet-inner { min-height: 100%; display: flex; flex-direction: column; padding: 30px 20px 28px; }
+        .sheet-content { position: relative; margin: auto; width: 100%; max-width: 860px; }
+        .sheet-content--wide { max-width: 940px; }
+        .sheet-content--full { max-width: none; }
+        .sheet-fade {
+            position: absolute; left: 0; right: 0; bottom: 0; height: 76px; z-index: 2;
+            display: flex; align-items: flex-end; justify-content: center; padding-bottom: 10px;
+            color: var(--accent-gold); pointer-events: none;
+            background: linear-gradient(to bottom, transparent, var(--sheet-base) 82%);
+            opacity: 0; transition: opacity 0.35s ease;
+        }
+        .sheet.has-more .sheet-fade { opacity: 1; }
+        .sheet-fade svg { width: 18px; height: 18px; animation: nudge 1.6s ease-in-out infinite; }
+        .sheet-shade { position: absolute; inset: 0; z-index: 3; pointer-events: none; background: rgb(var(--shade-rgb)); opacity: 0; transition: opacity 0.55s ease; }
+        /* Soft colour discs behind the glass panels so the frost is actually visible */
+        .blob {
+            position: absolute; z-index: 0; pointer-events: none; border-radius: 50%;
+            width: var(--s, 240px); height: var(--s, 240px);
+            background: radial-gradient(circle, var(--c) 0%, var(--c) 42%, transparent 70%);
+        }
+        .blob.gold { --c: var(--blob-gold); }
+        .blob.blue { --c: var(--blob-blue); }
+        @media (min-width: 768px) {
+            .sheet-inner { padding: 52px 48px 44px; }
+        }
+
+        /* Section dots */
+        .deck-nav {
+            position: fixed; right: 0; top: 50%; z-index: 3;
+            transform: translateY(-50%);
+            display: flex; flex-direction: column; align-items: center; gap: 9px;
+            padding: 8px 2px;
+        }
+        .deck-nav button {
+            position: relative; width: 4px; height: 4px; border-radius: 99px;
+            background: var(--text-secondary); opacity: 0.45;
+            transition: height 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease, background-color 0.3s ease;
+        }
+        .deck-nav button::before { content: ''; position: absolute; inset: -5px -8px; }
+        .deck-nav button[aria-current="true"] { height: 18px; opacity: 1; background: var(--accent-gold); }
+        @media (min-width: 768px) {
+            .deck-nav { right: 6px; gap: 12px; }
+            .deck-nav button { width: 7px; height: 7px; }
+            .deck-nav button[aria-current="true"] { height: 26px; }
+        }
+        @media (min-width: 1240px) { .deck-nav { right: 28px; } }
+
+        /* ================================================================
+           GLASS MATERIAL
+           ================================================================ */
+        .glass {
+            position: relative; isolation: isolate;
+            background: var(--glass-sheen), var(--glass-bg);
             border: 1px solid var(--glass-border);
-            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
-            transition: background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease, opacity 0.4s ease;
-            position: relative; z-index: 20;
+            box-shadow: var(--glass-shadow), inset 0 1px 0 0 var(--glass-spec), inset 0 -1px 0 0 var(--glass-edge);
         }
+        .glass::before {
+            content: ''; position: absolute; inset: 0; z-index: -1;
+            border-radius: inherit; padding: 1px;
+            background: linear-gradient(135deg, var(--glass-edge), transparent 45%, transparent 65%, var(--glass-edge));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
         .fade-in-section {
             opacity: 0; transform: translateY(20px);
             transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
-            transition-delay: var(--delay);
-            will-change: opacity, transform; position: relative; z-index: 20;
+            transition-delay: var(--delay, 0s);
         }
         .fade-in-section.is-visible { opacity: 1; transform: translateY(0); }
-        
-        /* ===== TEXT SHINE ANIMATION ===== */
+
+        .section-title {
+            font-size: 24px; font-weight: 500; line-height: 1.25;
+            color: var(--accent-gold); text-align: center; letter-spacing: 0.02em;
+        }
+        @media (min-width: 768px) { .section-title { font-size: 30px; } }
+
+        /* ================================================================
+           HERO CARD
+           ================================================================ */
+        .hero { display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .logo-wrap { display: flex; flex-direction: column; align-items: center; margin-bottom: 30px; }
+        .logo-link { position: relative; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; }
+        .profile-ring-outer {
+            position: absolute; inset: -4px; border-radius: 50%;
+            background: conic-gradient(from 0deg, var(--accent-gold), var(--accent-gold-light), transparent 40%, var(--accent-gold-light), var(--accent-gold));
+            animation: ring-spin 4s linear infinite reverse;
+        }
+        .profile-halo {
+            position: absolute; inset: -22px; border-radius: 50%;
+            background: radial-gradient(circle, var(--profile-glow) 0%, transparent 70%);
+            animation: halo-breathe 3s ease-in-out infinite alternate;
+        }
+        .profile-img-inner {
+            position: relative; z-index: 1;
+            width: 148px; height: 148px; border-radius: 50%; object-fit: cover;
+            background: var(--sheet-base);
+            border: 3px solid var(--sheet-base);
+            box-shadow: 0 0 0 1px var(--glass-border), 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .logo-link:hover .profile-img-inner { transform: scale(1.04); }
+        .logo-hint { margin-top: 18px; font-size: 9px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.2em; color: var(--text-secondary); opacity: 0.45; }
         .sanaabil-title {
-            position: relative;
-            display: inline-block;
+            display: inline-block; padding-left: 0.1em;
+            font-size: clamp(40px, 12.5vw, 50px); font-weight: 700; line-height: 1.1;
+            letter-spacing: 0.1em; text-transform: uppercase;
+            margin-bottom: 12px;
             background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-gold-light) 50%, var(--accent-gold) 100%);
             background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: text-shine 4s linear infinite;
+            -webkit-background-clip: text; background-clip: text;
+            -webkit-text-fill-color: transparent; color: transparent;
         }
-        @keyframes text-shine {
-            to { background-position: 200% center; }
+        .deck-card.is-active .sanaabil-title { animation: text-shine 4s linear 2; }
+        .hero-tagline { padding-left: 0.25em; font-size: 12px; font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-secondary); }
+        .scroll-cue {
+            margin-top: 46px; width: 46px; height: 46px; border-radius: 50%;
+            display: inline-flex; align-items: center; justify-content: center;
+            color: var(--accent-gold);
+            animation: cue-bob 2.4s ease-in-out infinite;
+        }
+        .scroll-cue svg { width: 20px; height: 20px; }
+        @media (min-width: 768px) {
+            .profile-img-inner { width: 196px; height: 196px; }
+            .profile-halo { inset: -28px; }
+            .sanaabil-title { font-size: 64px; }
+            .hero-tagline { font-size: 14px; }
         }
 
-        /* Aufruf-Sektion (Masonry-Style) */
-        .special-callout-container {
-            background: linear-gradient(145deg, var(--glass-bg), transparent);
-            border: 1px solid var(--glass-border);
-            box-shadow: inset 0 0 30px var(--card-hover);
-            position: relative; overflow: hidden; z-index: 20; transition: background 0.6s ease;
+        /* ================================================================
+           ABOUT CARD
+           ================================================================ */
+        .about-head { display: flex; align-items: center; gap: 14px; margin-bottom: 22px; }
+        .head-line { flex: 1; min-width: 16px; height: 1px; opacity: 0.5; }
+        .head-line.l { background: linear-gradient(to right, transparent, var(--accent-gold)); }
+        .head-line.r { background: linear-gradient(to left, transparent, var(--accent-gold)); }
+        .bismillah { margin-bottom: 18px; text-align: center; font-family: 'Playfair Display', Georgia, serif; font-size: 21px; color: var(--text-secondary); }
+        .ayah { text-align: center; font-style: italic; font-weight: 300; font-size: 16.5px; line-height: 1.7; opacity: 0.92; }
+        .sadaqa-box { margin-top: 26px; padding: 20px 20px 22px; border-radius: 18px; }
+        .sadaqa-title { margin-bottom: 10px; font-size: 18px; font-weight: 600; color: var(--accent-gold); }
+        .sadaqa-text { font-size: 14.5px; line-height: 1.65; color: var(--text-secondary); }
+        @media (min-width: 768px) {
+            .ayah { font-size: 17.5px; }
+            .sadaqa-box { padding: 26px 28px; }
+            .sadaqa-text { font-size: 16px; }
         }
-        .callout-item {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 1rem;
-            padding: 1.5rem;
-            height: fit-content;
+
+        /* ================================================================
+           ROADMAP CARD
+           ================================================================ */
+        .rm-head { margin-bottom: 26px; }
+        .timeline { position: relative; --rl-x: 18px; }
+        .roadmap-line-container {
+            position: absolute; left: var(--rl-x); top: 0; bottom: 0; width: 2px;
+            background: var(--roadmap-line); transform: translateX(-50%);
+        }
+        .roadmap-progress-line {
+            position: absolute; top: 0; left: 0; width: 100%; height: 0%;
+            background: linear-gradient(180deg, var(--accent-gold), var(--accent-gold-light), var(--accent-gold));
+            box-shadow: 0 0 8px 2px rgba(212, 175, 55, 0.5), 0 0 20px rgba(212, 175, 55, 0.2);
+            transition: height 2.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .roadmap-traveler {
+            position: absolute; left: 50%; top: 0%; z-index: 4;
+            width: 10px; height: 10px; border-radius: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--accent-gold-light);
+            box-shadow: 0 0 12px 4px var(--accent-gold), 0 0 24px 8px rgba(212, 175, 55, 0.3);
             opacity: 0;
-            transform: translateY(16px);
-            transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1), transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease, background-color 0.3s ease;
+            transition: top 2.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+        }
+        .roadmap-traveler.active { opacity: 1; }
+        .roadmap-item {
+            position: relative; margin-bottom: 16px;
+            opacity: 0; transform: translateX(-20px);
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.34, 1.3, 0.64, 1);
+        }
+        .roadmap-item:last-child { margin-bottom: 0; }
+        .roadmap-item.active { opacity: 1; transform: translateX(0); }
+        .roadmap-node-wrapper {
+            position: absolute; left: var(--rl-x); top: 30px; z-index: 3;
+            width: 0; height: 0; display: flex; align-items: center; justify-content: center;
+        }
+        .node {
+            position: relative; z-index: 2; flex-shrink: 0;
+            width: 30px; height: 30px; border-radius: 50%;
+            border: 2px solid var(--accent-gold);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 13px; font-weight: 700;
+        }
+        .node svg { width: 14px; height: 14px; }
+        .roadmap-node-done { background: var(--accent-gold); color: var(--bg-primary); box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.2); }
+        .roadmap-node-active { background: var(--accent-gold); color: var(--bg-primary); box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.3), 0 0 24px rgba(212, 175, 55, 0.4); }
+        .roadmap-node-glow {
+            position: absolute; width: 40px; height: 40px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.25) 0%, transparent 70%);
+            opacity: 0; transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
+        }
+        .roadmap-item.active .roadmap-node-glow { opacity: 1; }
+        .roadmap-dot { transform: scale(0); }
+        .roadmap-item.active .roadmap-dot { transform: scale(1); transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .roadmap-pulse-ring-1, .roadmap-pulse-ring-2 {
+            position: absolute; width: 30px; height: 30px; border-radius: 50%;
+            border: 2px solid var(--accent-gold); opacity: 0;
+        }
+        .roadmap-item.active .roadmap-pulse-ring-1 { animation: pulse-ring-out 2.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s infinite; }
+        .roadmap-item.active .roadmap-pulse-ring-2 { animation: pulse-ring-out 2.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.9s infinite; }
+        .roadmap-card {
+            margin-left: calc(var(--rl-x) + 28px);
+            padding: 16px 16px 18px; border-radius: 18px;
+            transition: opacity 0.4s ease, box-shadow 0.4s ease;
+        }
+        .roadmap-card.done { opacity: 0.82; }
+        .roadmap-card.done:hover { opacity: 1; }
+        .roadmap-card.is-current { border-left: 4px solid var(--accent-gold); }
+        .roadmap-item.active .roadmap-card {
+            box-shadow: -4px 0 20px -4px rgba(212, 175, 55, 0.3), var(--glass-shadow), inset 0 1px 0 0 var(--glass-spec), inset 0 -1px 0 0 var(--glass-edge);
+        }
+        .rm-badge {
+            display: inline-block; margin-bottom: 8px; padding: 2px 8px; border-radius: 99px;
+            font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--accent-gold); background: var(--card-hover); border: 1px solid var(--glass-border);
+        }
+        .rm-badge.live { color: var(--bg-primary); background: var(--accent-gold); border-color: var(--accent-gold); animation: badge-pulse 2s ease-in-out infinite; }
+        .rm-title { margin-bottom: 6px; font-size: 19px; font-weight: 500; line-height: 1.3; color: var(--text-primary); }
+        .roadmap-card.is-current .rm-title { color: var(--accent-gold); }
+        .rm-text { font-size: 14px; line-height: 1.6; color: var(--text-secondary); }
+        @media (min-width: 640px) {
+            .timeline { --rl-x: 26px; }
+            .node { width: 44px; height: 44px; font-size: 16px; }
+            .node svg { width: 20px; height: 20px; }
+            .roadmap-node-glow { width: 56px; height: 56px; }
+            .roadmap-pulse-ring-1, .roadmap-pulse-ring-2 { width: 44px; height: 44px; }
+            .roadmap-node-wrapper { top: 38px; }
+            .roadmap-card { margin-left: calc(var(--rl-x) + 44px); padding: 24px 28px; }
+            .rm-title { font-size: 23px; }
+            .rm-text { font-size: 15.5px; }
+            .roadmap-item { margin-bottom: 22px; }
+        }
+
+        /* ================================================================
+           CALLOUT CARD - swipeable quote rail
+           ================================================================ */
+        .callout-head { margin-bottom: 18px; text-align: center; }
+        .callout-badge {
+            display: inline-block; padding-bottom: 4px;
+            font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--accent-gold); border-bottom: 1px solid var(--accent-gold);
+        }
+        .quote-rail {
+            --q-w: min(74vw, 400px);
+            --bleed: 20px;
+            position: relative; display: flex; align-items: stretch; gap: 14px;
+            overflow-x: auto; overflow-y: hidden;
+            scroll-snap-type: x mandatory; overscroll-behavior-x: contain;
+            scrollbar-width: none;
+            margin: 0 calc(var(--bleed) * -1);
+            padding: 10px calc((100% + 2 * var(--bleed) - var(--q-w)) / 2) 16px;
+        }
+        .quote-rail::-webkit-scrollbar { display: none; }
+        .quote-slide { flex: 0 0 var(--q-w); scroll-snap-align: center; scroll-snap-stop: always; transform-origin: 50% 55%; transform: scale(0.92); transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1); }
+        .quote-slide.is-current { transform: none; }
+        .callout-item {
+            height: 100%; display: flex; flex-direction: column;
+            padding: 24px 22px 20px; border-radius: 20px;
+            opacity: 0; transform: translateY(16px);
+            transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1), transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease;
         }
         .callout-item.is-visible { opacity: 1; transform: translateY(0); }
-        .callout-item:hover {
-            border-color: var(--accent-gold);
-            background: var(--card-hover);
-            transform: translateY(-5px);
+        .callout-item:hover { border-color: var(--accent-gold); }
+        .q-dim { position: absolute; inset: 0; z-index: 2; border-radius: inherit; background: var(--sheet-base); opacity: 0.55; pointer-events: none; transition: opacity 0.45s ease; }
+        .quote-slide.is-current .q-dim { opacity: 0; }
+        .quote-text { flex: 1; font-size: 16px; line-height: 1.62; font-style: italic; color: var(--text-primary); }
+        .quote-src {
+            margin-top: 16px; text-align: right;
+            font-family: 'Playfair Display', Georgia, serif; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;
+            color: var(--accent-gold); opacity: 0.85;
         }
-        .quote-text {
-            font-size: 1rem; line-height: 1.6; color: var(--text-primary); font-style: italic; transition: color 0.5s ease;
+        .rail-controls { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 4px; }
+        @media (min-width: 768px) {
+            .quote-rail { --q-w: 420px; --bleed: 48px; }
+            .quote-text { font-size: 17.5px; }
+            .quote-src { font-size: 12px; }
         }
-        @media (min-width: 768px) { .quote-text { font-size: 1.1rem; } }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--accent-gold); }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        
+        /* ================================================================
+           PROJECTS CARD - 3D ring carousel
+           ================================================================ */
+        .projects-title {
+            display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 2px 12px;
+            font-size: 23px; font-weight: 500; line-height: 1.3; text-align: center;
+            color: var(--accent-gold);
+        }
+        .pt-main, .pt-count { display: inline-flex; align-items: center; gap: 10px; }
+        .pt-count { isolation: isolate; }
+        .pt-main svg { width: 24px; height: 24px; }
+        /* Glowing project count */
+        .count-glow {
+            position: relative; display: inline-block; padding: 0 2px;
+            font-weight: 700; color: var(--accent-gold-light);
+            text-shadow: 0 0 6px var(--accent-gold), 0 0 14px var(--accent-gold), 0 0 28px rgba(212, 175, 55, 0.55);
+        }
+        .count-glow::before {
+            content: ''; position: absolute; left: 50%; top: 50%; z-index: -1;
+            width: 2.4em; height: 2.4em; margin: -1.2em 0 0 -1.2em; border-radius: 50%;
+            background: radial-gradient(circle, var(--profile-glow) 0%, rgba(212, 175, 55, 0.18) 40%, transparent 70%);
+            animation: count-pulse 2.4s ease-in-out infinite;
+            pointer-events: none;
+        }
+        @media (prefers-color-scheme: light) {
+            .count-glow { color: var(--accent-gold); text-shadow: 0 0 6px rgba(217, 119, 6, 0.55), 0 0 16px rgba(251, 191, 36, 0.7); }
+        }
+        .carousel {
+            --pc-w: clamp(212px, 62vw, 268px);
+            --pc-h: 336px;
+            position: relative;
+            height: calc(var(--pc-h) + 74px);
+            margin: 10px -20px 0;
+            overflow: hidden;
+            touch-action: pan-y;
+            user-select: none; -webkit-user-select: none;
+            cursor: grab;
+        }
+        .carousel.is-dragging { cursor: grabbing; }
+        .carousel-floor {
+            position: absolute; left: 50%; bottom: 10px;
+            width: min(92%, 760px); height: 66px;
+            transform: translateX(-50%); border-radius: 50%;
+            border: 1px solid var(--glass-border);
+            background: radial-gradient(closest-side, var(--card-hover), transparent);
+            pointer-events: none;
+        }
+        .carousel-floor::after {
+            content: ''; position: absolute; left: 50%; top: 50%;
+            width: 44%; height: 64%; transform: translate(-50%, -50%); border-radius: 50%;
+            background: radial-gradient(closest-side, var(--profile-glow), transparent);
+        }
+        .carousel-ring {
+            position: absolute; left: 0; right: 0; top: 16px; height: var(--pc-h);
+            perspective: 1000px; perspective-origin: 50% 32%;
+        }
+        .p-slide {
+            position: absolute; top: 0; left: 50%;
+            width: var(--pc-w); height: var(--pc-h); margin-left: calc(var(--pc-w) / -2);
+            backface-visibility: hidden; -webkit-backface-visibility: hidden;
+        }
+        .p-card {
+            position: absolute; inset: 0; overflow: hidden;
+            display: flex; flex-direction: column;
+            padding: 24px 20px 20px; border-radius: 22px;
+            background: var(--glass-sheen), var(--pc-base);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 22px 44px -22px rgba(0, 0, 0, 0.65), inset 0 1px 0 var(--glass-spec), inset 0 -1px 0 var(--glass-edge);
+            backface-visibility: hidden; -webkit-backface-visibility: hidden;
+            transition: border-color 0.5s ease, box-shadow 0.5s ease;
+        }
+        .p-slide.is-active .p-card {
+            border-color: rgba(212, 175, 55, 0.55);
+            box-shadow: 0 26px 60px -24px rgba(212, 175, 55, 0.45), 0 22px 44px -22px rgba(0, 0, 0, 0.65), inset 0 1px 0 var(--glass-spec), inset 0 -1px 0 var(--glass-edge);
+        }
+        @media (prefers-color-scheme: light) {
+            .p-card { box-shadow: 0 22px 44px -24px rgba(93, 64, 55, 0.35), inset 0 1px 0 var(--glass-spec), inset 0 -1px 0 var(--glass-edge); }
+            .p-slide.is-active .p-card {
+                border-color: rgba(180, 83, 9, 0.5);
+                box-shadow: 0 26px 54px -26px rgba(180, 83, 9, 0.45), inset 0 1px 0 var(--glass-spec), inset 0 -1px 0 var(--glass-edge);
+            }
+        }
+        .p-bg-icon { position: absolute; right: -24px; top: -24px; color: var(--accent-gold); opacity: 0.05; }
+        .p-bg-icon.rot-a { transform: rotate(12deg); }
+        .p-bg-icon.rot-b { transform: rotate(-6deg); }
+        .p-bg-icon svg { width: 128px; height: 128px; }
+        .p-icon {
+            width: 54px; height: 54px; margin-bottom: 18px; flex-shrink: 0;
+            border-radius: 50%; border: 1px solid var(--glass-border);
+            background: var(--bg-primary); color: var(--accent-gold);
+            display: flex; align-items: center; justify-content: center;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+        .p-icon svg { width: 26px; height: 26px; }
+        .p-slide.is-active .p-icon { background: var(--accent-gold); color: var(--bg-primary); }
+        .p-title { margin-bottom: 4px; font-family: 'Inter', system-ui, sans-serif; font-size: 19px; font-weight: 600; line-height: 1.3; color: var(--text-primary); transition: color 0.4s ease; }
+        .p-slide.is-active .p-title { color: var(--accent-gold); }
+        .p-loc { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 14px; color: var(--text-secondary); }
+        .p-foot { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--glass-border); }
+        .p-label { margin-bottom: 4px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-secondary); }
+        .p-amount { margin-bottom: 12px; font-size: 21px; font-weight: 700; color: var(--text-primary); }
+        .p-badge {
+            display: flex; flex-wrap: wrap; align-items: center; gap: 2px 6px;
+            padding: 6px 11px; border-radius: 14px;
+            font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;
+        }
+        .p-badge.ok { background: var(--success-bg); color: var(--success-text); border: 1px solid var(--success-border); }
+        .p-badge.pending { background: rgba(245, 158, 11, 0.1); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); animation: badge-pulse 2s ease-in-out infinite; }
+        .p-badge-main { display: inline-flex; align-items: center; gap: 6px; }
+        .p-badge svg { width: 12px; height: 12px; }
+        .p-badge svg.spin { animation: spin 1s linear infinite; }
+        .p-badge-note { margin-left: auto; font-family: 'Playfair Display', Georgia, serif; font-size: 12px; font-weight: 600; text-transform: none; letter-spacing: 0; opacity: 0.75; }
+        .project-shine {
+            position: absolute; inset: 0; pointer-events: none;
+            background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.07) 50%, transparent 100%);
+            transform: skewX(-20deg) translateX(-150%);
+        }
+        .p-slide.is-active .project-shine { animation: shine-sweep 1.4s 0.35s cubic-bezier(0.4, 0, 0.2, 1) both; }
+        .carousel-controls { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 4px; }
+        .swipe-hint {
+            display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 12px;
+            font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--text-secondary); opacity: 0.6;
+        }
+        .swipe-hint svg { width: 14px; height: 14px; }
+        @media (min-width: 768px) {
+            .projects-title { font-size: 30px; }
+            .carousel {
+                --pc-w: 268px; --pc-h: 352px; margin-left: -48px; margin-right: -48px;
+                -webkit-mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+                mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+            }
+            .carousel-ring { perspective: 1500px; }
+        }
+        @media (min-width: 1100px) { .carousel { --pc-w: 284px; } }
+
+        /* ================================================================
+           FAQ CARD
+           ================================================================ */
+        .faq-title { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 18px; }
+        .faq-title svg { width: 26px; height: 26px; color: var(--accent-gold); }
+        .faq-list { display: grid; gap: 8px; }
+        .faq-item {
+            border-radius: 14px; overflow: hidden; cursor: pointer;
+            opacity: 0; transform: translateY(18px) scale(0.98);
+            transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.34, 1.3, 0.64, 1),
+                        border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .faq-item.is-visible { opacity: 1; transform: translateY(0) scale(1); }
+        .faq-item:hover, .faq-item.active { border-color: var(--accent-gold); }
+        .faq-q { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 13px 16px; }
+        .faq-q-text { font-size: 15px; font-weight: 500; line-height: 1.45; color: var(--text-primary); }
+        .faq-num { margin-right: 10px; font-weight: 700; color: var(--accent-gold); opacity: 0.8; }
+        .faq-icon { width: 20px; height: 20px; color: var(--text-secondary); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s ease; }
+        .faq-item:hover .faq-icon { color: var(--accent-gold); }
+        .faq-item.active .faq-icon { transform: rotate(180deg); color: var(--accent-gold); }
+        .faq-content-wrapper { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .faq-item.active .faq-content-wrapper { grid-template-rows: 1fr; }
+        .faq-content { overflow: hidden; min-height: 0; }
+        .faq-a { margin: 0 16px; padding: 12px 0 16px; border-top: 1px solid var(--glass-border); font-size: 14px; line-height: 1.6; color: var(--text-secondary); }
+        @media (min-width: 900px) {
+            .faq-list { grid-template-columns: 1fr 1fr; align-items: start; gap: 12px 14px; }
+            .faq-q { padding: 18px 20px; }
+            .faq-q-text { font-size: 16px; }
+            .faq-a { margin: 0 20px; font-size: 15px; }
+        }
+
+        /* ================================================================
+           SHARE CARD
+           ================================================================ */
+        .share { display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .share .section-title { margin-bottom: 18px; }
+        .share-quote { max-width: 32rem; margin: 0 auto 34px; font-size: 15px; line-height: 1.7; color: var(--text-secondary); }
+        .share-src { display: block; margin-top: 8px; font-family: 'Playfair Display', Georgia, serif; font-size: 14px; color: var(--accent-gold); opacity: 0.8; }
+        .share-actions { display: flex; flex-direction: column; gap: 14px; width: 100%; max-width: 380px; }
+        .site-footer { margin-top: 46px; font-size: 14px; color: var(--text-secondary); opacity: 0.7; }
+        @media (min-width: 640px) {
+            .share-actions { flex-direction: row; justify-content: center; width: auto; max-width: none; }
+            .share-quote { font-size: 16px; }
+        }
+
+        /* ================================================================
+           BUTTONS & CONTROLS
+           ================================================================ */
+        .btn {
+            position: relative; overflow: hidden;
+            display: inline-flex; align-items: center; justify-content: center; gap: 12px;
+            padding: 16px 38px; border-radius: 999px;
+            font-size: 16px; font-weight: 600;
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
+        }
+        .btn svg { width: 20px; height: 20px; }
+        .btn-primary { color: var(--bg-primary); background: var(--accent-gold); }
+        .btn-primary::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 55%;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.35), transparent);
+            border-radius: inherit; pointer-events: none;
+        }
+        .btn-primary:hover { opacity: 0.92; box-shadow: 0 0 30px rgba(212, 175, 55, 0.4); transform: translateY(-4px); }
+        .btn-primary .btn-arrow { transition: transform 0.3s ease; }
+        .btn-primary:hover .btn-arrow { transform: translateX(6px); }
+        .btn-outline { color: var(--text-primary); }
+        .btn-outline:hover { background-color: var(--card-hover); transform: translateY(-4px); }
+        .btn:active { transform: scale(0.96); }
+        .c-btn {
+            width: 44px; height: 44px; border-radius: 50%;
+            display: inline-flex; align-items: center; justify-content: center;
+            color: var(--accent-gold);
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.3s ease, color 0.3s ease;
+        }
+        .c-btn:hover { background: var(--accent-gold); color: var(--bg-primary); }
+        .c-btn:active { transform: scale(0.9); }
+        .c-btn svg { width: 20px; height: 20px; }
+        .c-dots { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 7px; max-width: 220px; }
+        .c-dots button {
+            position: relative; width: 6px; height: 6px; border-radius: 99px;
+            background: var(--text-secondary); opacity: 0.4;
+            transition: width 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease, background-color 0.3s ease;
+        }
+        .c-dots button::before { content: ''; position: absolute; inset: -9px -4px; }
+        .c-dots button[aria-current="true"] { width: 20px; opacity: 1; background: var(--accent-gold); }
+        .only-wide { display: none !important; }
+        @media (min-width: 768px) {
+            .only-wide { display: inline-flex !important; }
+            .only-narrow { display: none !important; }
+        }
+        /* The outline button keeps its gold ring on top of the glass */
+        .btn-outline.glass { border: 2px solid var(--accent-gold); }
+
+        /* ================================================================
+           LOADER
+           ================================================================ */
+        #loader-container {
+            position: fixed; inset: 0; z-index: 90;
+            display: flex; align-items: center; justify-content: center;
+            background: var(--bg-primary);
+            transition: opacity 0.6s ease;
+        }
+        #loader-container.is-fading { opacity: 0; pointer-events: none; }
+        #content-container.is-hidden { display: none; }
         .three-body {
             --uib-size: 45px;
             --uib-speed: 0.8s;
@@ -156,495 +779,156 @@
             width: var(--uib-size);
             animation: spin78236 calc(var(--uib-speed) * 2.5) infinite linear;
         }
-        .three-body__dot {
-            position: absolute;
-            height: 100%;
-            width: 30%;
-        }
-        .three-body__dot:after {
-            content: '';
-            position: absolute;
-            height: 0%;
-            width: 100%;
-            padding-bottom: 100%;
-            background-color: var(--uib-color);
-            border-radius: 50%;
-        }
-        .three-body__dot:nth-child(1) {
-            bottom: 5%;
-            left: 0;
-            transform: rotate(60deg);
-            transform-origin: 50% 85%;
-        }
-        .three-body__dot:nth-child(1)::after {
-            bottom: 0;
-            left: 0;
-            animation: wobble1 var(--uib-speed) infinite;
-            animation-delay: calc(var(--uib-speed) * -0.3);
-        }
-        .three-body__dot:nth-child(2) {
-            bottom: 5%;
-            right: 0;
-            transform: rotate(-60deg);
-            transform-origin: 50% 85%;
-        }
-        .three-body__dot:nth-child(2)::after {
-            bottom: 0;
-            left: 0;
-            animation: wobble1 var(--uib-speed) infinite
-                calc(var(--uib-speed) * -0.15) ease-in-out;
-        }
-        .three-body__dot:nth-child(3) {
-            bottom: -5%;
-            left: 0;
-            transform: translateX(116.666%);
-        }
-        .three-body__dot:nth-child(3)::after {
-            top: 0;
-            left: 0;
-            animation: wobble2 var(--uib-speed) infinite ease-in-out;
-        }
-        @keyframes spin78236 {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        @keyframes wobble1 {
-            0%, 100% { transform: translateY(0%) scale(1); opacity: 1; }
-            50% { transform: translateY(-66%) scale(0.65); opacity: 0.8; }
-        }
-        @keyframes wobble2 {
-            0%, 100% { transform: translateY(0%) scale(1); opacity: 1; }
-            50% { transform: translateY(66%) scale(0.65); opacity: 0.8; }
-        }
+        .three-body__dot { position: absolute; height: 100%; width: 30%; }
+        .three-body__dot:after { content: ''; position: absolute; height: 0%; width: 100%; padding-bottom: 100%; background-color: var(--uib-color); border-radius: 50%; }
+        .three-body__dot:nth-child(1) { bottom: 5%; left: 0; transform: rotate(60deg); transform-origin: 50% 85%; }
+        .three-body__dot:nth-child(1)::after { bottom: 0; left: 0; animation: wobble1 var(--uib-speed) infinite; animation-delay: calc(var(--uib-speed) * -0.3); }
+        .three-body__dot:nth-child(2) { bottom: 5%; right: 0; transform: rotate(-60deg); transform-origin: 50% 85%; }
+        .three-body__dot:nth-child(2)::after { bottom: 0; left: 0; animation: wobble1 var(--uib-speed) infinite calc(var(--uib-speed) * -0.15) ease-in-out; }
+        .three-body__dot:nth-child(3) { bottom: -5%; left: 0; transform: translateX(116.666%); }
+        .three-body__dot:nth-child(3)::after { top: 0; left: 0; animation: wobble2 var(--uib-speed) infinite ease-in-out; }
 
-        /* FAQ Modernisierung */
-        .faq-item {
-            background-color: var(--glass-bg); border: 1px solid var(--glass-border);
-            border-radius: 0.75rem; overflow: hidden; position: relative; z-index: 20;
-            opacity: 0;
-            transform: translateY(18px) scale(0.98);
-            transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.34, 1.3, 0.64, 1),
-                        border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
-        }
-        .faq-item.is-visible { opacity: 1; transform: translateY(0) scale(1); }
-        .faq-item:hover {
-            border-color: var(--accent-gold);
-            background-color: var(--card-hover);
-        }
-        .faq-item.active { border-color: var(--accent-gold); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); }
-        .faq-content-wrapper { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
-        .faq-item.active .faq-content-wrapper { grid-template-rows: 1fr; }
-        .faq-content { overflow: hidden; }
-        .faq-icon { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
-        .faq-item.active .faq-icon { transform: rotate(180deg); color: var(--accent-gold); }
-        
-        /* ===== PROFILE IMAGE - Rotating Ring ===== */
-        .profile-ring-outer {
-            background: conic-gradient(
-                from 0deg,
-                var(--accent-gold),
-                var(--accent-gold-light),
-                transparent 40%,
-                var(--accent-gold-light),
-                var(--accent-gold)
-            );
-            animation: ring-spin 4s linear infinite reverse;
-            border-radius: 50%;
-            padding: 4px;
-        }
-        @keyframes ring-spin {
-            0%   { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .profile-halo {
-            background: radial-gradient(circle, var(--profile-glow) 0%, transparent 70%);
-            animation: halo-breathe 3s ease-in-out infinite alternate;
-        }
-        @keyframes halo-breathe {
-            0%   { opacity: 0.5; transform: scale(0.95); }
-            100% { opacity: 1;   transform: scale(1.1); }
-        }
-        .profile-img-inner {
-            border: 3px solid var(--bg-primary);
-            box-shadow: 0 0 0 1px var(--glass-border), 0 8px 32px rgba(0,0,0,0.3);
-            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        .profile-img-inner:hover { transform: scale(1.04); }
-
-        /* ===== ROADMAP - EXACTLY CENTERED & BISECTED ===== */
-        .roadmap-line-container {
-            position: absolute; left: 7%; top: 0; bottom: 0; width: 2px;
-            background: var(--roadmap-line); overflow: visible;
-            transform: translateX(-50%); 
-        }
-        
-        .roadmap-progress-line {
-            position: absolute; top: 0; left: 0; width: 100%; height: 0%;
-            background: linear-gradient(180deg, var(--accent-gold), var(--accent-gold-light), var(--accent-gold));
-            box-shadow: 0 0 8px 2px rgba(212, 175, 55, 0.5), 0 0 20px rgba(212, 175, 55, 0.2);
-            transition: height 2.8s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .roadmap-traveler {
-            position: absolute; left: 50%; top: 0%; transform: translate(-50%, -50%);
-            width: 10px; height: 10px; border-radius: 50%;
-            background: var(--accent-gold-light);
-            box-shadow: 0 0 12px 4px var(--accent-gold), 0 0 24px 8px rgba(212,175,55,0.3);
-            opacity: 0;
-            transition: top 2.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
-            z-index: 40;
-        }
-        .roadmap-traveler.active { opacity: 1; }
-        
-        .roadmap-item {
-            opacity: 0; transform: translateX(-20px);
-            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.34, 1.3, 0.64, 1);
-            position: relative; z-index: 20;
-        }
-        .roadmap-item.active { opacity: 1; transform: translateX(0); }
-        .roadmap-dot { transform: scale(0); }
-        .roadmap-item.active .roadmap-dot { 
-            transform: scale(1);
-            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        .roadmap-node-wrapper {
-            position: absolute;
-            left: 7%;
-            top: 0;
-            transform: translate(-50%, 0); 
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 0; height: 0;
-            z-index: 30;
-        }
-        .roadmap-node-done {
-            background: var(--accent-gold);
-            border-color: var(--accent-gold);
-            color: var(--bg-primary);
-            box-shadow: 0 0 0 4px rgba(212,175,55,0.2);
-            transition: box-shadow 0.4s ease, transform 0.6s cubic-bezier(0.34,1.56,0.64,1);
-            position: relative; z-index: 10;
-        }
-        .roadmap-node-glow {
-            background: radial-gradient(circle, rgba(212,175,55,0.25) 0%, transparent 70%);
-            transition: transform 0.6s cubic-bezier(0.34,1.56,0.64,1), opacity 0.4s ease;
-            opacity: 0;
-        }
-        .roadmap-item.active .roadmap-node-glow { opacity: 1; }
-        .roadmap-node-active {
-            box-shadow: 0 0 0 4px rgba(212,175,55,0.3), 0 0 24px rgba(212,175,55,0.4);
-        }
-        .roadmap-pulse-ring-1, .roadmap-pulse-ring-2 {
-            width: 2.5rem; height: 2.5rem;
-            background: transparent;
-            border: 2px solid var(--accent-gold);
-            opacity: 0;
-            position: absolute;
-        }
-        @media (min-width: 640px) {
-            .roadmap-pulse-ring-1, .roadmap-pulse-ring-2 { width: 3.5rem; height: 3.5rem; }
-        }
-        .roadmap-item.active .roadmap-pulse-ring-1 {
-            animation: pulse-ring-out 2.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s infinite;
-        }
-        .roadmap-item.active .roadmap-pulse-ring-2 {
-            animation: pulse-ring-out 2.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.9s infinite;
-        }
-        @keyframes pulse-ring-out {
-            0%   { transform: scale(1);   opacity: 0.7; }
-            100% { transform: scale(2.2); opacity: 0; }
-        }
-        .roadmap-card {
-            transition: box-shadow 0.4s ease, opacity 0.4s ease;
-            margin-left: calc(7% + 1.5rem);
-        }
-        @media (min-width: 640px) {
-            .roadmap-card { margin-left: calc(7% + 2.5rem); }
-        }
-        .roadmap-item.active .roadmap-card {
-            box-shadow: -4px 0 20px -4px rgba(212,175,55,0.3), 0 10px 40px -10px rgba(0,0,0,0.1);
-        }
-        @keyframes badge-pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-        .animate-pulse-badge { animation: badge-pulse 2s ease-in-out infinite; }
-        .logo-static {
-            box-shadow: 0 0 30px var(--profile-glow);
-            animation: gentle-breathe 4s ease-in-out infinite alternate;
-        }
-        @keyframes gentle-breathe {
-            0% { box-shadow: 0 0 20px var(--profile-glow); transform: scale(1); }
-            100% { box-shadow: 0 0 40px var(--profile-glow); transform: scale(1.02); }
-        }
-        .project-shine {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to right, transparent 0%, rgba(255,255,255,0.05) 50%, transparent 100%);
-            transform: skewX(-20deg) translateX(-150%); transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); pointer-events: none;
-        }
-        .group:hover .project-shine { transform: skewX(-20deg) translateX(150%); transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
-        
-        /* Wobble Switch */
-        .switch-container { position: absolute; top: 1.5rem; right: 0.5rem; z-index: 100; transform: rotate(90deg); transform-origin: center; }
-        .switch { --INITIAL-SWITCH-TRACK-COLOR: #1e293b; --INITIAL-THUMB-COLOR: #D4AF37; --OVERALL-TRANSITION-DURATION: 500ms; font-size: 8px; position: relative; display: inline-block; width: 3.75em; height: 2em; }
-        .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--INITIAL-SWITCH-TRACK-COLOR); transition: var(--OVERALL-TRANSITION-DURATION); border-radius: 30px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1); }
-        .slider:before { position: absolute; content: ""; height: 100%; aspect-ratio: 1; border-radius: 20px; left: 0; bottom: 0; background-color: var(--INITIAL-THUMB-COLOR); transition: var(--OVERALL-TRANSITION-DURATION); }
-        .switch input:checked + .slider { background-color: var(--INITIAL-THUMB-COLOR); border-color: rgba(0,0,0,0.1); }
-        .switch input:checked + .slider::before { transform-origin: left; background-color: var(--INITIAL-SWITCH-TRACK-COLOR); animation: wobble var(--OVERALL-TRANSITION-DURATION) cubic-bezier(0.075, 0.82, 0.165, 1); transform: scale(1, 1) translateX(1.75em); }
-        .switch input:not(:checked) + .slider::before { transform-origin: right; animation: reverse-wobble var(--OVERALL-TRANSITION-DURATION) cubic-bezier(0.075, 0.82, 0.165, 1); }
-        @keyframes wobble { 0% { transform: scale(1, 1); } 50% { transform: scale(3, 1); } 100% { transform: scale(1, 1) translateX(1.75em); } }
-        @keyframes reverse-wobble { 0% { transform: scale(1, 1) translateX(1.75em); } 50% { transform: scale(3, 1); } 100% { transform: scale(1, 1) translateX(0); } }
-        
-        /* Modal Styles */
+        /* ================================================================
+           MODALS & TOAST
+           ================================================================ */
         #custom-modal, #qr-modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
+            display: none; position: fixed; inset: 0; z-index: 1000;
+            align-items: center; justify-content: center; padding: 20px;
         }
         .modal-overlay {
-            position: absolute;
-            inset: 0;
+            position: absolute; inset: 0;
             background: rgba(15, 23, 42, 0.85);
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(10px) saturate(140%);
+            -webkit-backdrop-filter: blur(10px) saturate(140%);
         }
         .modal-body {
-            position: relative;
-            width: 100%;
-            max-width: 450px;
-            background: var(--bg-primary);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 40px 30px;
-            text-align: center;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            transform: translateY(20px);
-            opacity: 0;
+            width: 100%; max-width: 450px; overflow: hidden;
+            padding: 40px 30px; border-radius: 24px; text-align: center;
+            background: var(--glass-sheen), var(--glass-modal);
+            backdrop-filter: blur(18px) saturate(170%);
+            -webkit-backdrop-filter: blur(18px) saturate(170%);
+            transform: translateY(20px); opacity: 0;
             transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-        #custom-modal.active .modal-body, #qr-modal.active .modal-body {
-            transform: translateY(0);
-            opacity: 1;
-        }
+        #custom-modal.active .modal-body, #qr-modal.active .modal-body { transform: translateY(0); opacity: 1; }
         .modal-close {
-            position: absolute;
-            top: 15px; right: 15px;
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: color 0.2s;
+            position: absolute; top: 15px; right: 15px; z-index: 2;
+            width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+            color: var(--text-secondary); transition: color 0.2s;
         }
         .modal-close:hover { color: var(--accent-gold); }
-
-        /* ===== LIQUID GLASS MATERIAL (restrained) ===== */
-        :root {
-            --glass-spec: rgba(255, 255, 255, 0.4);
-            --glass-edge: rgba(255, 255, 255, 0.14);
-            --glass-shadow: 0 20px 50px -22px rgba(0, 0, 0, 0.5);
+        .modal-close svg { width: 24px; height: 24px; }
+        .modal-avatar { width: 128px; height: 128px; margin: 0 auto 24px; border-radius: 50%; border: 4px solid var(--accent-gold); object-fit: cover; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2); }
+        .modal-title { margin-bottom: 8px; font-size: 24px; font-weight: 700; letter-spacing: 0.025em; color: var(--accent-gold); }
+        .modal-text { margin-bottom: 24px; font-size: 14px; line-height: 1.6; color: var(--text-secondary); }
+        .modal-desc { margin-bottom: 32px; font-style: italic; line-height: 1.6; color: var(--text-secondary); }
+        .modal-cta {
+            position: relative; overflow: hidden; display: block; width: 100%; padding: 16px;
+            border-radius: 999px; font-weight: 700; text-align: center;
+            background: var(--accent-gold); color: var(--bg-primary);
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.2);
         }
-        body.light-mode {
-            --glass-spec: rgba(255, 255, 255, 0.75);
-            --glass-edge: rgba(255, 255, 255, 0.5);
-            --glass-shadow: 0 20px 45px -22px rgba(93, 64, 55, 0.16);
+        .qr-frame { display: inline-block; margin: 0 auto 24px; padding: 16px; border-radius: 12px; background: #fff; overflow: hidden; box-shadow: inset 0 2px 4px rgba(0,0,0,0.06); }
+        .qr-frame img { width: 192px; height: 192px; object-fit: contain; }
+        .btn-soft {
+            position: relative; overflow: hidden; width: 100%; padding: 12px;
+            border-radius: 999px; font-weight: 500;
+            background: var(--glass-border); color: var(--text-primary);
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.3s ease;
         }
-        /* Primary panels: the About card, roadmap cards and modals get the full glass treatment */
-        .glass-container,
-        .modal-body {
-            backdrop-filter: blur(20px) saturate(160%);
-            -webkit-backdrop-filter: blur(20px) saturate(160%);
-            box-shadow: var(--glass-shadow), inset 0 1px 0 0 var(--glass-spec);
-            contain: layout style paint;
-        }
-        .modal-body { position: relative; z-index: 0; overflow: hidden; }
-        .glass-container::before,
-        .modal-body::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            z-index: -1;
-            border-radius: inherit;
-            padding: 1px;
-            background: linear-gradient(135deg, var(--glass-edge), transparent 45%, transparent 65%, var(--glass-edge));
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            pointer-events: none;
-        }
-        /* Small, repeated cards: same soft glass feel, but calm - no edge glow, no tilt, no motion tricks */
-        .callout-item,
-        .faq-item,
-        #projects-slider > div {
-            backdrop-filter: blur(12px) saturate(140%);
-            -webkit-backdrop-filter: blur(12px) saturate(140%);
-            box-shadow: 0 12px 30px -16px rgba(0, 0, 0, 0.35);
-            contain: layout style paint;
-        }
-        .callout-item,
-        #projects-slider > div {
-            position: relative;
-            overflow: hidden;
-        }
-        /* Project cards: gentle staggered entrance only - no tilt, no glow */
-        #projects-slider > div {
-            opacity: 0;
-            transform: translateY(16px);
-            transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1), transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
-        }
-        #projects-slider > div.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        /* Glass sheen cap on solid CTA controls */
-        #copy-link-btn, #show-qr-btn, #qr-close-btn, #modal-link {
-            position: relative;
-            overflow: hidden;
-        }
-        #copy-link-btn::before, #show-qr-btn::before, #qr-close-btn::before, #modal-link::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 55%;
+        .btn-soft::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 55%;
             background: linear-gradient(180deg, rgba(255, 255, 255, 0.35), transparent);
-            border-radius: inherit;
-            pointer-events: none;
+            border-radius: inherit; pointer-events: none;
         }
-        #slide-left, #slide-right {
-            backdrop-filter: blur(16px) saturate(170%);
-            -webkit-backdrop-filter: blur(16px) saturate(170%);
+        .btn-soft:hover { background: var(--card-hover); }
+        .btn-soft:active { transform: scale(0.96); }
+        @media (min-width: 640px) { .qr-frame img { width: 256px; height: 256px; } }
+
+        #toast-message {
+            position: fixed; left: 50%; bottom: 28px; z-index: 70;
+            display: flex; align-items: center; gap: 12px;
+            padding: 14px 22px; border-radius: 999px; white-space: nowrap;
+            border: 1px solid var(--accent-gold);
+            background: var(--glass-sheen), var(--glass-modal);
+            backdrop-filter: blur(18px) saturate(170%);
+            -webkit-backdrop-filter: blur(18px) saturate(170%);
+            box-shadow: var(--glass-shadow), inset 0 1px 0 0 var(--glass-spec);
+            opacity: 0; transform: translate(-50%, 24px); pointer-events: none;
+            transition: opacity 0.5s ease-out, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
         }
-        /* Tactile press feedback - physical, spring-back feel */
-        #copy-link-btn, #show-qr-btn, #qr-close-btn, #slide-left, #slide-right {
-            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
-        }
-        #copy-link-btn:hover, #show-qr-btn:hover {
-            transform: translateY(-4px);
-        }
-        #copy-link-btn:active, #show-qr-btn:active, #qr-close-btn:active {
-            transform: scale(0.96);
-        }
-        #slide-left:active, #slide-right:active {
-            transform: scale(0.9);
-        }
-        .switch .slider {
-            backdrop-filter: blur(10px) saturate(160%);
-            -webkit-backdrop-filter: blur(10px) saturate(160%);
-        }
-        .slider::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 50%;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.3), transparent);
-            pointer-events: none;
-        }
-        .modal-overlay {
-            backdrop-filter: blur(14px) saturate(140%);
-            -webkit-backdrop-filter: blur(14px) saturate(140%);
+        #toast-message.is-visible { opacity: 1; transform: translate(-50%, 0); }
+        #toast-message svg { width: 20px; height: 20px; color: var(--accent-gold); }
+        #toast-message span { font-size: 14px; font-weight: 500; color: var(--text-primary); }
+
+        /* ================================================================
+           SHORT SCREENS - keep each card on one screen where possible
+           ================================================================ */
+        @media (max-height: 720px) {
+            .sheet-inner { padding-top: 22px; padding-bottom: 22px; }
+            .profile-img-inner { width: 124px; height: 124px; }
+            .logo-wrap { margin-bottom: 22px; }
+            .scroll-cue { margin-top: 30px; }
+            .section-title, .projects-title { font-size: 22px; }
+            .about-head { margin-bottom: 16px; }
+            .bismillah { margin-bottom: 12px; font-size: 19px; }
+            .ayah { font-size: 15.5px; line-height: 1.6; }
+            .sadaqa-box { margin-top: 18px; padding: 16px 18px; }
+            .sadaqa-text { font-size: 14px; line-height: 1.55; }
+            .rm-head { margin-bottom: 18px; }
+            .rm-text { font-size: 13.5px; line-height: 1.5; }
+            .roadmap-item { margin-bottom: 12px; }
+            .carousel { --pc-h: 304px; }
+            .p-card { padding: 20px 18px 18px; }
+            .p-icon { width: 46px; height: 46px; margin-bottom: 14px; }
+            .faq-q { padding: 11px 14px; }
+            .faq-q-text { font-size: 14.5px; }
+            .faq-title { margin-bottom: 16px; }
+            .faq-list { gap: 8px; }
         }
 
-        /* ===== PERFORMANCE & MOTION PREFERENCES ===== */
+        /* ================================================================
+           KEYFRAMES
+           ================================================================ */
+        @keyframes text-shine { to { background-position: 200% center; } }
+        @keyframes ring-spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes halo-breathe { 0% { opacity: 0.5; transform: scale(0.95); } 100% { opacity: 1; transform: scale(1.1); } }
+        @keyframes pulse-ring-out { 0% { transform: scale(1); opacity: 0.7; } 100% { transform: scale(2.2); opacity: 0; } }
+        @keyframes badge-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+        @keyframes spin78236 { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes wobble1 { 0%, 100% { transform: translateY(0%) scale(1); opacity: 1; } 50% { transform: translateY(-66%) scale(0.65); opacity: 0.8; } }
+        @keyframes wobble2 { 0%, 100% { transform: translateY(0%) scale(1); opacity: 1; } 50% { transform: translateY(66%) scale(0.65); opacity: 0.8; } }
+        @keyframes nudge { 0%, 100% { transform: translateY(0); opacity: 0.5; } 50% { transform: translateY(4px); opacity: 1; } }
+        @keyframes cue-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(7px); } }
+        @keyframes shine-sweep { from { transform: skewX(-20deg) translateX(-150%); } to { transform: skewX(-20deg) translateX(150%); } }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes count-pulse { 0%, 100% { opacity: 0.55; transform: scale(0.85); } 50% { opacity: 1; transform: scale(1.15); } }
+
+
+        /* ================================================================
+           MOTION PREFERENCES & FALLBACKS
+           ================================================================ */
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after {
                 animation-duration: 0.001ms !important;
                 animation-iteration-count: 1 !important;
                 transition-duration: 0.001ms !important;
+                scroll-behavior: auto !important;
             }
-            .fade-in-section { opacity: 1; transform: none; }
-            .faq-item { opacity: 1; transform: none; }
-        }
-
-        /* ===== RENDERING PERFORMANCE: skip layout/paint work for off-screen sections ===== */
-        #roadmap-section, #callout-section, #projects-section, #faq-section, #share-section {
-            content-visibility: auto;
-        }
-        #roadmap-section { contain-intrinsic-size: 1100px; }
-        #callout-section { contain-intrinsic-size: 650px; }
-        #projects-section { contain-intrinsic-size: 520px; }
-        #faq-section { contain-intrinsic-size: 620px; }
-        #share-section { contain-intrinsic-size: 340px; }
-
-        /* Theme switch: let our own clip-path circle drive the reveal, not the browser's default crossfade */
-        ::view-transition-old(root),
-        ::view-transition-new(root) {
-            animation: none;
-            mix-blend-mode: normal;
-        }
-    
-        /* ===== GLASS v2 + PERFORMANCE LAYER ===== */
-        :root {
-            --glass-sheen: linear-gradient(135deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.025) 45%, rgba(255,255,255,0.06) 100%);
-            --glass-modal: rgba(15, 23, 42, 0.62);
-            --orb-a: rgba(212, 175, 55, 0.26);
-            --orb-b: rgba(71, 105, 160, 0.20);
-            --orb-c: rgba(212, 175, 55, 0.14);
-        }
-        body.light-mode {
-            --glass-sheen: linear-gradient(135deg, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.18) 50%, rgba(255,255,255,0.40) 100%);
-            --glass-modal: rgba(254, 252, 232, 0.72);
-            --orb-a: rgba(217, 119, 6, 0.20);
-            --orb-b: rgba(251, 191, 36, 0.30);
-            --orb-c: rgba(180, 83, 9, 0.12);
-        }
-        /* Static colour fields: give the glass something to refract (one cheap, non-animated layer) */
-        body::before {
-            content: ''; position: fixed; inset: 0; z-index: -2; pointer-events: none;
-            background:
-                radial-gradient(42vmax 42vmax at 10% 6%, var(--orb-a), transparent 70%),
-                radial-gradient(38vmax 38vmax at 94% 40%, var(--orb-b), transparent 70%),
-                radial-gradient(46vmax 46vmax at 22% 96%, var(--orb-c), transparent 70%);
-        }
-        .glass-container, .callout-item, .faq-item, #projects-slider > div { background-image: var(--glass-sheen); }
-        .glass-container, .modal-body {
-            backdrop-filter: blur(24px) saturate(185%);
-            -webkit-backdrop-filter: blur(24px) saturate(185%);
-            box-shadow: var(--glass-shadow), inset 0 1px 0 0 var(--glass-spec), inset 0 -1px 0 0 var(--glass-edge), inset 0 0 40px -18px var(--glass-edge);
-        }
-        .callout-item, .faq-item, #projects-slider > div {
-            backdrop-filter: blur(14px) saturate(165%);
-            -webkit-backdrop-filter: blur(14px) saturate(165%);
-            box-shadow: 0 12px 30px -16px rgba(0, 0, 0, 0.35), inset 0 1px 0 0 var(--glass-spec), inset 0 -1px 0 0 var(--glass-edge);
-        }
-        .special-callout-container { box-shadow: inset 0 0 30px var(--card-hover), inset 0 1px 0 0 var(--glass-spec); }
-        .modal-body { background: var(--glass-modal); background-image: var(--glass-sheen); }
-        #toast-message {
-            background: var(--glass-modal); background-image: var(--glass-sheen);
-            backdrop-filter: blur(18px) saturate(170%); -webkit-backdrop-filter: blur(18px) saturate(170%);
-            box-shadow: var(--glass-shadow), inset 0 1px 0 0 var(--glass-spec);
-        }
-        #show-qr-btn {
-            background-image: var(--glass-sheen);
-            backdrop-filter: blur(12px) saturate(165%); -webkit-backdrop-filter: blur(12px) saturate(165%);
-            box-shadow: inset 0 1px 0 0 var(--glass-spec);
-        }
-        /* Performance */
-        .fade-in-section.is-visible { will-change: auto; }
-        .profile-ring-outer, .profile-halo { will-change: transform; }
-        .anim-paused, .anim-paused *, .anim-paused *::before, .anim-paused *::after { animation-play-state: paused !important; }
-        @media (max-width: 640px) {
-            .glass-container, .modal-body { backdrop-filter: blur(16px) saturate(170%); -webkit-backdrop-filter: blur(16px) saturate(170%); }
-            .callout-item, .faq-item, #projects-slider > div { backdrop-filter: blur(10px) saturate(150%); -webkit-backdrop-filter: blur(10px) saturate(150%); }
+            .fade-in-section, .faq-item, .callout-item, .roadmap-item { opacity: 1; transform: none; }
         }
         @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-            .glass-container, .callout-item, .faq-item, #projects-slider > div, .modal-body { background-color: var(--bg-primary); }
+            .glass { background: var(--glass-sheen), var(--sheet-base); }
+            .modal-body { background: var(--glass-sheen), var(--bg-primary); }
         }
     </style>
 </head>
-<body class="antialiased selection:bg-[var(--accent-gold)] selection:text-[var(--bg-primary)]">
-    <!-- Theme Toggle -->
-    <div class="switch-container">
-        <label class="switch" aria-label="Theme umschalten">
-            <input type="checkbox" id="theme-toggle" />
-            <span class="slider"></span>
-        </label>
-    </div>
-    <!-- Background Canvas -->
+<body>
+    <!-- Floating gold dust -->
     <canvas id="particle-canvas" aria-hidden="true"></canvas>
-    
+
     <!-- Loader UI -->
-    <div id="loader-container" class="fixed inset-0 bg-[var(--bg-primary)] flex justify-center items-center z-50 transition-opacity duration-700">
+    <div id="loader-container">
         <div class="three-body">
             <div class="three-body__dot"></div>
             <div class="three-body__dot"></div>
@@ -655,312 +939,371 @@
     <!-- Modal Channel Info (kept for secondary actions if needed, safely ignored) -->
     <div id="custom-modal">
         <div class="modal-overlay" id="modal-overlay"></div>
-        <div class="modal-body">
-            <div class="modal-close" id="modal-close">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-            </div>
-            <img id="modal-img" src="" alt="" class="w-32 h-32 mx-auto rounded-full border-4 border-[var(--accent-gold)] mb-6 shadow-xl object-cover">
-            <h3 id="modal-title" class="text-2xl font-bold text-[var(--accent-gold)] mb-4 tracking-wide"></h3>
-            <p id="modal-desc" class="text-[var(--text-secondary)] leading-relaxed mb-8 italic"></p>
-            <a id="modal-link" href="" target="_blank" class="inline-block w-full py-4 bg-[var(--accent-gold)] text-[var(--bg-primary)] font-bold rounded-full hover:opacity-90 transition-all shadow-lg">
+        <div class="modal-body glass">
+            <button type="button" class="modal-close" id="modal-close" aria-label="Schließen">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <img id="modal-img" alt="" class="modal-avatar">
+            <h3 id="modal-title" class="modal-title"></h3>
+            <p id="modal-desc" class="modal-desc"></p>
+            <a id="modal-link" href="" target="_blank" rel="noopener" class="modal-cta">
                 Zum Telegram-Kanal
             </a>
         </div>
     </div>
+
     <!-- Modal QR Code -->
     <div id="qr-modal">
         <div class="modal-overlay" id="qr-modal-overlay"></div>
-        <div class="modal-body">
-            <div class="modal-close" id="qr-modal-close">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        <div class="modal-body glass" role="dialog" aria-modal="true" aria-labelledby="qr-title">
+            <button type="button" class="modal-close" id="qr-modal-close" aria-label="Schließen">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <div class="qr-frame">
+                <img src="https://i.imgur.com/9GoR7tl.png" alt="SANAABIL QR Code" loading="lazy" decoding="async">
             </div>
-            <div class="bg-white p-4 rounded-xl inline-block mb-6 shadow-inner mx-auto overflow-hidden">
-                <img src="https://i.imgur.com/9GoR7tl.png" alt="SANAABIL QR Code" loading="lazy" decoding="async" class="w-48 h-48 sm:w-64 sm:h-64 object-contain">
-            </div>
-            <h3 class="text-2xl font-bold text-[var(--accent-gold)] mb-2 tracking-wide">Initiative teilen</h3>
-            <p class="text-[var(--text-secondary)] text-sm mb-6 leading-relaxed">
+            <h3 class="modal-title" id="qr-title">Initiative teilen</h3>
+            <p class="modal-text">
                 Lass andere den QR-Code scannen,<br>um Teil der Gemeinschaft zu werden in sha ALLAH
             </p>
-            <button id="qr-close-btn" class="w-full py-3 bg-[var(--glass-border)] text-[var(--text-primary)] font-medium rounded-full hover:bg-[var(--card-hover)] transition-all">
+            <button type="button" id="qr-close-btn" class="btn-soft">
                 Schließen
             </button>
         </div>
     </div>
-    
+
     <!-- Main Content -->
-    <div id="content-container" class="hidden opacity-0 transition-opacity duration-1000 ease-out">
-        
-        <!-- Header with Center Logo and Elegant Button below SANAABIL -->
-        <header class="text-center pt-24 pb-14 px-4 fade-in-section" style="--delay: 0.1s;">
-            <!-- Center Logo -->
-            <div class="relative inline-flex flex-col items-center justify-center z-20 mb-8">
-                <a href="https://chat.whatsapp.com/IJ2prCPPeU2ApH4MVcMBcq" target="_blank" class="relative inline-flex items-center justify-center group/logo">
-                    <div class="profile-ring-outer absolute rounded-full" style="width:calc(100% + 8px);height:calc(100% + 8px);top:-4px;left:-4px;"></div>
-                    <div class="absolute rounded-full profile-halo w-40 h-40 md:w-56 md:h-56"></div>
-                    <img src="https://i.imgur.com/4rrmnBh.jpeg" 
-                         alt="SANAABIL Community Logo" width="192" height="192" decoding="async" 
-                         class="w-32 h-32 md:w-48 md:h-48 mx-auto rounded-full object-cover relative z-10 profile-img-inner group-hover/logo:scale-[1.02] transition-transform duration-500" 
-                         fetchpriority="high">
-                </a>
-                <span class="mt-4 text-[9px] uppercase tracking-[0.2em] text-[var(--text-secondary)] opacity-40 font-medium">Klick zum Gruppenbeitritt</span>
+    <div id="content-container" class="is-hidden">
+        <nav class="deck-nav" id="deck-nav" aria-label="Abschnitte"></nav>
+
+        <main class="deck" id="deck">
+            <div class="deck-track" style="--n: 7;">
+                <div class="snap-rail" aria-hidden="true">
+                    <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                </div>
+
+                <!-- ========== CARD 1: HERO ========== -->
+                <section class="deck-card" data-label="SANAABIL">
+                    <div class="sheet">
+                        <span class="blob gold" style="--s: 280px; top: -90px; right: -90px;"></span>
+                        <span class="blob blue" style="--s: 320px; bottom: -120px; left: -120px;"></span>
+                        <div class="sheet-scroll">
+                            <div class="sheet-inner">
+                                <header class="sheet-content hero fade-in-section" style="--delay: 0.1s;">
+                                    <div class="logo-wrap">
+                                        <a href="https://chat.whatsapp.com/IJ2prCPPeU2ApH4MVcMBcq" target="_blank" rel="noopener" class="logo-link">
+                                            <span class="profile-halo" aria-hidden="true"></span>
+                                            <span class="profile-ring-outer" aria-hidden="true"></span>
+                                            <img src="https://i.imgur.com/4rrmnBh.jpeg" alt="SANAABIL Community Logo" class="profile-img-inner" width="196" height="196" decoding="async" fetchpriority="high">
+                                        </a>
+                                        <span class="logo-hint">Klick zum Gruppenbeitritt</span>
+                                    </div>
+                                    <h1 class="sanaabil-title">SANAABIL</h1>
+                                    <p class="hero-tagline">Mit wenig viel bewirken</p>
+                                    <button type="button" class="scroll-cue glass" data-goto="1" aria-label="Weiter">
+                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                    </button>
+                                </header>
+                            </div>
+                        </div>
+                        <div class="sheet-fade" aria-hidden="true"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></div>
+                        <div class="sheet-shade" aria-hidden="true"></div>
+                    </div>
+                </section>
+
+                <!-- ========== CARD 2: ABOUT ========== -->
+                <section class="deck-card" data-label="Über unsere Gemeinschaft">
+                    <div class="sheet">
+                        <span class="blob gold" style="--s: 260px; top: 46%; right: -120px;"></span>
+                        <span class="blob blue" style="--s: 240px; top: -90px; left: -80px;"></span>
+                        <div class="sheet-scroll">
+                            <div class="sheet-inner">
+                                <div class="sheet-content fade-in-section" style="--delay: 0.05s;">
+                                    <div class="about-head">
+                                        <span class="head-line l"></span>
+                                        <h2 class="section-title">Über unsere Gemeinschaft</h2>
+                                        <span class="head-line r"></span>
+                                    </div>
+                                    <p class="bismillah">
+                                        بسم الله الرحمن الرحيم
+                                    </p>
+                                    <p class="ayah">
+                                            Das Gleichnis derjenigen, die ihren Besitz auf dem Weg Allahs ausgeben, ist das eines Saatkorns, das sieben Ähren wachsen lässt, (und) in jeder Ähre (befinden sich) hundert Körner. Und Allah vervielfacht, wem Er will, und Allah ist (all)umfassend und (all)wissend.
+                                    </p>
+                                    <div class="sadaqa-box glass">
+                                        <p class="sadaqa-title">1€ Sadaqa:</p>
+                                        <p class="sadaqa-text">
+                                            Wir sind eine private Gemeinschaft, die gemeinsam durch kleine, monatliche Beiträge Gutes bewirken möchte. Diese Seite dient ausschließlich zur Präsentation unserer Arbeit, damit wir transparent zeigen können, was wir gemeinsam erreichen wollen in sha ALLAH.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sheet-fade" aria-hidden="true"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></div>
+                        <div class="sheet-shade" aria-hidden="true"></div>
+                    </div>
+                </section>
+
+                <!-- ========== CARD 3: ROADMAP ========== -->
+                <section class="deck-card" data-label="Unsere Roadmap">
+                    <div class="sheet">
+                        <span class="blob gold" style="--s: 230px; top: 26%; left: -110px;"></span>
+                        <span class="blob blue" style="--s: 280px; bottom: -110px; right: -100px;"></span>
+                        <div class="sheet-scroll">
+                            <div class="sheet-inner">
+                                <div class="sheet-content fade-in-section" id="roadmap-section" style="--delay: 0.05s;">
+                                    <h2 class="section-title rm-head">Unsere Roadmap</h2>
+                                    <div class="timeline">
+                                        <div class="roadmap-line-container">
+                                            <div class="roadmap-progress-line" id="progress-line"></div>
+                                            <div class="roadmap-traveler" id="roadmap-traveler"></div>
+                                        </div>
+                                        <!-- Roadmap Item 1 -->
+                                        <div class="roadmap-item" data-index="1">
+                                            <div class="roadmap-node-wrapper">
+                                                <div class="roadmap-node-glow roadmap-dot"></div>
+                                                <div class="node roadmap-dot roadmap-node-done">
+                                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                                                </div>
+                                            </div>
+                                            <div class="roadmap-card glass done">
+                                                <span class="rm-badge">Abgeschlossen</span>
+                                                <h3 class="rm-title">Start der Community</h3>
+                                                <p class="rm-text">Der offizielle Start unserer Sadaqa-Initiative ist für Rabi' al-Thani 1447 in sha ALLAH geplant. Wir beginnen mit der Sammlung der ersten monatlichen Beiträge.</p>
+                                            </div>
+                                        </div>
+                                        <!-- Roadmap Item 2 -->
+                                        <div class="roadmap-item" data-index="2">
+                                            <div class="roadmap-node-wrapper">
+                                                <div class="roadmap-node-glow roadmap-dot"></div>
+                                                <div class="node roadmap-dot roadmap-node-done">
+                                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                                                </div>
+                                            </div>
+                                            <div class="roadmap-card glass done">
+                                                <span class="rm-badge">Abgeschlossen</span>
+                                                <h3 class="rm-title">Erstes Projekt</h3>
+                                                <p class="rm-text">Nach dem erfolgreichen Start in sha ALLAH, werden wir gemeinsam das erste Projekt auswählen, das wir unterstützen möchten.</p>
+                                            </div>
+                                        </div>
+                                        <!-- Roadmap Item 3 -->
+                                        <div class="roadmap-item" data-index="3">
+                                            <div class="roadmap-node-wrapper">
+                                                <div class="roadmap-pulse-ring-1 roadmap-dot"></div>
+                                                <div class="roadmap-pulse-ring-2 roadmap-dot"></div>
+                                                <div class="node roadmap-dot roadmap-node-active">3</div>
+                                            </div>
+                                            <div class="roadmap-card glass is-current">
+                                                <span class="rm-badge live">● Jetzt aktiv</span>
+                                                <h3 class="rm-title">Laufende Unterstützung</h3>
+                                                <p class="rm-text">In sha ALLAH werden wir weiterhin monatlich spenden und neue Wege finden, um Gutes zu tun.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sheet-fade" aria-hidden="true"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></div>
+                        <div class="sheet-shade" aria-hidden="true"></div>
+                    </div>
+                </section>
+
+                <!-- ========== CARD 4: CALLOUT (quote rail) ========== -->
+                <section class="deck-card" data-label="Ein Aufruf">
+                    <div class="sheet sheet--glow">
+                        <span class="blob gold" style="--s: 300px; top: 30%; left: 50%; margin-left: -150px;"></span>
+                        <span class="blob blue" style="--s: 260px; top: -110px; right: -90px;"></span>
+                        <div class="sheet-scroll">
+                            <div class="sheet-inner">
+                                <div class="sheet-content sheet-content--full fade-in-section" id="callout-section" style="--delay: 0.05s;">
+                                    <div class="callout-head">
+                                        <span class="callout-badge">Ein Aufruf</span>
+                                    </div>
+                                    <div class="quote-rail" id="callout-texts"></div>
+                                    <div class="rail-controls">
+                                        <button type="button" class="c-btn glass only-wide" id="quote-prev" aria-label="Vorheriges Zitat">
+                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                                        </button>
+                                        <div class="c-dots" id="quote-dots"></div>
+                                        <button type="button" class="c-btn glass only-wide" id="quote-next" aria-label="Nächstes Zitat">
+                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sheet-fade" aria-hidden="true"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></div>
+                        <div class="sheet-shade" aria-hidden="true"></div>
+                    </div>
+                </section>
+
+                <!-- ========== CARD 5: PROJECTS (3D carousel) ========== -->
+                <section class="deck-card" data-label="Abgeschlossene Projekte">
+                    <div class="sheet">
+                        <span class="blob blue" style="--s: 260px; top: -100px; left: -100px;"></span>
+                        <span class="blob gold" style="--s: 300px; bottom: -130px; right: -110px;"></span>
+                        <div class="sheet-scroll">
+                            <div class="sheet-inner">
+                                <div class="sheet-content sheet-content--wide projects fade-in-section" id="projects-section" style="--delay: 0.05s;">
+                                    <h2 class="projects-title">
+                                        <span class="pt-main">
+                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                            Abgeschlossene Projekte:
+                                        </span>
+                                        <span class="pt-count">
+                                            <span id="project-counter" class="count-glow">0</span>
+                                            <span>الحمد لله</span>
+                                        </span>
+                                    </h2>
+
+                                    <div class="carousel" id="projects-carousel" tabindex="0" role="region" aria-roledescription="Karussell" aria-label="Abgeschlossene Projekte">
+                                        <div class="carousel-floor" aria-hidden="true"></div>
+                                        <div class="carousel-ring" id="projects-slider"></div>
+                                    </div>
+
+                                    <div class="carousel-controls">
+                                        <button type="button" id="slide-left" class="c-btn glass" aria-label="Vorheriges Projekt">
+                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                                        </button>
+                                        <div class="c-dots" id="project-dots"></div>
+                                        <button type="button" id="slide-right" class="c-btn glass" aria-label="Nächstes Projekt">
+                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                                        </button>
+                                    </div>
+
+                                    <div class="swipe-hint only-narrow">
+                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                                        <span>Wischen für mehr</span>
+                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sheet-fade" aria-hidden="true"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></div>
+                        <div class="sheet-shade" aria-hidden="true"></div>
+                    </div>
+                </section>
+
+                <!-- ========== CARD 6: FAQ ========== -->
+                <section class="deck-card" data-label="Häufige Fragen">
+                    <div class="sheet">
+                        <span class="blob gold" style="--s: 260px; top: -100px; right: -90px;"></span>
+                        <span class="blob blue" style="--s: 280px; bottom: 8%; left: -140px;"></span>
+                        <div class="sheet-scroll">
+                            <div class="sheet-inner">
+                                <div class="sheet-content sheet-content--wide fade-in-section" id="faq-section" style="--delay: 0.05s;">
+                                    <h2 class="section-title faq-title">
+                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                        Häufige Fragen
+                                    </h2>
+                                    <div id="faq-container" class="faq-list"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sheet-fade" aria-hidden="true"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></div>
+                        <div class="sheet-shade" aria-hidden="true"></div>
+                    </div>
+                </section>
+
+                <!-- ========== CARD 7: SHARE ========== -->
+                <section class="deck-card" data-label="Teile die Initiative">
+                    <div class="sheet">
+                        <span class="blob blue" style="--s: 240px; top: -90px; left: -90px;"></span>
+                        <span class="blob gold" style="--s: 320px; bottom: -150px; left: 50%; margin-left: -160px;"></span>
+                        <div class="sheet-scroll">
+                            <div class="sheet-inner">
+                                <div class="sheet-content share fade-in-section" id="share-section" style="--delay: 0.05s;">
+                                    <h2 class="section-title">Teile die Initiative</h2>
+                                    <p class="share-quote">
+                                        „[...] Wer auf Gutes hinweist, erhält den gleichen Lohn wie derjenige, der es tut."
+                                        <span class="share-src">[Sahih Muslim - 1893]</span>
+                                    </p>
+                                    <div class="share-actions">
+                                        <button type="button" id="copy-link-btn" aria-label="Link kopieren" class="btn btn-primary">
+                                            Link kopieren
+                                            <svg class="btn-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                                        </button>
+                                        <button type="button" id="show-qr-btn" aria-label="QR Code anzeigen" class="btn btn-outline glass">
+                                            QR Code
+                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path></svg>
+                                        </button>
+                                    </div>
+                                    <footer class="site-footer">
+                                        <p>SANAABIL &copy; 1447 AH</p>
+                                    </footer>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sheet-fade" aria-hidden="true"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></div>
+                        <div class="sheet-shade" aria-hidden="true"></div>
+                    </div>
+                </section>
             </div>
-            
-            <div class="mt-4">
-                <h1 class="text-4xl md:text-6xl font-bold mb-3 tracking-widest uppercase sanaabil-title drop-shadow-sm">
-                    SANAABIL
-                </h1>
-                <p class="text-xs md:text-sm font-medium tracking-[0.25em] text-[var(--text-secondary)] uppercase mb-8">
-                    Mit wenig viel bewirken
-                </p>
-            </div>
-        </header>
-
-        <main class="max-w-4xl mx-auto px-5 pb-24 relative z-20">
-            <!-- About Section -->
-            <section class="glass-container p-8 md:p-10 rounded-2xl mb-14 fade-in-section" style="--delay: 0.2s;">
-                <div class="flex items-center space-x-6 mb-8">
-                    <div class="h-px flex-1 bg-gradient-to-r from-transparent to-[var(--accent-gold)] opacity-50"></div>
-                    <h2 class="text-2xl md:text-3xl font-medium text-[var(--accent-gold)] text-center tracking-wide">Über unsere Gemeinschaft</h2>
-                    <div class="h-px flex-1 bg-gradient-to-l from-transparent to-[var(--accent-gold)] opacity-50"></div>
-                </div>
-                
-                <p class="text-center text-[var(--text-secondary)] font-serif text-xl mb-8">
-                    بسم الله الرحمن الرحيم
-                </p>
-                <div class="text-[var(--text-primary)] space-y-6 leading-relaxed font-light text-[1.05rem]">
-                    <p class="text-center italic opacity-90">
-                            Das Gleichnis derjenigen, die ihren Besitz auf dem Weg Allahs ausgeben, ist das eines Saatkorns, das sieben Ähren wachsen lässt, (und) in jeder Ähre (befinden sich) hundert Körner. Und Allah vervielfacht, wem Er will, und Allah ist (all)umfassend und (all)wissend.
-                    </p>
-                    <div class="bg-[var(--card-hover)] p-6 rounded-xl border border-[var(--glass-border)] mt-6 shadow-inner">
-                        <div class="flex items-center gap-2 mb-3">
-                            <p class="font-semibold text-[var(--accent-gold)] text-lg">1€ Sadaqa:</p>
-                        </div>
-                        <p class="text-sm md:text-base text-[var(--text-secondary)] leading-relaxed">
-                            Wir sind eine private Gemeinschaft, die gemeinsam durch kleine, monatliche Beiträge Gutes bewirken möchte. Diese Seite dient ausschließlich zur Präsentation unserer Arbeit, damit wir transparent zeigen können, was wir gemeinsam erreichen wollen in sha ALLAH.
-                        </p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Timeline Section -->
-            <section id="roadmap-section" class="mb-24 fade-in-section" style="--delay: 0.3s;">
-                <h2 class="text-2xl md:text-3xl font-medium text-[var(--accent-gold)] text-center mb-16 tracking-wide">Unsere Roadmap</h2>
-                <div class="relative py-2">
-                    <div class="roadmap-line-container">
-                        <div class="roadmap-progress-line" id="progress-line"></div>
-                        <div class="roadmap-traveler" id="roadmap-traveler"></div>
-                    </div>
-                    <!-- Roadmap Item 1 -->
-                    <div class="mb-14 relative roadmap-item" data-index="1">
-                        <div class="roadmap-node-wrapper" style="top: 2rem;">
-                            <div class="roadmap-node-glow roadmap-dot absolute w-10 h-10 sm:w-14 sm:h-14 rounded-full"></div>
-                            <div class="w-8 h-8 sm:w-12 sm:h-12 rounded-full border-2 z-10 flex items-center justify-center font-bold roadmap-dot roadmap-node-done">
-                                <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
-                            </div>
-                        </div>
-                        <div class="glass-container p-6 sm:p-8 rounded-2xl roadmap-card opacity-80 hover:opacity-100 transition-opacity">
-                            <div class="flex items-center gap-2 mb-2">
-                                <span class="text-[9px] font-bold uppercase tracking-widest text-[var(--accent-gold)] bg-[var(--card-hover)] px-2 py-0.5 rounded-full border border-[var(--glass-border)]">Abgeschlossen</span>
-                            </div>
-                            <h3 class="text-xl sm:text-2xl font-medium text-[var(--text-primary)] mb-3">Start der Community</h3>
-                            <p class="text-[var(--text-secondary)] text-sm sm:text-base leading-relaxed">Der offizielle Start unserer Sadaqa-Initiative ist für Rabi' al-Thani 1447 in sha ALLAH geplant. Wir beginnen mit der Sammlung der ersten monatlichen Beiträge.</p>
-                        </div>
-                    </div>
-                    <!-- Roadmap Item 2 -->
-                    <div class="mb-14 relative roadmap-item" data-index="2">
-                        <div class="roadmap-node-wrapper" style="top: 2rem;">
-                            <div class="roadmap-node-glow roadmap-dot absolute w-10 h-10 sm:w-14 sm:h-14 rounded-full"></div>
-                            <div class="w-8 h-8 sm:w-12 sm:h-12 rounded-full border-2 z-10 flex items-center justify-center font-bold roadmap-dot roadmap-node-done">
-                                <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
-                            </div>
-                        </div>
-                        <div class="glass-container p-6 sm:p-8 rounded-2xl roadmap-card opacity-80 hover:opacity-100 transition-opacity">
-                            <div class="flex items-center gap-2 mb-2">
-                                <span class="text-[9px] font-bold uppercase tracking-widest text-[var(--accent-gold)] bg-[var(--card-hover)] px-2 py-0.5 rounded-full border border-[var(--glass-border)]">Abgeschlossen</span>
-                            </div>
-                            <h3 class="text-xl sm:text-2xl font-medium text-[var(--text-primary)] mb-3">Erstes Projekt</h3>
-                            <p class="text-[var(--text-secondary)] text-sm sm:text-base leading-relaxed">Nach dem erfolgreichen Start in sha ALLAH, werden wir gemeinsam das erste Projekt auswählen, das wir unterstützen möchten.</p>
-                        </div>
-                    </div>
-                    <!-- Roadmap Item 3 -->
-                    <div class="relative roadmap-item" data-index="3">
-                        <div class="roadmap-node-wrapper" style="top: 2rem;">
-                            <div class="roadmap-pulse-ring-1 absolute rounded-full roadmap-dot"></div>
-                            <div class="roadmap-pulse-ring-2 absolute rounded-full roadmap-dot"></div>
-                            <div class="w-8 h-8 sm:w-12 sm:h-12 rounded-full border-2 border-[var(--accent-gold)] z-10 flex items-center justify-center text-[var(--bg-primary)] bg-[var(--accent-gold)] font-bold roadmap-dot roadmap-node-active">3</div>
-                        </div>
-                        <div class="glass-container p-6 sm:p-8 rounded-2xl roadmap-card border-l-4 border-l-[var(--accent-gold)] shadow-[0_8px_32px_var(--card-hover)]">
-                            <div class="flex items-center gap-2 mb-2">
-                                <span class="text-[9px] font-bold uppercase tracking-widest text-[var(--bg-primary)] bg-[var(--accent-gold)] px-2 py-0.5 rounded-full animate-pulse-badge">● Jetzt aktiv</span>
-                            </div>
-                            <h3 class="text-xl sm:text-2xl font-medium text-[var(--accent-gold)] mb-3">Laufende Unterstützung</h3>
-                            <p class="text-[var(--text-secondary)] text-sm sm:text-base leading-relaxed">In sha ALLAH werden wir weiterhin monatlich spenden und neue Wege finden, um Gutes zu tun.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Callout Section (Masonry Grid) -->
-            <section class="special-callout-container p-8 md:p-12 rounded-3xl mb-24 fade-in-section" style="--delay: 0.4s;" id="callout-section">
-                <div class="text-center mb-10">
-                    <span class="text-[var(--accent-gold)] uppercase tracking-widest text-xs font-bold border-b border-[var(--accent-gold)] pb-1">Ein Aufruf</span>
-                </div>
-                <!-- Grid Container for Masonry effect -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start" id="callout-texts"></div>
-            </section>
-
-            <!-- Projects Slider -->
-            <section class="fade-in-section relative group/slider mb-24" style="--delay: 0.5s;" id="projects-section">
-                <h2 class="text-2xl md:text-3xl font-medium text-[var(--accent-gold)] mb-8 flex flex-wrap items-center justify-center md:justify-start gap-y-2">
-                    <span class="flex items-center">
-                        <svg class="w-6 h-6 mr-3 text-[var(--accent-gold)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        Abgeschlossene Projekte:
-                    </span>
-                    <span class="flex items-center ml-2">
-                        <span id="project-counter" class="mx-2">0</span>
-                        <span>الحمد لله</span>
-                    </span>
-                </h2>
-                
-                <button id="slide-left" aria-label="Vorheriges Projekt" class="absolute -left-5 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-[var(--glass-bg)] border border-[var(--glass-border)] text-[var(--accent-gold)] opacity-0 group-hover/slider:opacity-100 transition-all hidden md:flex hover:bg-[var(--accent-gold)] hover:text-[var(--bg-primary)] hover:scale-110 backdrop-blur-md">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
-                </button>
-                <button id="slide-right" aria-label="Nächstes Projekt" class="absolute -right-5 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-[var(--glass-bg)] border border-[var(--glass-border)] text-[var(--accent-gold)] opacity-0 group-hover/slider:opacity-100 transition-all hidden md:flex hover:bg-[var(--accent-gold)] hover:text-[var(--bg-primary)] hover:scale-110 backdrop-blur-md">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                </button>
-                <div id="projects-slider" class="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-6 no-scrollbar scroll-smooth px-2"></div>
-                
-                <div class="text-center mt-4 md:hidden flex justify-center items-center gap-2 text-[var(--text-secondary)] opacity-60">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                    <span class="text-xs font-medium uppercase tracking-wider">Wischen für mehr</span>
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                </div>
-            </section>
-            
-            <!-- FAQ Section -->
-            <section id="faq-section" class="fade-in-section mb-20" style="--delay: 0.6s;">
-                <div class="flex items-center justify-center md:justify-start mb-10">
-                    <h2 class="text-2xl md:text-3xl font-medium text-[var(--accent-gold)] flex items-center">
-                        <svg class="w-7 h-7 mr-3 text-[var(--accent-gold)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        Häufige Fragen
-                    </h2>
-                </div>
-                <div id="faq-container" class="space-y-4"></div>
-            </section>
-            
-            <!-- Share Section -->
-            <section id="share-section" class="text-center py-16 border-t border-[var(--glass-border)] fade-in-section" style="--delay: 0.7s;">
-                <h2 class="text-2xl md:text-3xl font-medium text-[var(--accent-gold)] mb-6 font-serif">Teile die Initiative</h2>
-                <p class="text-[var(--text-secondary)] text-sm md:text-base max-w-lg mx-auto mb-10 leading-relaxed">
-                    „[...] Wer auf Gutes hinweist, erhält den gleichen Lohn wie derjenige, der es tut."
-                    <span class="block text-[var(--accent-gold)] mt-2 font-serif text-sm opacity-80">[Sahih Muslim - 1893]</span>
-                </p>
-                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                    <button id="copy-link-btn" aria-label="Link kopieren" class="w-full sm:w-auto group relative inline-flex items-center justify-center px-10 py-4 text-base font-semibold text-[var(--bg-primary)] bg-[var(--accent-gold)] rounded-full overflow-hidden transition-all duration-300 hover:opacity-90 hover:shadow-[0_0_30px_rgba(212,175,55,0.4)] hover:-translate-y-1">
-                        <span class="relative z-10 flex items-center">
-                            Link kopieren
-                            <svg class="ml-3 w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
-                        </span>
-                    </button>
-                    <button id="show-qr-btn" aria-label="QR Code anzeigen" class="w-full sm:w-auto group relative inline-flex items-center justify-center px-10 py-4 text-base font-semibold text-[var(--text-primary)] border-2 border-[var(--accent-gold)] rounded-full overflow-hidden transition-all duration-300 hover:bg-[var(--card-hover)] hover:-translate-y-1">
-                        <span class="relative z-10 flex items-center">
-                            QR Code
-                            <svg class="ml-3 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1v-2a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1z"></path></svg>
-                        </span>
-                    </button>
-                </div>
-            </section>
-            
-            <footer class="text-center text-[var(--text-secondary)] text-sm mt-12 pb-8 opacity-70">
-                <p>SANAABIL &copy; 1447 AH</p>
-            </footer>
         </main>
-        
-        <div id="toast-message" class="toast fixed bottom-8 left-1/2 -translate-x-1/2 px-6 py-4 bg-[var(--bg-primary)] border border-[var(--accent-gold)] rounded-full shadow-2xl transition-all duration-500 ease-out opacity-0 translate-y-8 pointer-events-none z-50 flex items-center gap-3">
-            <svg class="w-5 h-5 text-[var(--accent-gold)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-            <span class="text-sm font-medium text-[var(--text-primary)]">Link in die Zwischenablage kopiert</span>
+
+        <div id="toast-message" role="status" aria-live="polite">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            <span>Link in die Zwischenablage kopiert</span>
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const toggle = document.getElementById('theme-toggle');
             const body = document.body;
             const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const smooth = prefersReducedMotion ? 'auto' : 'smooth';
 
-            // Respect a saved choice, otherwise follow the system's light/dark preference
-            let savedTheme = null;
-            try { savedTheme = localStorage.getItem('sanaabil-theme'); } catch (err) { /* storage unavailable - fall back to system preference */ }
-            const systemPrefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
-            const initialIsLight = savedTheme ? savedTheme === 'light' : systemPrefersLight;
-            body.classList.toggle('light-mode', initialIsLight);
-            toggle.checked = initialIsLight;
+            /* =============================================================
+               THEME - follows the phone's light/dark setting (pure CSS);
+               only the particle tint has to hear about a change
+               ============================================================= */
+            try { localStorage.removeItem('sanaabil-theme'); } catch (err) { /* storage unavailable */ }
+            const lightQuery = window.matchMedia('(prefers-color-scheme: light)');
+            const onSchemeChange = () => refreshParticleColor();
+            if (lightQuery.addEventListener) lightQuery.addEventListener('change', onSchemeChange);
+            else if (lightQuery.addListener) lightQuery.addListener(onSchemeChange);
 
-            let lastToggleX = window.innerWidth - 40;
-            let lastToggleY = 40;
-            toggle.addEventListener('click', (e) => {
-                // Keyboard-triggered clicks report no real coordinates - fall back to the switch's own position
-                if (e.detail === 0) {
-                    const r = toggle.getBoundingClientRect();
-                    lastToggleX = r.left + r.width / 2;
-                    lastToggleY = r.top + r.height / 2;
-                } else {
-                    lastToggleX = e.clientX;
-                    lastToggleY = e.clientY;
-                }
-            });
-            toggle.addEventListener('change', () => {
-                const isLight = toggle.checked;
-                try { localStorage.setItem('sanaabil-theme', isLight ? 'light' : 'dark'); } catch (err) { /* ignore */ }
-
-                const applyTheme = () => body.classList.toggle('light-mode', isLight);
-
-                if (prefersReducedMotion || !document.startViewTransition) {
-                    applyTheme();
-                    return;
-                }
-                // Innovative touch: the theme sweeps outward from the switch itself, like light spreading through glass
-                const endRadius = Math.hypot(
-                    Math.max(lastToggleX, window.innerWidth - lastToggleX),
-                    Math.max(lastToggleY, window.innerHeight - lastToggleY)
-                );
-                const transition = document.startViewTransition(applyTheme);
-                transition.ready.then(() => {
-                    document.documentElement.animate(
-                        { clipPath: [`circle(0px at ${lastToggleX}px ${lastToggleY}px)`, `circle(${endRadius}px at ${lastToggleX}px ${lastToggleY}px)`] },
-                        { duration: 650, easing: 'cubic-bezier(0.65, 0, 0.35, 1)', pseudoElement: '::view-transition-new(root)' }
-                    );
-                }).catch(() => {});
-            });
-            
+            /* =============================================================
+               MODALS
+               ============================================================= */
             const modal = document.getElementById('custom-modal');
             const qrModal = document.getElementById('qr-modal');
-            
+            const anyModalOpen = () => modal.classList.contains('active') || qrModal.classList.contains('active');
+
+            const qrBtn = document.getElementById('show-qr-btn');
+            const qrCloseX = document.getElementById('qr-modal-close');
             const closeModal = () => {
+                if (!modal.classList.contains('active')) return;
                 modal.classList.remove('active');
-                setTimeout(() => modal.style.display = 'none', 400);
+                setTimeout(() => { if (!modal.classList.contains('active')) modal.style.display = 'none'; }, 400);
             };
             const closeQrModal = () => {
+                if (!qrModal.classList.contains('active')) return;
                 qrModal.classList.remove('active');
-                setTimeout(() => qrModal.style.display = 'none', 400);
+                setTimeout(() => { if (!qrModal.classList.contains('active')) qrModal.style.display = 'none'; }, 400);
+                try { qrBtn.focus({ preventScroll: true }); } catch (err) { /* ignore */ }
             };
             document.getElementById('modal-close').addEventListener('click', closeModal);
             document.getElementById('modal-overlay').addEventListener('click', closeModal);
-            
-            document.getElementById('show-qr-btn').addEventListener('click', () => {
+
+            qrBtn.addEventListener('click', () => {
                 qrModal.style.display = 'flex';
-                setTimeout(() => qrModal.classList.add('active'), 10);
+                requestAnimationFrame(() => requestAnimationFrame(() => qrModal.classList.add('active')));
+                setTimeout(() => { try { qrCloseX.focus({ preventScroll: true }); } catch (err) { /* ignore */ } }, 80);
             });
             document.getElementById('qr-modal-close').addEventListener('click', closeQrModal);
             document.getElementById('qr-modal-overlay').addEventListener('click', closeQrModal);
             document.getElementById('qr-close-btn').addEventListener('click', closeQrModal);
-            window.addEventListener('keydown', (e) => { 
-                if(e.key === 'Escape') {
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
                     closeModal();
                     closeQrModal();
                 }
             });
 
+            /* =============================================================
+               CONTENT
+               ============================================================= */
             const calloutData = [
                 { text: 'O die ihr glaubt, gebt aus von dem, womit Wir euch versorgt haben, bevor ein Tag kommt, an dem es keinen Verkauf, keine Freundschaft und keine Fürsprache gibt! Und die Ungläubigen sind die Ungerechten.', source: '[Qur\'an - 2:254]' },
                 { text: 'Diejenigen, die ihren Besitz auf dem Weg Allahs ausgeben und hierauf dem, was sie ausgegeben haben, weder (Dankbarkeit einfordernde) Vorhaltung (ihrer Gabe) noch Ungemach nachfolgen lassen, für sie wird es ihren Lohn bei ihrem Herrn geben, und keine Furcht soll über sie kommen, noch sollen sie traurig sein.', source: '[Qur\'an - 2:262]' },
@@ -982,7 +1325,8 @@
                 { title: 'Schuldenhilfe für Bruder', location: 'Deutschland', amount: '180,00 €', iconPath: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z', bgIcon: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' },
                 { title: 'Madrasa-Bau', location: 'Afghanistan', amount: '1.171,99 €', iconPath: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5s3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18s-3.332.477-4.5 1.253', bgIcon: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5s3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18s-3.332.477-4.5 1.253', isStroke: true },
                 { title: 'Finanzielle Unterstützung eines Bruders', location: 'Deutschland', amount: '100,00 €', iconPath: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z', bgIcon: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' },
-                { title: 'Unterstützung von Waisenkindern', location: 'Weltweit', amount: '500,00 €', iconPath: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z', bgIcon: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' }
+                { title: 'Unterstützung von Waisenkindern', location: 'Weltweit', amount: '500,00 €', iconPath: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z', bgIcon: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' },
+                { title: 'Finanzielle Unterstützung eines Bruders', location: 'Medina', amount: '235,80 €', iconPath: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z', bgIcon: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' }
             ];
 
             const faqData = [
@@ -996,80 +1340,438 @@
                 { q: "Gibt es Bilder oder Videos als Nachweis?", a: "Ja, entsprechende Nachweise werden intern in der Community, oder auf Anfrage geteilt in sha ALLAH" }
             ];
 
-            // Render Callout items in Grid
-            document.getElementById('callout-texts').innerHTML = calloutData.map(item => `
-                <div class="callout-item group">
-                    <blockquote class="quote-text mb-4">"${item.text}"</blockquote>
-                    <p class="text-[10px] md:text-xs text-[var(--accent-gold)] font-serif tracking-widest uppercase text-right opacity-80 group-hover:opacity-100 transition-opacity">${item.source}</p>
+            // Quotes -> swipeable rail
+            const rail = document.getElementById('callout-texts');
+            rail.innerHTML = calloutData.map((item, i) => `
+                <div class="quote-slide" data-index="${i}">
+                    <div class="callout-item glass">
+                        <blockquote class="quote-text">"${item.text}"</blockquote>
+                        <p class="quote-src">${item.source}</p>
+                        <span class="q-dim" aria-hidden="true"></span>
+                    </div>
                 </div>
             `).join('');
 
-            document.getElementById('projects-slider').innerHTML = projectsData.map((p, i) => `
-                <div class="snap-center flex-shrink-0 w-[85%] sm:w-[320px] group relative overflow-hidden rounded-2xl bg-[var(--glass-bg)] border border-[var(--glass-border)] transition-all duration-300 hover:shadow-[0_10px_30px_var(--card-hover)] hover:-translate-y-1">
-                    <div class="absolute -right-6 -top-6 text-[var(--accent-gold)] opacity-[0.03] transform ${i%2===0?'rotate-12':'-rotate-6'} group-hover:scale-110 transition-transform duration-700">
-                        <svg class="w-32 h-32" ${p.isStroke ? 'fill="none" stroke="currentColor"' : 'fill="currentColor"'} viewBox="0 0 24 24"><path ${p.isStroke ? 'stroke-linecap="round" stroke-linejoin="round" stroke-width="3"' : ''} d="${p.bgIcon}"></path></svg>
-                    </div>
-                    <div class="p-6 md:p-8 relative z-10 flex flex-col h-full">
-                        <div class="w-14 h-14 rounded-full border border-[var(--glass-border)] bg-[var(--bg-primary)] shadow-sm flex items-center justify-center mb-5 text-[var(--accent-gold)] group-hover:bg-[var(--accent-gold)] group-hover:text-[var(--bg-primary)] transition-all duration-300">
-                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${p.iconPath}"></path></svg>
+            // Projects -> slides on a 3D ring
+            const ring = document.getElementById('projects-slider');
+            ring.innerHTML = projectsData.map((p, i) => `
+                <div class="p-slide" role="group" aria-roledescription="Folie" aria-label="${i + 1} / ${projectsData.length}">
+                    <article class="p-card">
+                        <div class="p-bg-icon ${i % 2 === 0 ? 'rot-a' : 'rot-b'}" aria-hidden="true">
+                            <svg ${p.isStroke ? 'fill="none" stroke="currentColor"' : 'fill="currentColor"'} viewBox="0 0 24 24"><path ${p.isStroke ? 'stroke-linecap="round" stroke-linejoin="round" stroke-width="3"' : ''} d="${p.bgIcon}"></path></svg>
                         </div>
-                        <h3 class="text-xl font-semibold text-[var(--text-primary)] mb-1 group-hover:text-[var(--accent-gold)] transition-colors">${p.title}</h3>
-                        <p class="text-sm text-[var(--text-secondary)] font-serif italic mb-6">${p.location}</p>
-                        <div class="mt-auto pt-5 border-t border-[var(--glass-border)] flex flex-col gap-2">
-                            <div>
-                                <p class="text-[var(--text-secondary)] text-[10px] font-semibold uppercase tracking-widest mb-1">${p.isPending ? 'Status' : 'Gespendet'}</p>
-                                <p class="text-[var(--text-primary)] font-bold text-xl">${p.amount}</p>
-                            </div>
-                            <div class="mt-2">
-                                ${p.isPending ? `
-                                <span class="inline-flex items-center px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wide bg-amber-500/10 text-amber-500 border border-amber-500/30 w-full animate-pulse-badge">
-                                    <svg class="mr-1.5 h-3 w-3 flex-shrink-0 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>
+                        <div class="p-icon" aria-hidden="true">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${p.iconPath}"></path></svg>
+                        </div>
+                        <h3 class="p-title">${p.title}</h3>
+                        <p class="p-loc">${p.location}</p>
+                        <div class="p-foot">
+                            <p class="p-label">${p.isPending ? 'Status' : 'Gespendet'}</p>
+                            <p class="p-amount">${p.amount}</p>
+                            ${p.isPending ? `
+                            <span class="p-badge pending">
+                                <span class="p-badge-main">
+                                    <svg class="spin" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle opacity="0.25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path opacity="0.75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>
                                     In Arbeit
-                                    <span class="ml-1 opacity-75 font-serif normal-case tracking-normal text-xs flex-1 text-right">| in sha ALLAH</span>
                                 </span>
-                                ` : `
-                                <span class="inline-flex items-center px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wide bg-[var(--success-bg)] text-[var(--success-text)] border border-[var(--success-border)] w-full">
-                                    <svg class="mr-1.5 h-3 w-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                                <span class="p-badge-note">| in sha ALLAH</span>
+                            </span>
+                            ` : `
+                            <span class="p-badge ok">
+                                <span class="p-badge-main">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
                                     Erfolgreich
-                                    <span class="ml-1 opacity-75 font-serif normal-case tracking-normal text-xs flex-1 text-right">| wa lillahi-l hamd</span>
                                 </span>
-                                `}
-                            </div>
+                                <span class="p-badge-note">| wa lillahi-l hamd</span>
+                            </span>
+                            `}
                         </div>
-                    </div>
-                    <div class="project-shine"></div>
+                        <div class="project-shine" aria-hidden="true"></div>
+                    </article>
                 </div>
             `).join('');
 
+            // FAQ
             const faqContainer = document.getElementById('faq-container');
             faqContainer.innerHTML = faqData.map((f, i) => `
-                <div class="faq-item cursor-pointer group" tabindex="0" role="button" aria-expanded="false">
-                    <div class="flex justify-between items-center p-5 md:p-6">
-                        <span class="text-[var(--text-primary)] font-medium text-base md:text-lg"><span class="text-[var(--accent-gold)] font-bold mr-3 opacity-80">${i+1}.</span>${f.q}</span>
-                        <svg class="faq-icon w-6 h-6 text-[var(--text-secondary)] group-hover:text-[var(--accent-gold)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                <div class="faq-item glass" tabindex="0" role="button" aria-expanded="false">
+                    <div class="faq-q">
+                        <span class="faq-q-text"><span class="faq-num">${i + 1}.</span>${f.q}</span>
+                        <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </div>
                     <div class="faq-content-wrapper">
-                        <div class="faq-content px-5 md:px-6">
-                            <p class="text-[var(--text-secondary)] text-sm md:text-base leading-relaxed border-t border-[var(--glass-border)] pt-4 pb-5">${f.a}</p>
+                        <div class="faq-content">
+                            <p class="faq-a">${f.a}</p>
                         </div>
                     </div>
                 </div>
             `).join('');
 
-            window.addEventListener('load', () => {
-                const loader = document.getElementById('loader-container');
-                const content = document.getElementById('content-container');
-                setTimeout(() => {
-                    loader.classList.add('opacity-0');
-                    setTimeout(() => {
-                        loader.style.display = 'none';
-                        content.classList.remove('hidden');
-                        requestAnimationFrame(() => content.classList.remove('opacity-0'));
-                    }, 700);
-                }, 150);
+            /* =============================================================
+               CARD DECK
+               Native scrolling + scroll snap does the paging; this code only
+               adds the stacking depth (cards behind shrink, darken and peek
+               out above the card on top) and keyboard / wheel paging.
+               ============================================================= */
+            const deck = document.getElementById('deck');
+            const cards = Array.from(deck.querySelectorAll('.deck-card'));
+            const sheets = cards.map(c => c.querySelector('.sheet'));
+            const scrollers = sheets.map(s => s.querySelector('.sheet-scroll'));
+            const projectsCardIndex = cards.indexOf(document.getElementById('projects-section').closest('.deck-card'));
+            const deckNav = document.getElementById('deck-nav');
+            deckNav.innerHTML = cards.map((c, i) => `<button type="button" data-goto="${i}" aria-label="${c.dataset.label}"></button>`).join('');
+            const navButtons = Array.from(deckNav.children);
+
+            let H = 0, active = -1;
+            let navTarget = null, navTimer = 0;
+            const depthCache = cards.map(() => -1);
+            const goneTimers = cards.map(() => 0);
+
+            function readDeckMetrics() { H = deck.clientHeight; }
+
+            // Set which card is on top and how deep every other card sits in the stack.
+            // Only writes when the top card changes; the motion itself is a CSS transition
+            // on the card's own compositor layer.
+            function setActive(a) {
+                if (a === navTarget) navTarget = null;
+                if (a === active) return;
+                active = a;
+                for (let i = 0; i < cards.length; i++) {
+                    const d = i < a ? Math.min(a - i, 4) : 0;
+                    if (depthCache[i] !== d) {
+                        cards[i].dataset.depth = String(d);
+                        depthCache[i] = d;
+                        clearTimeout(goneTimers[i]);
+                        if (d >= 4) {
+                            // fully covered: stop rendering it once it has slid back
+                            goneTimers[i] = setTimeout(() => { if (depthCache[i] >= 4) cards[i].classList.add('is-gone'); }, 620);
+                        } else {
+                            cards[i].classList.remove('is-gone');
+                        }
+                    }
+                    cards[i].classList.toggle('is-active', i === a);
+                }
+                navButtons.forEach((btn, i) => btn.setAttribute('aria-current', i === a ? 'true' : 'false'));
+                if (a === projectsCardIndex) pauseAuto(3200);
+            }
+
+            // The snap point crossing the middle of the screen marks the card on top.
+            // IntersectionObserver reports this after layout, so scrolling never forces extra work.
+            const snapPoints = Array.from(deck.querySelectorAll('.snap-rail > span'));
+            const centerHits = new Set();
+            const deckObserver = new IntersectionObserver((entries) => {
+                entries.forEach(en => {
+                    const i = snapPoints.indexOf(en.target);
+                    if (en.isIntersecting) centerHits.add(i); else centerHits.delete(i);
+                });
+                if (centerHits.size) setActive(Math.max(...centerHits));
+            }, { root: deck, rootMargin: '-50% 0px -50% 0px', threshold: 0 });
+            snapPoints.forEach(sp => deckObserver.observe(sp));
+            deck.addEventListener('touchstart', () => { navTarget = null; }, { passive: true });
+
+            const baseIndex = () => (navTarget !== null ? navTarget : Math.max(active, 0));
+            function goTo(i) {
+                i = Math.max(0, Math.min(cards.length - 1, i));
+                navTarget = i;
+                clearTimeout(navTimer);
+                navTimer = setTimeout(() => { navTarget = null; }, 1400);
+                deck.scrollTo({ top: i * H, behavior: smooth });
+            }
+            document.addEventListener('click', (e) => {
+                const trigger = e.target.closest('[data-goto]');
+                if (trigger) goTo(parseInt(trigger.dataset.goto, 10));
             });
 
-            const observer = new IntersectionObserver((entries, obs) => {
+            const canScroll = (el, dir) => {
+                if (!el) return false;
+                return dir > 0 ? el.scrollTop + el.clientHeight < el.scrollHeight - 2 : el.scrollTop > 1;
+            };
+
+            // Mouse wheel / trackpad: one gesture = one card. A card's own overflow scrolls first.
+            let lastWheelT = 0, wheelOwner = null, wheelPaged = false, wheelAcc = 0;
+            deck.addEventListener('wheel', (e) => {
+                if (e.ctrlKey || e.defaultPrevented || anyModalOpen()) return;
+                const dy = e.deltaMode === 1 ? e.deltaY * 16 : e.deltaY;
+                if (Math.abs(e.deltaX) > Math.abs(dy) || dy === 0) return;
+                const dir = dy > 0 ? 1 : -1;
+                const now = performance.now();
+                const fresh = now - lastWheelT > 200;
+                lastWheelT = now;
+                const scroller = e.target.closest ? e.target.closest('.sheet-scroll') : null;
+                if (fresh) {
+                    wheelOwner = (scroller && canScroll(scroller, dir)) ? scroller : null;
+                    wheelPaged = false;
+                    wheelAcc = 0;
+                }
+                if (wheelOwner) {
+                    // Gesture belongs to the card's own content: never let its tail flip the page
+                    if (!canScroll(wheelOwner, dir)) e.preventDefault();
+                    return;
+                }
+                e.preventDefault();
+                if (wheelPaged) return;
+                wheelAcc += dy;
+                if (Math.abs(wheelAcc) < 18) return;
+                wheelPaged = true;
+                goTo(baseIndex() + (wheelAcc > 0 ? 1 : -1));
+            }, { passive: false });
+
+            // Keyboard paging
+            document.addEventListener('keydown', (e) => {
+                if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey || anyModalOpen()) return;
+                const t = e.target;
+                if (t.closest && t.closest('input, textarea, select, [contenteditable="true"]')) return;
+                let dir = 0, small = false;
+                switch (e.key) {
+                    case 'ArrowDown': dir = 1; small = true; break;
+                    case 'ArrowUp': dir = -1; small = true; break;
+                    case 'PageDown': dir = 1; break;
+                    case 'PageUp': dir = -1; break;
+                    case ' ':
+                    case 'Spacebar':
+                        if (t.closest && t.closest('button, a, [role="button"], label')) return;
+                        dir = e.shiftKey ? -1 : 1; break;
+                    case 'Home': e.preventDefault(); goTo(0); return;
+                    case 'End': e.preventDefault(); goTo(cards.length - 1); return;
+                    default: return;
+                }
+                e.preventDefault();
+                const scroller = scrollers[Math.max(active, 0)];
+                if (navTarget === null && canScroll(scroller, dir)) {
+                    scroller.scrollBy({ top: dir * (small ? 90 : scroller.clientHeight * 0.85), behavior: smooth });
+                } else {
+                    goTo(baseIndex() + dir);
+                }
+            });
+
+            // Tabbing into another card brings that card to the top of the stack
+            deck.addEventListener('focusin', (e) => {
+                const i = cards.indexOf(e.target.closest('.deck-card'));
+                if (i >= 0 && i !== active && i !== navTarget) goTo(i);
+            });
+
+            // "More content inside this card" hint
+            const hasMore = scrollers.map(() => false);
+            function refreshHasMore(i) {
+                const s = scrollers[i];
+                const more = s.scrollHeight - s.clientHeight - s.scrollTop > 6;
+                if (more !== hasMore[i]) { hasMore[i] = more; sheets[i].classList.toggle('has-more', more); }
+            }
+            scrollers.forEach((s, i) => s.addEventListener('scroll', () => refreshHasMore(i), { passive: true }));
+
+            /* =============================================================
+               3D PROJECT CAROUSEL
+               Every card sits on a ring and is projected on its own, which
+               renders the same in every browser (no preserve-3d quirks).
+               ============================================================= */
+            const carousel = document.getElementById('projects-carousel');
+            const slides = Array.from(ring.children);
+            const slideCards = slides.map(s => s.firstElementChild);
+            const N = slides.length;
+            const theta = 360 / N;
+            const dotsWrap = document.getElementById('project-dots');
+            dotsWrap.innerHTML = slides.map((_, i) => `<button type="button" aria-label="Projekt ${i + 1}"></button>`).join('');
+            const dots = Array.from(dotsWrap.children);
+            const mod = (a, n) => ((a % n) + n) % n;
+            const slideState = slides.map(() => ({ t: '', o: '', z: '', hidden: false }));
+
+            let radius = 0, cardW = 0, current = -1, animRaf = 0;
+            // Start a little rotated so the ring can spin into place when the card appears
+            let angle = prefersReducedMotion ? 0 : theta * 2;
+            let targetAngle = angle;
+            let autoPausedUntil = 0;
+            const pauseAuto = (ms = 12000) => { autoPausedUntil = performance.now() + ms; };
+
+            function renderRing() {
+                if (!radius) return;
+                const idx = mod(Math.round(-angle / theta), N);
+                for (let i = 0; i < N; i++) {
+                    const a = mod(i * theta + angle + 180, 360) - 180; // this card's angle on the ring, -180..180
+                    const ad = Math.abs(a);
+                    const st = slideState[i];
+                    slides[i].classList.toggle('is-active', i === idx);
+                    const hide = ad > 100;
+                    if (hide !== st.hidden) { slides[i].style.visibility = hide ? 'hidden' : ''; st.hidden = hide; }
+                    if (hide) continue;
+                    const t = `translateZ(${-radius}px) rotateY(${a.toFixed(2)}deg) translateZ(${radius}px)`;
+                    if (t !== st.t) { slides[i].style.transform = t; st.t = t; }
+                    const z = String(300 - Math.round(ad));
+                    if (z !== st.z) { slides[i].style.zIndex = z; st.z = z; }
+                    const slots = ad / theta;
+                    const o = (slots > 3.2 ? 0 : Math.max(0, 1 - slots * 0.28)).toFixed(3);
+                    if (o !== st.o) { slideCards[i].style.opacity = o; st.o = o; }
+                }
+                if (idx !== current) {
+                    current = idx;
+                    dots.forEach((d, i) => d.setAttribute('aria-current', i === idx ? 'true' : 'false'));
+                }
+            }
+            const easeOut = (t) => 1 - Math.pow(1 - t, 4);
+            function animateTo(target, duration) {
+                cancelAnimationFrame(animRaf);
+                animRaf = 0;
+                const from = angle;
+                const delta = target - from;
+                if (prefersReducedMotion || !radius || Math.abs(delta) < 0.01) { angle = target; renderRing(); return; }
+                const start = performance.now();
+                const frame = (now) => {
+                    const t = Math.min(1, (now - start) / duration);
+                    angle = from + delta * easeOut(t);
+                    renderRing();
+                    animRaf = t < 1 ? requestAnimationFrame(frame) : 0;
+                };
+                animRaf = requestAnimationFrame(frame);
+            }
+            function goToSlide(target, duration = 950) {
+                const cont = -targetAngle / theta;
+                const t = target + N * Math.round((cont - target) / N); // shortest way round
+                targetAngle = -t * theta;
+                animateTo(targetAngle, duration);
+            }
+            const stepSlide = (dir) => goToSlide(Math.round(-targetAngle / theta) + dir);
+            function layoutCarousel() {
+                const w = slides[0] ? slides[0].offsetWidth : 0;
+                if (!w) return;
+                cardW = w;
+                radius = Math.round((w / 2) / Math.tan(Math.PI / N) + w * 0.12);
+                slideState.forEach(st => { st.t = ''; });
+                renderRing();
+            }
+
+            document.getElementById('slide-left').addEventListener('click', () => { pauseAuto(); stepSlide(-1); });
+            document.getElementById('slide-right').addEventListener('click', () => { pauseAuto(); stepSlide(1); });
+            dots.forEach((d, i) => d.addEventListener('click', () => { pauseAuto(); goToSlide(i); }));
+            carousel.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft') { e.preventDefault(); pauseAuto(); stepSlide(-1); }
+                else if (e.key === 'ArrowRight') { e.preventDefault(); pauseAuto(); stepSlide(1); }
+            });
+
+            // Drag / swipe to spin the ring (vertical swipes still page the deck)
+            let dragging = false, dragMoved = false, dragPid = null, dragStartX = 0, dragStartY = 0;
+            let dragStartAngle = 0, dragLastX = 0, dragLastT = 0, dragVel = 0, dragRaf = 0, suppressClick = false;
+            carousel.addEventListener('pointerdown', (e) => {
+                if (e.pointerType === 'mouse' && e.button !== 0) return;
+                dragging = true; dragMoved = false; dragPid = e.pointerId;
+                dragStartX = dragLastX = e.clientX; dragStartY = e.clientY;
+                dragLastT = performance.now(); dragVel = 0;
+            });
+            carousel.addEventListener('pointermove', (e) => {
+                if (!dragging || e.pointerId !== dragPid) return;
+                if (!dragMoved) {
+                    const dx0 = e.clientX - dragStartX;
+                    if (Math.abs(dx0) < 6) return;
+                    if (Math.abs(e.clientY - dragStartY) > Math.abs(dx0)) { dragging = false; return; }
+                    dragMoved = true;
+                    try { carousel.setPointerCapture(dragPid); } catch (err) { /* ignore */ }
+                    cancelAnimationFrame(animRaf); animRaf = 0;
+                    dragStartAngle = angle;
+                    dragStartX = e.clientX;
+                    carousel.classList.add('is-dragging');
+                    pauseAuto();
+                }
+                const now = performance.now();
+                const dt = Math.max(1, now - dragLastT);
+                dragVel = dragVel * 0.6 + ((e.clientX - dragLastX) / dt) * 0.4;
+                dragLastX = e.clientX; dragLastT = now;
+                angle = dragStartAngle + ((e.clientX - dragStartX) / (cardW || 240)) * theta * 1.05;
+                targetAngle = angle;
+                if (!dragRaf) dragRaf = requestAnimationFrame(() => { dragRaf = 0; renderRing(); });
+            });
+            const endDrag = (e) => {
+                if (!dragging || (e && e.pointerId !== dragPid)) return;
+                dragging = false;
+                if (!dragMoved) return;
+                if (dragRaf) { cancelAnimationFrame(dragRaf); dragRaf = 0; }
+                carousel.classList.remove('is-dragging');
+                suppressClick = true;
+                setTimeout(() => { suppressClick = false; }, 0);
+                const projected = angle + (dragVel * 220 / (cardW || 240)) * theta;
+                const startIdx = Math.round(-dragStartAngle / theta);
+                let target = Math.round(-projected / theta);
+                target = Math.max(startIdx - 3, Math.min(startIdx + 3, target));
+                targetAngle = angle;
+                pauseAuto();
+                goToSlide(target, 700);
+            };
+            carousel.addEventListener('pointerup', endDrag);
+            carousel.addEventListener('pointercancel', endDrag);
+            // Touch pointers start out captured by the card under the finger; moving the capture to the
+            // carousel fires lostpointercapture on that card, which bubbles up here - ignore those.
+            carousel.addEventListener('lostpointercapture', (e) => { if (e.target === carousel) endDrag(e); });
+            // Tap a side card to bring it to the front
+            ring.addEventListener('click', (e) => {
+                if (suppressClick) return;
+                const s = e.target.closest('.p-slide');
+                if (s && !s.classList.contains('is-active')) { pauseAuto(); goToSlide(slides.indexOf(s)); }
+            });
+            // Horizontal trackpad swipes
+            let cWheelAcc = 0, cWheelLock = 0;
+            carousel.addEventListener('wheel', (e) => {
+                if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
+                e.preventDefault();
+                const now = performance.now();
+                if (now < cWheelLock) return;
+                cWheelAcc += e.deltaX;
+                if (Math.abs(cWheelAcc) > 50) {
+                    stepSlide(cWheelAcc > 0 ? 1 : -1);
+                    cWheelAcc = 0; cWheelLock = now + 450; pauseAuto();
+                }
+            }, { passive: false });
+            // Gentle auto-rotation while the projects card is on top
+            setInterval(() => {
+                if (prefersReducedMotion || document.hidden || dragging) return;
+                if (active !== projectsCardIndex || anyModalOpen()) return;
+                if (performance.now() < autoPausedUntil) return;
+                if (carousel.matches(':hover') || carousel.contains(document.activeElement)) return;
+                stepSlide(1);
+            }, 4200);
+
+            /* =============================================================
+               QUOTE RAIL
+               ============================================================= */
+            const qSlides = Array.from(rail.querySelectorAll('.quote-slide'));
+            const qDotsWrap = document.getElementById('quote-dots');
+            qDotsWrap.innerHTML = qSlides.map((_, i) => `<button type="button" aria-label="Zitat ${i + 1}"></button>`).join('');
+            const qDots = Array.from(qDotsWrap.children);
+            let qCenters = [], qActive = -1;
+            function measureRail() {
+                qCenters = qSlides.map(sl => sl.offsetLeft + sl.offsetWidth / 2);
+            }
+            function setQuote(best) {
+                if (best === qActive) return;
+                qActive = best;
+                qSlides.forEach((sl, i) => sl.classList.toggle('is-current', i === best));
+                qDots.forEach((btn, i) => btn.setAttribute('aria-current', i === best ? 'true' : 'false'));
+            }
+            const railHits = new Set();
+            const railObserver = new IntersectionObserver((entries) => {
+                entries.forEach(en => {
+                    const i = qSlides.indexOf(en.target);
+                    if (en.isIntersecting) railHits.add(i); else railHits.delete(i);
+                });
+                if (railHits.size) setQuote(Math.min(...railHits));
+            }, { root: rail, rootMargin: '0px -50% 0px -50%', threshold: 0 });
+            qSlides.forEach(sl => railObserver.observe(sl));
+            const railGo = (i) => {
+                i = Math.max(0, Math.min(qSlides.length - 1, i));
+                if (!qCenters.length) measureRail();
+                rail.scrollTo({ left: qCenters[i] - rail.clientWidth / 2, behavior: smooth });
+            };
+            qDots.forEach((b, i) => b.addEventListener('click', () => railGo(i)));
+            document.getElementById('quote-prev').addEventListener('click', () => railGo(qActive - 1));
+            document.getElementById('quote-next').addEventListener('click', () => railGo(qActive + 1));
+
+            /* =============================================================
+               REVEALS
+               ============================================================= */
+            const onceVisible = (el, threshold, fn) => {
+                if (!el) return;
+                const io = new IntersectionObserver((entries) => {
+                    if (entries.some(en => en.isIntersecting)) { io.disconnect(); fn(); }
+                }, { threshold });
+                io.observe(el);
+            };
+            const revealObserver = new IntersectionObserver((entries, obs) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('is-visible');
@@ -1077,131 +1779,134 @@
                     }
                 });
             }, { threshold: 0.1 });
-            document.querySelectorAll('.fade-in-section').forEach(el => observer.observe(el));
+            document.querySelectorAll('.fade-in-section').forEach(el => revealObserver.observe(el));
 
-            const roadmapSection = document.getElementById('roadmap-section');
-            if(roadmapSection) {
-                const roadmapObserver = new IntersectionObserver((entries) => {
-                    if (entries[0].isIntersecting) {
-                        document.getElementById('progress-line').style.height = '100%';
-                        const traveler = document.getElementById('roadmap-traveler');
-                        traveler.classList.add('active');
-                        setTimeout(() => { 
-                            traveler.style.top = '100%'; 
-                            setTimeout(() => traveler.classList.remove('active'), 2800);
-                        }, 50);
-                        document.querySelectorAll('.roadmap-item').forEach((item, index) => {
-                            setTimeout(() => item.classList.add('active'), index * 600 + 300);
-                        });
-                        roadmapObserver.disconnect();
-                    }
-                }, { threshold: 0.15 });
-                roadmapObserver.observe(roadmapSection);
-            }
+            // Roadmap: line grows, a light travels down, nodes pop in one by one
+            onceVisible(document.getElementById('roadmap-section'), 0.15, () => {
+                document.getElementById('progress-line').style.height = '100%';
+                const traveler = document.getElementById('roadmap-traveler');
+                traveler.classList.add('active');
+                setTimeout(() => {
+                    traveler.style.top = '100%';
+                    setTimeout(() => traveler.classList.remove('active'), 2800);
+                }, 50);
+                document.querySelectorAll('.roadmap-item').forEach((item, index) => {
+                    setTimeout(() => item.classList.add('active'), index * 600 + 300);
+                });
+            });
 
+            // Quotes drift in one after another
+            onceVisible(document.getElementById('callout-section'), 0.15, () => {
+                document.querySelectorAll('.callout-item').forEach((item, index) => {
+                    setTimeout(() => item.classList.add('is-visible'), prefersReducedMotion ? 0 : index * 110 + 100);
+                });
+            });
+
+            // Projects: counter counts up while the ring spins into place
             const projectCounter = document.getElementById('project-counter');
-            const projectSection = document.getElementById('projects-section');
-            if(projectSection) {
-                const projectObserver = new IntersectionObserver((entries) => {
-                    if (entries[0].isIntersecting) {
-                        const target = projectsData.length;
-                        const cards = document.querySelectorAll('#projects-slider > div');
-                        if (prefersReducedMotion) {
-                            projectCounter.innerText = target;
-                            cards.forEach(card => card.classList.add('is-visible'));
-                        } else {
-                            // Eased count-up (fast start, gentle settle) instead of a flat metronome tick
-                            const start = performance.now();
-                            const duration = 1400;
-                            function tickCounter(now) {
-                                const t = Math.min((now - start) / duration, 1);
-                                const eased = 1 - Math.pow(1 - t, 3);
-                                projectCounter.innerText = Math.round(eased * target);
-                                if (t < 1) requestAnimationFrame(tickCounter);
-                            }
-                            requestAnimationFrame(tickCounter);
-                            cards.forEach((card, index) => {
-                                setTimeout(() => card.classList.add('is-visible'), index * 90 + 120 + Math.random() * 60);
-                            });
-                        }
-                        projectObserver.disconnect();
-                    }
-                }, { threshold: 0.2 });
-                projectObserver.observe(projectSection);
-            }
-
-            // Stagger the callout quotes in one after another
-            const calloutSection = document.getElementById('callout-section');
-            if (calloutSection) {
+            onceVisible(document.getElementById('projects-section'), 0.2, () => {
+                const target = projectsData.length;
                 if (prefersReducedMotion) {
-                    document.querySelectorAll('.callout-item').forEach(item => item.classList.add('is-visible'));
-                } else {
-                    const calloutObserver = new IntersectionObserver((entries) => {
-                        if (entries[0].isIntersecting) {
-                            document.querySelectorAll('.callout-item').forEach((item, index) => {
-                                setTimeout(() => item.classList.add('is-visible'), index * 110 + 100 + Math.random() * 60);
-                            });
-                            calloutObserver.disconnect();
-                        }
-                    }, { threshold: 0.15 });
-                    calloutObserver.observe(calloutSection);
+                    projectCounter.textContent = target;
+                    return;
                 }
-            }
+                const start = performance.now();
+                const duration = 1400;
+                const tickCounter = (now) => {
+                    const t = Math.min((now - start) / duration, 1);
+                    projectCounter.textContent = Math.round((1 - Math.pow(1 - t, 3)) * target);
+                    if (t < 1) requestAnimationFrame(tickCounter);
+                };
+                requestAnimationFrame(tickCounter);
+                goToSlide(0, 1900);
+            });
 
-            // Stagger the FAQ items in one after another, like the roadmap reveal
-            const faqSection = faqContainer.closest('section');
-            if (faqSection) {
-                if (prefersReducedMotion) {
-                    document.querySelectorAll('.faq-item').forEach(item => item.classList.add('is-visible'));
-                } else {
-                    const faqObserver = new IntersectionObserver((entries) => {
-                        if (entries[0].isIntersecting) {
-                            document.querySelectorAll('.faq-item').forEach((item, index) => {
-                                setTimeout(() => item.classList.add('is-visible'), index * 100 + 150 + Math.random() * 60);
-                            });
-                            faqObserver.disconnect();
-                        }
-                    }, { threshold: 0.15 });
-                    faqObserver.observe(faqSection);
-                }
-            }
+            // FAQ items cascade in
+            onceVisible(faqContainer, 0.1, () => {
+                document.querySelectorAll('.faq-item').forEach((item, index) => {
+                    setTimeout(() => item.classList.add('is-visible'), prefersReducedMotion ? 0 : index * 90 + 120);
+                });
+            });
 
-            faqContainer.addEventListener('click', (e) => {
-                const item = e.target.closest('.faq-item');
-                if (!item) return;
+            /* =============================================================
+               FAQ
+               ============================================================= */
+            function toggleFaq(item) {
                 const isActive = item.classList.contains('active');
-                document.querySelectorAll('.faq-item').forEach(el => {
+                faqContainer.querySelectorAll('.faq-item').forEach(el => {
                     el.classList.remove('active');
                     el.setAttribute('aria-expanded', 'false');
                 });
-                if (!isActive) {
-                    item.classList.add('active');
-                    item.setAttribute('aria-expanded', 'true');
-                }
+                if (isActive) return;
+                item.classList.add('active');
+                item.setAttribute('aria-expanded', 'true');
+                // Keep the opened answer inside the visible part of the card
+                const scroller = item.closest('.sheet-scroll');
+                if (!scroller) return;
+                setTimeout(() => {
+                    const sr = scroller.getBoundingClientRect();
+                    const ir = item.getBoundingClientRect();
+                    const overflow = ir.bottom - (sr.bottom - 28);
+                    if (overflow > 0) scroller.scrollBy({ top: Math.min(overflow, ir.top - sr.top - 16), behavior: smooth });
+                }, 420);
+            }
+            faqContainer.addEventListener('click', (e) => {
+                const item = e.target.closest('.faq-item');
+                if (item) toggleFaq(item);
+            });
+            faqContainer.addEventListener('keydown', (e) => {
+                if (e.key !== 'Enter' && e.key !== ' ') return;
+                const item = e.target.closest('.faq-item');
+                if (!item) return;
+                e.preventDefault();
+                toggleFaq(item);
             });
 
-            const slider = document.getElementById('projects-slider');
-            document.getElementById('slide-left').addEventListener('click', () => slider.scrollBy({ left: -300, behavior: 'smooth' }));
-            document.getElementById('slide-right').addEventListener('click', () => slider.scrollBy({ left: 300, behavior: 'smooth' }));
+            /* =============================================================
+               SHARE
+               ============================================================= */
+            const toast = document.getElementById('toast-message');
+            let toastTimer = 0;
             document.getElementById('copy-link-btn').addEventListener('click', async () => {
                 const text = "SANAABIL: https://blu3oceanwaves.github.io/SANAABIL/";
-                try { await navigator.clipboard.writeText(text); } catch (err) {}
-                const toast = document.getElementById('toast-message');
-                toast.classList.remove('opacity-0', 'translate-y-8');
-                setTimeout(() => toast.classList.add('opacity-0', 'translate-y-8'), 3000);
+                let copied = false;
+                try { await navigator.clipboard.writeText(text); copied = true; } catch (err) { /* fall back below */ }
+                if (!copied) {
+                    try {
+                        const ta = document.createElement('textarea');
+                        ta.value = text;
+                        ta.setAttribute('readonly', '');
+                        ta.style.position = 'fixed';
+                        ta.style.opacity = '0';
+                        document.body.appendChild(ta);
+                        ta.select();
+                        ta.setSelectionRange(0, text.length);
+                        document.execCommand('copy');
+                        ta.remove();
+                    } catch (err) { /* ignore */ }
+                }
+                toast.classList.add('is-visible');
+                clearTimeout(toastTimer);
+                toastTimer = setTimeout(() => toast.classList.remove('is-visible'), 3000);
             });
 
+            /* =============================================================
+               PARTICLES
+               ============================================================= */
             const canvas = document.getElementById('particle-canvas');
             const ctx = canvas.getContext('2d');
             let particles = [];
             let particleColor = getComputedStyle(body).getPropertyValue('--particle-color').trim();
+            function refreshParticleColor() {
+                particleColor = getComputedStyle(body).getPropertyValue('--particle-color').trim();
+            }
             let resizeTimer;
-            function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+            function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
             window.addEventListener('resize', () => {
                 clearTimeout(resizeTimer);
-                resizeTimer = setTimeout(resize, 150);
+                resizeTimer = setTimeout(resizeCanvas, 150);
             }, { passive: true });
-            resize();
+            resizeCanvas();
             class Particle {
                 constructor() { this.reset(); }
                 reset() {
@@ -1215,61 +1920,113 @@
                     this.twinklePhase = Math.random() * Math.PI * 2;
                     this.twinkleSpeed = 0.006 + Math.random() * 0.01;
                 }
-                update() {
+                update(k) {
                     // Gentle random drift instead of straight bounces - feels like floating dust in light
                     this.vx += (Math.random() - 0.5) * 0.015;
                     this.vy += (Math.random() - 0.5) * 0.015;
                     const maxSpeed = 0.35;
                     const speed = Math.hypot(this.vx, this.vy) || 1;
                     if (speed > maxSpeed) { this.vx = (this.vx / speed) * maxSpeed; this.vy = (this.vy / speed) * maxSpeed; }
-                    this.x += this.vx; this.y += this.vy;
+                    this.x += this.vx * k; this.y += this.vy * k;
                     if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
                     if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
                     // Slow breathing twinkle
-                    this.twinklePhase += this.twinkleSpeed;
+                    this.twinklePhase += this.twinkleSpeed * k;
                     this.op = this.baseOp + Math.sin(this.twinklePhase) * this.baseOp * 0.5;
                 }
-                draw(color) {
+                draw() {
                     ctx.globalAlpha = this.op;
-                    ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI*2); ctx.fill();
+                    ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
                 }
             }
             const particleCount = prefersReducedMotion ? 0 : (window.innerWidth < 640 ? 18 : 28);
-            for(let i=0; i<particleCount; i++) particles.push(new Particle());
-            let rafId = null;
-            function animate() {
-                ctx.clearRect(0,0,canvas.width,canvas.height);
+            for (let i = 0; i < particleCount; i++) particles.push(new Particle());
+            // Dust drifts slowly, so 30 frames per second look identical and cost half
+            let rafId = null, frameTimer = 0, lastDraw = 0;
+            function animate(now) {
+                rafId = null;
+                const k = lastDraw ? Math.min((now - lastDraw) / 16.7, 3) : 1;
+                lastDraw = now;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
                 ctx.fillStyle = 'rgb(' + particleColor + ')';
-                particles.forEach(p => { p.update(); p.draw(particleColor); });
+                particles.forEach(p => { p.update(k); p.draw(); });
                 ctx.globalAlpha = 1;
-                rafId = requestAnimationFrame(animate);
+                frameTimer = setTimeout(() => { rafId = requestAnimationFrame(animate); }, 22);
             }
-            // Recompute the tint only when the theme actually changes, not every frame
-            toggle.addEventListener('change', () => {
-                particleColor = getComputedStyle(body).getPropertyValue('--particle-color').trim();
-            });
+            const startParticles = () => {
+                if (!particles.length || rafId || frameTimer || document.hidden) return;
+                lastDraw = 0;
+                rafId = requestAnimationFrame(animate);
+            };
+            const stopParticles = () => {
+                if (rafId) cancelAnimationFrame(rafId);
+                clearTimeout(frameTimer);
+                rafId = null; frameTimer = 0;
+            };
             // Pause the canvas loop while the tab isn't visible to save CPU/battery
+            let particlesReady = false;
             document.addEventListener('visibilitychange', () => {
-                if (document.hidden) {
-                    if (rafId) cancelAnimationFrame(rafId);
-                    rafId = null;
-                } else if (!rafId && particles.length) {
-                    animate();
-                }
+                if (document.hidden) stopParticles();
+                else if (particlesReady) startParticles();
             });
-            // Pause endless decorative animations while their section is off-screen (saves GPU/battery)
-            const animObserver = new IntersectionObserver((entries) => {
-                entries.forEach(en => en.target.classList.toggle('anim-paused', !en.isIntersecting));
-            }, { rootMargin: '120px' });
-            document.querySelectorAll('header, #roadmap-section, #projects-section').forEach(el => animObserver.observe(el));
-
             // Defer non-critical, purely decorative work until the browser is idle
             function onIdle(cb) {
                 if ('requestIdleCallback' in window) requestIdleCallback(cb, { timeout: 1500 });
                 else setTimeout(cb, 200);
             }
 
-            onIdle(() => { if (particles.length) animate(); });
+            /* =============================================================
+               LAYOUT & START
+               ============================================================= */
+            let lastH = -1;
+            function layoutAll() {
+                readDeckMetrics();
+                if (H && H !== lastH) { deck.scrollTop = baseIndex() * H; lastH = H; }
+                layoutCarousel();
+                measureRail();
+                scrollers.forEach((_, i) => refreshHasMore(i));
+            }
+            let layoutRaf = 0;
+            const scheduleLayout = () => {
+                cancelAnimationFrame(layoutRaf);
+                layoutRaf = requestAnimationFrame(layoutAll);
+            };
+            const sizeObserver = new ResizeObserver(scheduleLayout);
+            sizeObserver.observe(deck);
+            sizeObserver.observe(carousel);
+            sizeObserver.observe(rail);
+            const innerObserver = new ResizeObserver((entries) => {
+                entries.forEach(en => {
+                    const i = scrollers.indexOf(en.target.closest('.sheet-scroll'));
+                    if (i >= 0) refreshHasMore(i);
+                });
+            });
+            sheets.forEach(s => innerObserver.observe(s.querySelector('.sheet-inner')));
+            if (document.fonts && document.fonts.ready) document.fonts.ready.then(scheduleLayout).catch(() => {});
+
+            const loader = document.getElementById('loader-container');
+            const content = document.getElementById('content-container');
+            let shown = false;
+            function showContent() {
+                if (shown) return;
+                shown = true;
+                content.classList.remove('is-hidden');
+                layoutAll();
+                loader.classList.add('is-fading');
+                setTimeout(() => { loader.style.display = 'none'; }, 650);
+                onIdle(() => {
+                    particlesReady = true;
+                    startParticles();
+                    // Warm the cache so the QR code is there the moment the dialog opens
+                    const qrPreload = new Image();
+                    qrPreload.decoding = 'async';
+                    qrPreload.src = 'https://i.imgur.com/9GoR7tl.png';
+                });
+            }
+            if (document.readyState === 'complete') setTimeout(showContent, 150);
+            else window.addEventListener('load', () => setTimeout(showContent, 150));
+            // Never keep people waiting on a slow image host
+            setTimeout(showContent, 3500);
         });
     </script>
 </body>
