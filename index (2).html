@@ -1,0 +1,2100 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SANAABIL - Mit wenig viel bewirken. Eine private Spenden-Gemeinschaft.">
+    <meta name="color-scheme" content="dark light">
+    <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#FEFCE8" media="(prefers-color-scheme: light)">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="SANAABIL">
+    <meta property="og:title" content="SANAABIL">
+    <meta property="og:description" content="SANAABIL - Mit wenig viel bewirken. Eine private Spenden-Gemeinschaft.">
+    <meta property="og:url" content="https://blu3oceanwaves.github.io/SANAABIL/">
+    <meta property="og:image" content="https://i.imgur.com/4rrmnBh.jpeg">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://i.imgur.com/4rrmnBh.jpeg">
+    <title>SANAABIL</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="https://i.imgur.com/4rrmnBh.jpeg" type="image/jpeg">
+
+    <!-- Performance: warm up the image CDN and get the hero (LCP) image downloading immediately -->
+    <link rel="preconnect" href="https://i.imgur.com">
+    <link rel="dns-prefetch" href="https://i.imgur.com">
+    <link rel="preload" as="image" href="https://i.imgur.com/4rrmnBh.jpeg" fetchpriority="high">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Fonts load without blocking the first paint -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap"></noscript>
+
+    <style>
+        /* ================================================================
+           DESIGN TOKENS (palette unchanged)
+           ================================================================ */
+        :root {
+            /* --- Dark Mode (Default / Seed State) --- */
+            --bg-primary: #0f172a;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-gold: #D4AF37;
+            --accent-gold-light: #FDE68A;
+            --glass-bg: rgba(30, 41, 59, 0.45);
+            --glass-border: rgba(212, 175, 55, 0.15);
+            --card-hover: rgba(212, 175, 55, 0.08);
+            --roadmap-line: rgba(255, 255, 255, 0.05);
+            --particle-color: 212, 175, 55;
+            --profile-glow: rgba(212, 175, 55, 0.3);
+            --success-bg: rgba(20, 83, 45, 0.4);
+            --success-text: #4ade80;
+            --success-border: #166534;
+
+            /* Glass material */
+            --glass-spec: rgba(255, 255, 255, 0.4);
+            --glass-edge: rgba(255, 255, 255, 0.14);
+            --glass-shadow: 0 20px 50px -22px rgba(0, 0, 0, 0.5);
+            --glass-sheen: linear-gradient(135deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.025) 45%, rgba(255,255,255,0.06) 100%);
+            --glass-modal: rgba(15, 23, 42, 0.62);
+            --orb-a: rgba(212, 175, 55, 0.26);
+            --orb-b: rgba(71, 105, 160, 0.20);
+            --orb-c: rgba(212, 175, 55, 0.14);
+
+            /* Card deck */
+            --sheet-base: #111a2e;
+            --sheet-tint: rgba(212, 175, 55, 0.06);
+            --sheet-border: rgba(212, 175, 55, 0.18);
+            --sheet-shadow: 0 -24px 60px -24px rgba(0, 0, 0, 0.9);
+            --shade-rgb: 3, 7, 18;
+            --blob-gold: rgba(212, 175, 55, 0.28);
+            --blob-blue: rgba(59, 100, 170, 0.34);
+            --pc-base: rgba(19, 29, 52, 0.94);
+
+            /* Deck geometry (mobile first) */
+            --sheet-top: 26px;
+            --sheet-bottom: 10px;
+            --sheet-x: 8px;
+            --sheet-radius: 26px;
+            /* Stack depth: how far each card under the top card moves up / shrinks */
+            --stack-step: 8;
+            --stack-scale: 0.045;
+        }
+        /* --- Light Mode (Plant State / Weizen-Gelb) - follows the phone's light/dark setting --- */
+        @media (prefers-color-scheme: light) {
+        :root {
+            --bg-primary: #FEFCE8;
+            --text-primary: #3E2723;
+            --text-secondary: #5D4037;
+            --accent-gold: #B45309;
+            --accent-gold-light: #D97706;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(180, 83, 9, 0.2);
+            --card-hover: rgba(180, 83, 9, 0.05);
+            --roadmap-line: rgba(62, 39, 35, 0.1);
+            --particle-color: 180, 83, 9;
+            --profile-glow: rgba(180, 83, 9, 0.25);
+            --success-bg: #dcfce7;
+            --success-text: #14532d;
+            --success-border: #86efac;
+
+            --glass-spec: rgba(255, 255, 255, 0.75);
+            --glass-edge: rgba(255, 255, 255, 0.5);
+            --glass-shadow: 0 20px 45px -22px rgba(93, 64, 55, 0.16);
+            --glass-sheen: linear-gradient(135deg, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.18) 50%, rgba(255,255,255,0.40) 100%);
+            --glass-modal: rgba(254, 252, 232, 0.72);
+            --orb-a: rgba(217, 119, 6, 0.20);
+            --orb-b: rgba(251, 191, 36, 0.30);
+            --orb-c: rgba(180, 83, 9, 0.12);
+
+            --sheet-base: #FFFDF3;
+            --sheet-tint: rgba(251, 191, 36, 0.10);
+            --sheet-border: rgba(180, 83, 9, 0.16);
+            --sheet-shadow: 0 -20px 50px -22px rgba(93, 64, 55, 0.35);
+            --shade-rgb: 62, 39, 35;
+            --blob-gold: rgba(251, 191, 36, 0.40);
+            --blob-blue: rgba(234, 88, 12, 0.14);
+            --pc-base: rgba(255, 255, 255, 0.92);
+        }
+        }
+        @media (min-width: 768px) {
+            :root {
+                --sheet-top: 40px;
+                --sheet-bottom: 18px;
+                --sheet-x: max(20px, calc((100% - 1120px) / 2));
+                --sheet-radius: 32px;
+                --stack-step: 12;
+                --stack-scale: 0.035;
+            }
+        }
+
+        /* ================================================================
+           BASE
+           ================================================================ */
+        *, *::before, *::after { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        html, body { height: 100%; margin: 0; overscroll-behavior: none; }
+        html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+        body {
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            overflow: hidden;
+            overscroll-behavior: none;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        /* No double-tap zoom on controls (fast taps on arrows would zoom on iPhone) */
+        button, a, .faq-item { touch-action: manipulation; }
+        ::selection { background: var(--accent-gold); color: var(--bg-primary); }
+        h1, h2, h3, blockquote { font-family: 'Playfair Display', Georgia, serif; margin: 0; font-weight: 600; }
+        p { margin: 0; }
+        button { font: inherit; color: inherit; background: none; border: 0; padding: 0; margin: 0; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+        a { color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
+        svg { display: block; flex-shrink: 0; }
+        img { display: block; max-width: 100%; }
+        :focus { outline: none; }
+        :focus-visible { outline: 2px solid var(--accent-gold); outline-offset: 3px; }
+
+        /* Static colour fields behind the deck */
+        body::before {
+            content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+            background:
+                radial-gradient(42vmax 42vmax at 10% 6%, var(--orb-a), transparent 70%),
+                radial-gradient(38vmax 38vmax at 94% 40%, var(--orb-b), transparent 70%),
+                radial-gradient(46vmax 46vmax at 22% 96%, var(--orb-c), transparent 70%);
+        }
+
+        /* Floating gold dust - drawn above the cards, never catches clicks */
+        #particle-canvas {
+            position: fixed; inset: 0; width: 100%; height: 100%;
+            z-index: 2; opacity: 0.35; pointer-events: none;
+        }
+
+        /* ================================================================
+           CARD DECK - every section is a full-screen card.
+           Cards stick to the top and the next card slides over them.
+           ================================================================ */
+        /* The deck does not scroll natively: every card is a layer that is moved
+           by transforms only, so swiping stays on the GPU and never fights the browser. */
+        .deck {
+            position: fixed; inset: 0; z-index: 1;
+            overflow: hidden;
+            overscroll-behavior: none;
+        }
+        .deck-track { position: absolute; inset: 0; }
+        .deck-card {
+            position: absolute; inset: 0;
+            transform-origin: 50% var(--sheet-top);
+            transform: translate3d(0, 100%, 0);
+            backface-visibility: hidden; -webkit-backface-visibility: hidden;
+        }
+        .deck-card:first-child { transform: none; }
+        .deck-card.is-near { will-change: transform; }
+        .deck-card.is-gone { visibility: hidden; }
+        /* Only the card on top runs its looping animations */
+        .deck-card:not(.is-active) .profile-ring-outer,
+        .deck-card:not(.is-active) .profile-halo,
+        .deck-card:not(.is-active) .scroll-cue,
+        .deck-card:not(.is-active) .sheet-fade svg,
+        .deck-card:not(.is-active) .roadmap-pulse-ring-1,
+        .deck-card:not(.is-active) .roadmap-pulse-ring-2,
+        .deck-card:not(.is-active) .rm-badge.live,
+        .deck-card:not(.is-active) .project-shine,
+        .deck-card:not(.is-active) .p-badge,
+        .deck-card:not(.is-active) .p-badge svg,
+        .deck-card:not(.is-active) .count-glow::before { animation-play-state: paused; }
+
+        .sheet {
+            position: absolute;
+            top: var(--sheet-top); bottom: var(--sheet-bottom);
+            left: var(--sheet-x); right: var(--sheet-x);
+            border-radius: var(--sheet-radius);
+            overflow: hidden;
+            background: linear-gradient(180deg, var(--sheet-tint), transparent 38%), var(--sheet-base);
+            border: 1px solid var(--sheet-border);
+            box-shadow: var(--sheet-shadow), inset 0 1px 0 var(--glass-edge);
+        }
+        .sheet--glow { box-shadow: var(--sheet-shadow), inset 0 1px 0 var(--glass-edge), inset 0 0 60px var(--card-hover); }
+        .sheet-scroll {
+            position: absolute; inset: 0; z-index: 1;
+            overflow-x: hidden; overflow-y: auto;
+            overscroll-behavior: contain;
+            scrollbar-width: thin; scrollbar-color: var(--glass-border) transparent;
+        }
+        .sheet-scroll::-webkit-scrollbar { width: 4px; }
+        .sheet-scroll::-webkit-scrollbar-track { background: transparent; }
+        .sheet-scroll::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 10px; }
+        .sheet-inner { min-height: 100%; display: flex; flex-direction: column; padding: 30px 20px 28px; }
+        .sheet-content { position: relative; margin: auto; width: 100%; max-width: 860px; }
+        .sheet-content--wide { max-width: 940px; }
+        .sheet-content--full { max-width: none; }
+        .sheet-fade {
+            position: absolute; left: 0; right: 0; bottom: 0; height: 76px; z-index: 2;
+            display: flex; align-items: flex-end; justify-content: center; padding-bottom: 10px;
+            color: var(--accent-gold); pointer-events: none;
+            background: linear-gradient(to bottom, transparent, var(--sheet-base) 82%);
+            opacity: 0; transition: opacity 0.35s ease;
+        }
+        .sheet.has-more .sheet-fade { opacity: 1; }
+        .sheet-fade svg { width: 18px; height: 18px; animation: nudge 1.6s ease-in-out infinite; }
+        .sheet-shade { position: absolute; inset: 0; z-index: 3; pointer-events: none; background: rgb(var(--shade-rgb)); opacity: 0; }
+        /* Soft colour discs behind the glass panels so the frost is actually visible */
+        .blob {
+            position: absolute; z-index: 0; pointer-events: none; border-radius: 50%;
+            width: var(--s, 240px); height: var(--s, 240px);
+            background: radial-gradient(circle, var(--c) 0%, var(--c) 42%, transparent 70%);
+        }
+        .blob.gold { --c: var(--blob-gold); }
+        .blob.blue { --c: var(--blob-blue); }
+        @media (min-width: 768px) {
+            .sheet-inner { padding: 52px 48px 44px; }
+        }
+
+        /* Section dots */
+        .deck-nav {
+            position: fixed; right: 0; top: 50%; z-index: 3;
+            transform: translateY(-50%);
+            display: flex; flex-direction: column; align-items: center; gap: 9px;
+            padding: 8px 2px;
+        }
+        .deck-nav button {
+            position: relative; width: 4px; height: 4px; border-radius: 99px;
+            background: var(--text-secondary); opacity: 0.45;
+            transition: height 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease, background-color 0.3s ease;
+        }
+        .deck-nav button::before { content: ''; position: absolute; inset: -5px -8px; }
+        .deck-nav button[aria-current="true"] { height: 18px; opacity: 1; background: var(--accent-gold); }
+        @media (min-width: 768px) {
+            .deck-nav { right: 6px; gap: 12px; }
+            .deck-nav button { width: 7px; height: 7px; }
+            .deck-nav button[aria-current="true"] { height: 26px; }
+        }
+        @media (min-width: 1240px) { .deck-nav { right: 28px; } }
+
+        /* ================================================================
+           GLASS MATERIAL
+           ================================================================ */
+        .glass {
+            position: relative; isolation: isolate;
+            background: var(--glass-sheen), var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow), inset 0 1px 0 0 var(--glass-spec), inset 0 -1px 0 0 var(--glass-edge);
+        }
+        .glass::before {
+            content: ''; position: absolute; inset: 0; z-index: -1;
+            border-radius: inherit; padding: 1px;
+            background: linear-gradient(135deg, var(--glass-edge), transparent 45%, transparent 65%, var(--glass-edge));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        .fade-in-section {
+            opacity: 0; transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+            transition-delay: var(--delay, 0s);
+        }
+        .fade-in-section.is-visible { opacity: 1; transform: translateY(0); }
+
+        .section-title {
+            font-size: 24px; font-weight: 500; line-height: 1.25;
+            color: var(--accent-gold); text-align: center; letter-spacing: 0.02em;
+        }
+        @media (min-width: 768px) { .section-title { font-size: 30px; } }
+
+        /* ================================================================
+           HERO CARD
+           ================================================================ */
+        .hero { display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .logo-wrap { display: flex; flex-direction: column; align-items: center; margin-bottom: 30px; }
+        .logo-link { position: relative; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; }
+        .profile-ring-outer {
+            position: absolute; inset: -4px; border-radius: 50%;
+            background: conic-gradient(from 0deg, var(--accent-gold), var(--accent-gold-light), transparent 40%, var(--accent-gold-light), var(--accent-gold));
+            animation: ring-spin 4s linear infinite reverse;
+        }
+        .profile-halo {
+            position: absolute; inset: -22px; border-radius: 50%;
+            background: radial-gradient(circle, var(--profile-glow) 0%, transparent 70%);
+            animation: halo-breathe 3s ease-in-out infinite alternate;
+        }
+        .profile-img-inner {
+            position: relative; z-index: 1;
+            width: 148px; height: 148px; border-radius: 50%; object-fit: cover;
+            background: var(--sheet-base);
+            border: 3px solid var(--sheet-base);
+            box-shadow: 0 0 0 1px var(--glass-border), 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .logo-link:hover .profile-img-inner { transform: scale(1.04); }
+        .logo-hint { margin-top: 18px; font-size: 9px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.2em; color: var(--text-secondary); opacity: 0.45; }
+        .sanaabil-title {
+            display: inline-block; padding-left: 0.1em;
+            font-size: clamp(40px, 12.5vw, 50px); font-weight: 700; line-height: 1.1;
+            letter-spacing: 0.1em; text-transform: uppercase;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-gold-light) 50%, var(--accent-gold) 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text; background-clip: text;
+            -webkit-text-fill-color: transparent; color: transparent;
+        }
+        .deck-card.is-active .sanaabil-title { animation: text-shine 4s linear 2; }
+        .hero-tagline { padding-left: 0.25em; font-size: 12px; font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-secondary); }
+        .scroll-cue {
+            margin-top: 46px; width: 46px; height: 46px; border-radius: 50%;
+            display: inline-flex; align-items: center; justify-content: center;
+            color: var(--accent-gold);
+            animation: cue-bob 2.4s ease-in-out infinite;
+        }
+        .scroll-cue svg { width: 20px; height: 20px; }
+        @media (min-width: 768px) {
+            .profile-img-inner { width: 196px; height: 196px; }
+            .profile-halo { inset: -28px; }
+            .sanaabil-title { font-size: 64px; }
+            .hero-tagline { font-size: 14px; }
+        }
+
+        /* ================================================================
+           ABOUT CARD
+           ================================================================ */
+        .about-head { display: flex; align-items: center; gap: 14px; margin-bottom: 22px; }
+        .head-line { flex: 1; min-width: 16px; height: 1px; opacity: 0.5; }
+        .head-line.l { background: linear-gradient(to right, transparent, var(--accent-gold)); }
+        .head-line.r { background: linear-gradient(to left, transparent, var(--accent-gold)); }
+        .bismillah { margin-bottom: 18px; text-align: center; font-family: 'Playfair Display', Georgia, serif; font-size: 21px; color: var(--text-secondary); }
+        .ayah { text-align: center; font-style: italic; font-weight: 300; font-size: 16.5px; line-height: 1.7; opacity: 0.92; }
+        .sadaqa-box { margin-top: 26px; padding: 20px 20px 22px; border-radius: 18px; }
+        .sadaqa-title { margin-bottom: 10px; font-size: 18px; font-weight: 600; color: var(--accent-gold); }
+        .sadaqa-text { font-size: 14.5px; line-height: 1.65; color: var(--text-secondary); }
+        @media (min-width: 768px) {
+            .ayah { font-size: 17.5px; }
+            .sadaqa-box { padding: 26px 28px; }
+            .sadaqa-text { font-size: 16px; }
+        }
+
+        /* ================================================================
+           ROADMAP CARD
+           ================================================================ */
+        .rm-head { margin-bottom: 26px; }
+        .timeline { position: relative; --rl-x: 18px; }
+        .roadmap-line-container {
+            position: absolute; left: var(--rl-x); top: 0; bottom: 0; width: 2px;
+            background: var(--roadmap-line); transform: translateX(-50%);
+        }
+        .roadmap-progress-line {
+            position: absolute; top: 0; left: 0; width: 100%; height: 0%;
+            background: linear-gradient(180deg, var(--accent-gold), var(--accent-gold-light), var(--accent-gold));
+            box-shadow: 0 0 8px 2px rgba(212, 175, 55, 0.5), 0 0 20px rgba(212, 175, 55, 0.2);
+            transition: height 2.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .roadmap-traveler {
+            position: absolute; left: 50%; top: 0%; z-index: 4;
+            width: 10px; height: 10px; border-radius: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--accent-gold-light);
+            box-shadow: 0 0 12px 4px var(--accent-gold), 0 0 24px 8px rgba(212, 175, 55, 0.3);
+            opacity: 0;
+            transition: top 2.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+        }
+        .roadmap-traveler.active { opacity: 1; }
+        .roadmap-item {
+            position: relative; margin-bottom: 16px;
+            opacity: 0; transform: translateX(-20px);
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.34, 1.3, 0.64, 1);
+        }
+        .roadmap-item:last-child { margin-bottom: 0; }
+        .roadmap-item.active { opacity: 1; transform: translateX(0); }
+        .roadmap-node-wrapper {
+            position: absolute; left: var(--rl-x); top: 30px; z-index: 3;
+            width: 0; height: 0; display: flex; align-items: center; justify-content: center;
+        }
+        .node {
+            position: relative; z-index: 2; flex-shrink: 0;
+            width: 30px; height: 30px; border-radius: 50%;
+            border: 2px solid var(--accent-gold);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 13px; font-weight: 700;
+        }
+        .node svg { width: 14px; height: 14px; }
+        .roadmap-node-done { background: var(--accent-gold); color: var(--bg-primary); box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.2); }
+        .roadmap-node-active { background: var(--accent-gold); color: var(--bg-primary); box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.3), 0 0 24px rgba(212, 175, 55, 0.4); }
+        .roadmap-node-glow {
+            position: absolute; width: 40px; height: 40px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.25) 0%, transparent 70%);
+            opacity: 0; transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
+        }
+        .roadmap-item.active .roadmap-node-glow { opacity: 1; }
+        .roadmap-dot { transform: scale(0); }
+        .roadmap-item.active .roadmap-dot { transform: scale(1); transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .roadmap-pulse-ring-1, .roadmap-pulse-ring-2 {
+            position: absolute; width: 30px; height: 30px; border-radius: 50%;
+            border: 2px solid var(--accent-gold); opacity: 0;
+        }
+        .roadmap-item.active .roadmap-pulse-ring-1 { animation: pulse-ring-out 2.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s infinite; }
+        .roadmap-item.active .roadmap-pulse-ring-2 { animation: pulse-ring-out 2.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.9s infinite; }
+        .roadmap-card {
+            margin-left: calc(var(--rl-x) + 28px);
+            padding: 16px 16px 18px; border-radius: 18px;
+            transition: opacity 0.4s ease, box-shadow 0.4s ease;
+        }
+        .roadmap-card.done { opacity: 0.82; }
+        .roadmap-card.done:hover { opacity: 1; }
+        .roadmap-card.is-current { border-left: 4px solid var(--accent-gold); }
+        .roadmap-item.active .roadmap-card {
+            box-shadow: -4px 0 20px -4px rgba(212, 175, 55, 0.3), var(--glass-shadow), inset 0 1px 0 0 var(--glass-spec), inset 0 -1px 0 0 var(--glass-edge);
+        }
+        .rm-badge {
+            display: inline-block; margin-bottom: 8px; padding: 2px 8px; border-radius: 99px;
+            font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--accent-gold); background: var(--card-hover); border: 1px solid var(--glass-border);
+        }
+        .rm-badge.live { color: var(--bg-primary); background: var(--accent-gold); border-color: var(--accent-gold); animation: badge-pulse 2s ease-in-out infinite; }
+        .rm-title { margin-bottom: 6px; font-size: 19px; font-weight: 500; line-height: 1.3; color: var(--text-primary); }
+        .roadmap-card.is-current .rm-title { color: var(--accent-gold); }
+        .rm-text { font-size: 14px; line-height: 1.6; color: var(--text-secondary); }
+        @media (min-width: 640px) {
+            .timeline { --rl-x: 26px; }
+            .node { width: 44px; height: 44px; font-size: 16px; }
+            .node svg { width: 20px; height: 20px; }
+            .roadmap-node-glow { width: 56px; height: 56px; }
+            .roadmap-pulse-ring-1, .roadmap-pulse-ring-2 { width: 44px; height: 44px; }
+            .roadmap-node-wrapper { top: 38px; }
+            .roadmap-card { margin-left: calc(var(--rl-x) + 44px); padding: 24px 28px; }
+            .rm-title { font-size: 23px; }
+            .rm-text { font-size: 15.5px; }
+            .roadmap-item { margin-bottom: 22px; }
+        }
+
+        /* ================================================================
+           CALLOUT CARD - swipeable quote rail
+           ================================================================ */
+        .callout-head { margin-bottom: 18px; text-align: center; }
+        .callout-badge {
+            display: inline-block; padding-bottom: 4px;
+            font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--accent-gold); border-bottom: 1px solid var(--accent-gold);
+        }
+        .quote-rail {
+            --q-w: min(74vw, 400px);
+            --bleed: 20px;
+            position: relative; display: flex; align-items: stretch; gap: 14px;
+            overflow-x: auto; overflow-y: hidden;
+            scroll-snap-type: x mandatory; overscroll-behavior-x: contain;
+            scrollbar-width: none;
+            margin: 0 calc(var(--bleed) * -1);
+            padding: 10px calc((100% + 2 * var(--bleed) - var(--q-w)) / 2) 16px;
+        }
+        .quote-rail::-webkit-scrollbar { display: none; }
+        .quote-slide { flex: 0 0 var(--q-w); scroll-snap-align: center; scroll-snap-stop: always; transform-origin: 50% 55%; transform: scale(0.92); transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1); }
+        .quote-slide.is-current { transform: none; }
+        .callout-item {
+            height: 100%; display: flex; flex-direction: column;
+            padding: 24px 22px 20px; border-radius: 20px;
+            opacity: 0; transform: translateY(16px);
+            transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1), transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease;
+        }
+        .callout-item.is-visible { opacity: 1; transform: translateY(0); }
+        .callout-item:hover { border-color: var(--accent-gold); }
+        .q-dim { position: absolute; inset: 0; z-index: 2; border-radius: inherit; background: var(--sheet-base); opacity: 0.55; pointer-events: none; transition: opacity 0.45s ease; }
+        .quote-slide.is-current .q-dim { opacity: 0; }
+        .quote-text { flex: 1; font-size: 16px; line-height: 1.62; font-style: italic; color: var(--text-primary); }
+        .quote-src {
+            margin-top: 16px; text-align: right;
+            font-family: 'Playfair Display', Georgia, serif; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;
+            color: var(--accent-gold); opacity: 0.85;
+        }
+        .rail-controls { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 4px; }
+        @media (min-width: 768px) {
+            .quote-rail { --q-w: 420px; --bleed: 48px; }
+            .quote-text { font-size: 17.5px; }
+            .quote-src { font-size: 12px; }
+        }
+
+        /* ================================================================
+           PROJECTS CARD - 3D ring carousel
+           ================================================================ */
+        .projects-title {
+            display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 2px 12px;
+            font-size: 23px; font-weight: 500; line-height: 1.3; text-align: center;
+            color: var(--accent-gold);
+        }
+        .pt-main, .pt-count { display: inline-flex; align-items: center; gap: 10px; }
+        .pt-count { isolation: isolate; }
+        .pt-main svg { width: 24px; height: 24px; }
+        /* Glowing project count */
+        .count-glow {
+            position: relative; display: inline-block; padding: 0 2px;
+            font-weight: 700; color: var(--accent-gold-light);
+            text-shadow: 0 0 6px var(--accent-gold), 0 0 14px var(--accent-gold), 0 0 28px rgba(212, 175, 55, 0.55);
+        }
+        .count-glow::before {
+            content: ''; position: absolute; left: 50%; top: 50%; z-index: -1;
+            width: 2.4em; height: 2.4em; margin: -1.2em 0 0 -1.2em; border-radius: 50%;
+            background: radial-gradient(circle, var(--profile-glow) 0%, rgba(212, 175, 55, 0.18) 40%, transparent 70%);
+            animation: count-pulse 2.4s ease-in-out infinite;
+            pointer-events: none;
+        }
+        @media (prefers-color-scheme: light) {
+            .count-glow { color: var(--accent-gold); text-shadow: 0 0 6px rgba(217, 119, 6, 0.55), 0 0 16px rgba(251, 191, 36, 0.7); }
+        }
+        .carousel {
+            --pc-w: clamp(212px, 62vw, 268px);
+            --pc-h: 336px;
+            position: relative;
+            height: calc(var(--pc-h) + 74px);
+            margin: 10px -20px 0;
+            overflow: hidden;
+            touch-action: pan-y;
+            user-select: none; -webkit-user-select: none;
+            cursor: grab;
+        }
+        .carousel.is-dragging { cursor: grabbing; }
+        .carousel-floor {
+            position: absolute; left: 50%; bottom: 10px;
+            width: min(92%, 760px); height: 66px;
+            transform: translateX(-50%); border-radius: 50%;
+            border: 1px solid var(--glass-border);
+            background: radial-gradient(closest-side, var(--card-hover), transparent);
+            pointer-events: none;
+        }
+        .carousel-floor::after {
+            content: ''; position: absolute; left: 50%; top: 50%;
+            width: 44%; height: 64%; transform: translate(-50%, -50%); border-radius: 50%;
+            background: radial-gradient(closest-side, var(--profile-glow), transparent);
+        }
+        .carousel-ring {
+            position: absolute; left: 0; right: 0; top: 16px; height: var(--pc-h);
+            perspective: 1000px; perspective-origin: 50% 32%;
+        }
+        .p-slide {
+            position: absolute; top: 0; left: 50%;
+            width: var(--pc-w); height: var(--pc-h); margin-left: calc(var(--pc-w) / -2);
+            backface-visibility: hidden; -webkit-backface-visibility: hidden;
+        }
+        .p-card {
+            position: absolute; inset: 0; overflow: hidden;
+            display: flex; flex-direction: column;
+            padding: 24px 20px 20px; border-radius: 22px;
+            background: var(--glass-sheen), var(--pc-base);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 22px 44px -22px rgba(0, 0, 0, 0.65), inset 0 1px 0 var(--glass-spec), inset 0 -1px 0 var(--glass-edge);
+            backface-visibility: hidden; -webkit-backface-visibility: hidden;
+            transition: border-color 0.5s ease, box-shadow 0.5s ease;
+        }
+        .p-slide.is-active .p-card {
+            border-color: rgba(212, 175, 55, 0.55);
+            box-shadow: 0 26px 60px -24px rgba(212, 175, 55, 0.45), 0 22px 44px -22px rgba(0, 0, 0, 0.65), inset 0 1px 0 var(--glass-spec), inset 0 -1px 0 var(--glass-edge);
+        }
+        @media (prefers-color-scheme: light) {
+            .p-card { box-shadow: 0 22px 44px -24px rgba(93, 64, 55, 0.35), inset 0 1px 0 var(--glass-spec), inset 0 -1px 0 var(--glass-edge); }
+            .p-slide.is-active .p-card {
+                border-color: rgba(180, 83, 9, 0.5);
+                box-shadow: 0 26px 54px -26px rgba(180, 83, 9, 0.45), inset 0 1px 0 var(--glass-spec), inset 0 -1px 0 var(--glass-edge);
+            }
+        }
+        .p-bg-icon { position: absolute; right: -24px; top: -24px; color: var(--accent-gold); opacity: 0.05; }
+        .p-bg-icon.rot-a { transform: rotate(12deg); }
+        .p-bg-icon.rot-b { transform: rotate(-6deg); }
+        .p-bg-icon svg { width: 128px; height: 128px; }
+        .p-icon {
+            width: 54px; height: 54px; margin-bottom: 18px; flex-shrink: 0;
+            border-radius: 50%; border: 1px solid var(--glass-border);
+            background: var(--bg-primary); color: var(--accent-gold);
+            display: flex; align-items: center; justify-content: center;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+        .p-icon svg { width: 26px; height: 26px; }
+        .p-slide.is-active .p-icon { background: var(--accent-gold); color: var(--bg-primary); }
+        .p-title { margin-bottom: 4px; font-family: 'Inter', system-ui, sans-serif; font-size: 19px; font-weight: 600; line-height: 1.3; color: var(--text-primary); transition: color 0.4s ease; }
+        .p-slide.is-active .p-title { color: var(--accent-gold); }
+        .p-loc { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 14px; color: var(--text-secondary); }
+        .p-foot { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--glass-border); }
+        .p-label { margin-bottom: 4px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-secondary); }
+        .p-amount { margin-bottom: 12px; font-size: 21px; font-weight: 700; color: var(--text-primary); }
+        .p-badge {
+            display: flex; flex-wrap: wrap; align-items: center; gap: 2px 6px;
+            padding: 6px 11px; border-radius: 14px;
+            font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;
+        }
+        .p-badge.ok { background: var(--success-bg); color: var(--success-text); border: 1px solid var(--success-border); }
+        .p-badge.pending { background: rgba(245, 158, 11, 0.1); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); animation: badge-pulse 2s ease-in-out infinite; }
+        .p-badge-main { display: inline-flex; align-items: center; gap: 6px; }
+        .p-badge svg { width: 12px; height: 12px; }
+        .p-badge svg.spin { animation: spin 1s linear infinite; }
+        .p-badge-note { margin-left: auto; font-family: 'Playfair Display', Georgia, serif; font-size: 12px; font-weight: 600; text-transform: none; letter-spacing: 0; opacity: 0.75; }
+        .project-shine {
+            position: absolute; inset: 0; pointer-events: none;
+            background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.07) 50%, transparent 100%);
+            transform: skewX(-20deg) translateX(-150%);
+        }
+        .p-slide.is-active .project-shine { animation: shine-sweep 1.4s 0.35s cubic-bezier(0.4, 0, 0.2, 1) both; }
+        .carousel-controls { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 4px; }
+        .swipe-hint {
+            display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 12px;
+            font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--text-secondary); opacity: 0.6;
+        }
+        .swipe-hint svg { width: 14px; height: 14px; }
+        @media (min-width: 768px) {
+            .projects-title { font-size: 30px; }
+            .carousel {
+                --pc-w: 268px; --pc-h: 352px; margin-left: -48px; margin-right: -48px;
+                -webkit-mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+                mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+            }
+            .carousel-ring { perspective: 1500px; }
+        }
+        @media (min-width: 1100px) { .carousel { --pc-w: 284px; } }
+
+        /* ================================================================
+           FAQ CARD
+           ================================================================ */
+        .faq-title { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 18px; }
+        .faq-title svg { width: 26px; height: 26px; color: var(--accent-gold); }
+        .faq-list { display: grid; gap: 8px; }
+        .faq-item {
+            border-radius: 14px; overflow: hidden; cursor: pointer;
+            opacity: 0; transform: translateY(18px) scale(0.98);
+            transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.34, 1.3, 0.64, 1),
+                        border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .faq-item.is-visible { opacity: 1; transform: translateY(0) scale(1); }
+        .faq-item:hover, .faq-item.active { border-color: var(--accent-gold); }
+        .faq-q { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 13px 16px; }
+        .faq-q-text { font-size: 15px; font-weight: 500; line-height: 1.45; color: var(--text-primary); }
+        .faq-num { margin-right: 10px; font-weight: 700; color: var(--accent-gold); opacity: 0.8; }
+        .faq-icon { width: 20px; height: 20px; color: var(--text-secondary); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s ease; }
+        .faq-item:hover .faq-icon { color: var(--accent-gold); }
+        .faq-item.active .faq-icon { transform: rotate(180deg); color: var(--accent-gold); }
+        .faq-content-wrapper { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .faq-item.active .faq-content-wrapper { grid-template-rows: 1fr; }
+        .faq-content { overflow: hidden; min-height: 0; }
+        .faq-a { margin: 0 16px; padding: 12px 0 16px; border-top: 1px solid var(--glass-border); font-size: 14px; line-height: 1.6; color: var(--text-secondary); }
+        @media (min-width: 900px) {
+            .faq-list { grid-template-columns: 1fr 1fr; align-items: start; gap: 12px 14px; }
+            .faq-q { padding: 18px 20px; }
+            .faq-q-text { font-size: 16px; }
+            .faq-a { margin: 0 20px; font-size: 15px; }
+        }
+
+        /* ================================================================
+           SHARE CARD
+           ================================================================ */
+        .share { display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .share .section-title { margin-bottom: 18px; }
+        .share-quote { max-width: 32rem; margin: 0 auto 34px; font-size: 15px; line-height: 1.7; color: var(--text-secondary); }
+        .share-src { display: block; margin-top: 8px; font-family: 'Playfair Display', Georgia, serif; font-size: 14px; color: var(--accent-gold); opacity: 0.8; }
+        .share-actions { display: flex; flex-direction: column; gap: 14px; width: 100%; max-width: 380px; }
+        .site-footer { margin-top: 46px; font-size: 14px; color: var(--text-secondary); opacity: 0.7; }
+        @media (min-width: 640px) {
+            .share-actions { flex-direction: row; justify-content: center; width: auto; max-width: none; }
+            .share-quote { font-size: 16px; }
+        }
+
+        /* ================================================================
+           BUTTONS & CONTROLS
+           ================================================================ */
+        .btn {
+            position: relative; overflow: hidden;
+            display: inline-flex; align-items: center; justify-content: center; gap: 12px;
+            padding: 16px 38px; border-radius: 999px;
+            font-size: 16px; font-weight: 600;
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
+        }
+        .btn svg { width: 20px; height: 20px; }
+        .btn-primary { color: var(--bg-primary); background: var(--accent-gold); }
+        .btn-primary::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 55%;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.35), transparent);
+            border-radius: inherit; pointer-events: none;
+        }
+        .btn-primary:hover { opacity: 0.92; box-shadow: 0 0 30px rgba(212, 175, 55, 0.4); transform: translateY(-4px); }
+        .btn-primary .btn-arrow { transition: transform 0.3s ease; }
+        .btn-primary:hover .btn-arrow { transform: translateX(6px); }
+        .btn-outline { color: var(--text-primary); }
+        .btn-outline:hover { background-color: var(--card-hover); transform: translateY(-4px); }
+        .btn:active { transform: scale(0.96); }
+        .c-btn {
+            width: 44px; height: 44px; border-radius: 50%;
+            display: inline-flex; align-items: center; justify-content: center;
+            color: var(--accent-gold);
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.3s ease, color 0.3s ease;
+        }
+        .c-btn:hover { background: var(--accent-gold); color: var(--bg-primary); }
+        .c-btn:active { transform: scale(0.9); }
+        .c-btn svg { width: 20px; height: 20px; }
+        .c-dots { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 7px; max-width: 220px; }
+        .c-dots button {
+            position: relative; width: 6px; height: 6px; border-radius: 99px;
+            background: var(--text-secondary); opacity: 0.4;
+            transition: width 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease, background-color 0.3s ease;
+        }
+        .c-dots button::before { content: ''; position: absolute; inset: -9px -4px; }
+        .c-dots button[aria-current="true"] { width: 20px; opacity: 1; background: var(--accent-gold); }
+        .only-wide { display: none !important; }
+        @media (min-width: 768px) {
+            .only-wide { display: inline-flex !important; }
+            .only-narrow { display: none !important; }
+        }
+        /* The outline button keeps its gold ring on top of the glass */
+        .btn-outline.glass { border: 2px solid var(--accent-gold); }
+
+        /* ================================================================
+           LOADER
+           ================================================================ */
+        #loader-container {
+            position: fixed; inset: 0; z-index: 90;
+            display: flex; align-items: center; justify-content: center;
+            background: var(--bg-primary);
+            transition: opacity 0.6s ease;
+        }
+        #loader-container.is-fading { opacity: 0; pointer-events: none; }
+        #content-container.is-hidden { display: none; }
+        .three-body {
+            --uib-size: 45px;
+            --uib-speed: 0.8s;
+            --uib-color: var(--accent-gold);
+            position: relative;
+            display: inline-block;
+            height: var(--uib-size);
+            width: var(--uib-size);
+            animation: spin78236 calc(var(--uib-speed) * 2.5) infinite linear;
+        }
+        .three-body__dot { position: absolute; height: 100%; width: 30%; }
+        .three-body__dot:after { content: ''; position: absolute; height: 0%; width: 100%; padding-bottom: 100%; background-color: var(--uib-color); border-radius: 50%; }
+        .three-body__dot:nth-child(1) { bottom: 5%; left: 0; transform: rotate(60deg); transform-origin: 50% 85%; }
+        .three-body__dot:nth-child(1)::after { bottom: 0; left: 0; animation: wobble1 var(--uib-speed) infinite; animation-delay: calc(var(--uib-speed) * -0.3); }
+        .three-body__dot:nth-child(2) { bottom: 5%; right: 0; transform: rotate(-60deg); transform-origin: 50% 85%; }
+        .three-body__dot:nth-child(2)::after { bottom: 0; left: 0; animation: wobble1 var(--uib-speed) infinite calc(var(--uib-speed) * -0.15) ease-in-out; }
+        .three-body__dot:nth-child(3) { bottom: -5%; left: 0; transform: translateX(116.666%); }
+        .three-body__dot:nth-child(3)::after { top: 0; left: 0; animation: wobble2 var(--uib-speed) infinite ease-in-out; }
+
+        /* ================================================================
+           MODALS & TOAST
+           ================================================================ */
+        #custom-modal, #qr-modal {
+            display: none; position: fixed; inset: 0; z-index: 1000;
+            align-items: center; justify-content: center; padding: 20px;
+        }
+        .modal-overlay {
+            position: absolute; inset: 0;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(10px) saturate(140%);
+            -webkit-backdrop-filter: blur(10px) saturate(140%);
+        }
+        .modal-body {
+            width: 100%; max-width: 450px; overflow: hidden;
+            padding: 40px 30px; border-radius: 24px; text-align: center;
+            background: var(--glass-sheen), var(--glass-modal);
+            backdrop-filter: blur(18px) saturate(170%);
+            -webkit-backdrop-filter: blur(18px) saturate(170%);
+            transform: translateY(20px); opacity: 0;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        #custom-modal.active .modal-body, #qr-modal.active .modal-body { transform: translateY(0); opacity: 1; }
+        .modal-close {
+            position: absolute; top: 15px; right: 15px; z-index: 2;
+            width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+            color: var(--text-secondary); transition: color 0.2s;
+        }
+        .modal-close:hover { color: var(--accent-gold); }
+        .modal-close svg { width: 24px; height: 24px; }
+        .modal-avatar { width: 128px; height: 128px; margin: 0 auto 24px; border-radius: 50%; border: 4px solid var(--accent-gold); object-fit: cover; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2); }
+        .modal-title { margin-bottom: 8px; font-size: 24px; font-weight: 700; letter-spacing: 0.025em; color: var(--accent-gold); }
+        .modal-text { margin-bottom: 24px; font-size: 14px; line-height: 1.6; color: var(--text-secondary); }
+        .modal-desc { margin-bottom: 32px; font-style: italic; line-height: 1.6; color: var(--text-secondary); }
+        .modal-cta {
+            position: relative; overflow: hidden; display: block; width: 100%; padding: 16px;
+            border-radius: 999px; font-weight: 700; text-align: center;
+            background: var(--accent-gold); color: var(--bg-primary);
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.2);
+        }
+        .qr-frame { display: inline-block; margin: 0 auto 24px; padding: 16px; border-radius: 12px; background: #fff; overflow: hidden; box-shadow: inset 0 2px 4px rgba(0,0,0,0.06); }
+        .qr-frame img { width: 192px; height: 192px; object-fit: contain; }
+        .btn-soft {
+            position: relative; overflow: hidden; width: 100%; padding: 12px;
+            border-radius: 999px; font-weight: 500;
+            background: var(--glass-border); color: var(--text-primary);
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.3s ease;
+        }
+        .btn-soft::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 55%;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.35), transparent);
+            border-radius: inherit; pointer-events: none;
+        }
+        .btn-soft:hover { background: var(--card-hover); }
+        .btn-soft:active { transform: scale(0.96); }
+        @media (min-width: 640px) { .qr-frame img { width: 256px; height: 256px; } }
+
+        #toast-message {
+            position: fixed; left: 50%; bottom: 28px; z-index: 70;
+            display: flex; align-items: center; gap: 12px;
+            padding: 14px 22px; border-radius: 999px; white-space: nowrap;
+            border: 1px solid var(--accent-gold);
+            background: var(--glass-sheen), var(--glass-modal);
+            backdrop-filter: blur(18px) saturate(170%);
+            -webkit-backdrop-filter: blur(18px) saturate(170%);
+            box-shadow: var(--glass-shadow), inset 0 1px 0 0 var(--glass-spec);
+            opacity: 0; transform: translate(-50%, 24px); pointer-events: none;
+            transition: opacity 0.5s ease-out, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        #toast-message.is-visible { opacity: 1; transform: translate(-50%, 0); }
+        #toast-message svg { width: 20px; height: 20px; color: var(--accent-gold); }
+        #toast-message span { font-size: 14px; font-weight: 500; color: var(--text-primary); }
+
+        /* ================================================================
+           SHORT SCREENS - keep each card on one screen where possible
+           ================================================================ */
+        @media (max-height: 720px) {
+            .sheet-inner { padding-top: 22px; padding-bottom: 22px; }
+            .profile-img-inner { width: 124px; height: 124px; }
+            .logo-wrap { margin-bottom: 22px; }
+            .scroll-cue { margin-top: 30px; }
+            .section-title, .projects-title { font-size: 22px; }
+            .about-head { margin-bottom: 16px; }
+            .bismillah { margin-bottom: 12px; font-size: 19px; }
+            .ayah { font-size: 15.5px; line-height: 1.6; }
+            .sadaqa-box { margin-top: 18px; padding: 16px 18px; }
+            .sadaqa-text { font-size: 14px; line-height: 1.55; }
+            .rm-head { margin-bottom: 18px; }
+            .rm-text { font-size: 13.5px; line-height: 1.5; }
+            .roadmap-item { margin-bottom: 12px; }
+            .carousel { --pc-h: 304px; }
+            .p-card { padding: 20px 18px 18px; }
+            .p-icon { width: 46px; height: 46px; margin-bottom: 14px; }
+            .faq-q { padding: 11px 14px; }
+            .faq-q-text { font-size: 14.5px; }
+            .faq-title { margin-bottom: 16px; }
+            .faq-list { gap: 8px; }
+        }
+
+        /* ================================================================
+           KEYFRAMES
+           ================================================================ */
+        @keyframes text-shine { to { background-position: 200% center; } }
+        @keyframes ring-spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes halo-breathe { 0% { opacity: 0.5; transform: scale(0.95); } 100% { opacity: 1; transform: scale(1.1); } }
+        @keyframes pulse-ring-out { 0% { transform: scale(1); opacity: 0.7; } 100% { transform: scale(2.2); opacity: 0; } }
+        @keyframes badge-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+        @keyframes spin78236 { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes wobble1 { 0%, 100% { transform: translateY(0%) scale(1); opacity: 1; } 50% { transform: translateY(-66%) scale(0.65); opacity: 0.8; } }
+        @keyframes wobble2 { 0%, 100% { transform: translateY(0%) scale(1); opacity: 1; } 50% { transform: translateY(66%) scale(0.65); opacity: 0.8; } }
+        @keyframes nudge { 0%, 100% { transform: translateY(0); opacity: 0.5; } 50% { transform: translateY(4px); opacity: 1; } }
+        @keyframes cue-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(7px); } }
+        @keyframes shine-sweep { from { transform: skewX(-20deg) translateX(-150%); } to { transform: skewX(-20deg) translateX(150%); } }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes count-pulse { 0%, 100% { opacity: 0.55; transform: scale(0.85); } 50% { opacity: 1; transform: scale(1.15); } }
+
+
+        /* ================================================================
+           MOTION PREFERENCES & FALLBACKS
+           ================================================================ */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.001ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.001ms !important;
+                scroll-behavior: auto !important;
+            }
+            .fade-in-section, .faq-item, .callout-item, .roadmap-item { opacity: 1; transform: none; }
+        }
+        @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+            .glass { background: var(--glass-sheen), var(--sheet-base); }
+            .modal-body { background: var(--glass-sheen), var(--bg-primary); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating gold dust -->
+    <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+    <!-- Loader UI -->
+    <div id="loader-container">
+        <div class="three-body">
+            <div class="three-body__dot"></div>
+            <div class="three-body__dot"></div>
+            <div class="three-body__dot"></div>
+        </div>
+    </div>
+
+    <!-- Modal Channel Info (kept for secondary actions if needed, safely ignored) -->
+    <div id="custom-modal">
+        <div class="modal-overlay" id="modal-overlay"></div>
+        <div class="modal-body glass">
+            <button type="button" class="modal-close" id="modal-close" aria-label="Schließen">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <img id="modal-img" alt="" class="modal-avatar">
+            <h3 id="modal-title" class="modal-title"></h3>
+            <p id="modal-desc" class="modal-desc"></p>
+            <a id="modal-link" href="" target="_blank" rel="noopener" class="modal-cta">
+                Zum Telegram-Kanal
+            </a>
+        </div>
+    </div>
+
+    <!-- Modal QR Code -->
+    <div id="qr-modal">
+        <div class="modal-overlay" id="qr-modal-overlay"></div>
+        <div class="modal-body glass" role="dialog" aria-modal="true" aria-labelledby="qr-title">
+            <button type="button" class="modal-close" id="qr-modal-close" aria-label="Schließen">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <div class="qr-frame">
+                <img src="https://i.imgur.com/9GoR7tl.png" alt="SANAABIL QR Code" loading="lazy" decoding="async">
+            </div>
+            <h3 class="modal-title" id="qr-title">Initiative teilen</h3>
+            <p class="modal-text">
+                Lass andere den QR-Code scannen,<br>um Teil der Gemeinschaft zu werden in sha ALLAH
+            </p>
+            <button type="button" id="qr-close-btn" class="btn-soft">
+                Schließen
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="content-container" class="is-hidden">
+        <nav class="deck-nav" id="deck-nav" aria-label="Abschnitte"></nav>
+
+        <main class="deck" id="deck">
+            <div class="deck-track" style="--n: 7;">
+
+                <!-- ========== CARD 1: HERO ========== -->
+                <section class="deck-card" data-label="SANAABIL">
+                    <div class="sheet">
+                        <span class="blob gold" style="--s: 280px; top: -90px; right: -90px;"></span>
+                        <span class="blob blue" style="--s: 320px; bottom: -120px; left: -120px;"></span>
+                        <div class="sheet-scroll">
+                            <div class="sheet-inner">
+                                <header class="sheet-content hero fade-in-section" style="--delay: 0.1s;">
+                                    <div class="logo-wrap">
+                                        <a href="https://chat.whatsapp.com/IJ2prCPPeU2ApH4MVcMBcq" target="_blank" rel="noopener" class="logo-link">
+                                            <span class="profile-halo" aria-hidden="true"></span>
+                                            <span class="profile-ring-outer" aria-hidden="true"></span>
+                                            <img src="https://i.imgur.com/4rrmnBh.jpeg" alt="SANAABIL Community Logo" class="profile-img-inner" width="196" height="196" decoding="async" fetchpriority="high">
+                                        </a>
+                                        <span class="logo-hint">Klick zum Gruppenbeitritt</span>
+                                    </div>
+                                    <h1 class="sanaabil-title">SANAABIL</h1>
+                                    <p class="hero-tagline">Mit wenig viel bewirken</p>
+                                    <button type="button" class="scroll-cue glass" data-goto="1" aria-label="Weiter">
+                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                    </button>
+                                </header>
+                            </div>
+                        </div>
+                        <div class="sheet-fade" aria-hidden="true"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></div>
+                        <div class="sheet-shade" aria-hidden="true"></div>
+                    </div>
+                </section>
+
+                <!-- ========== CARD 2: ABOUT ========== -->
+                <section class="deck-card" data-label="Über unsere Gemeinschaft">
+                    <div class="sheet">
+                        <span class="blob gold" style="--s: 260px; top: 46%; right: -120px;"></span>
+                        <span class="blob blue" style="--s: 240px; top: -90px; left: -80px;"></span>
+                        <div class="sheet-scroll">
+                            <div class="sheet-inner">
+                                <div class="sheet-content fade-in-section" style="--delay: 0.05s;">
+                                    <div class="about-head">
+                                        <span class="head-line l"></span>
+                                        <h2 class="section-title">Über unsere Gemeinschaft</h2>
+                                        <span class="head-line r"></span>
+                                    </div>
+                                    <p class="bismillah">
+                                        بسم الله الرحمن الرحيم
+                                    </p>
+                                    <p class="ayah">
+                                            Das Gleichnis derjenigen, die ihren Besitz auf dem Weg Allahs ausgeben, ist das eines Saatkorns, das sieben Ähren wachsen lässt, (und) in jeder Ähre (befinden sich) hundert Körner. Und Allah vervielfacht, wem Er will, und Allah ist (all)umfassend und (all)wissend.
+                                    </p>
+                                    <div class="sadaqa-box glass">
+                                        <p class="sadaqa-title">1€ Sadaqa:</p>
+                                        <p class="sadaqa-text">
+                                            Wir sind eine private Gemeinschaft, die gemeinsam durch kleine, monatliche Beiträge Gutes bewirken möchte. Diese Seite dient ausschließlich zur Präsentation unserer Arbeit, damit wir transparent zeigen können, was wir gemeinsam erreichen wollen in sha ALLAH.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sheet-fade" aria-hidden="true"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></div>
+                        <div class="sheet-shade" aria-hidden="true"></div>
+                    </div>
+                </section>
+
+                <!-- ========== CARD 3: ROADMAP ========== -->
+                <section class="deck-card" data-label="Unsere Roadmap">
+                    <div class="sheet">
+                        <span class="blob gold" style="--s: 230px; top: 26%; left: -110px;"></span>
+                        <span class="blob blue" style="--s: 280px; bottom: -110px; right: -100px;"></span>
+                        <div class="sheet-scroll">
+                            <div class="sheet-inner">
+                                <div class="sheet-content fade-in-section" id="roadmap-section" style="--delay: 0.05s;">
+                                    <h2 class="section-title rm-head">Unsere Roadmap</h2>
+                                    <div class="timeline">
+                                        <div class="roadmap-line-container">
+                                            <div class="roadmap-progress-line" id="progress-line"></div>
+                                            <div class="roadmap-traveler" id="roadmap-traveler"></div>
+                                        </div>
+                                        <!-- Roadmap Item 1 -->
+                                        <div class="roadmap-item" data-index="1">
+                                            <div class="roadmap-node-wrapper">
+                                                <div class="roadmap-node-glow roadmap-dot"></div>
+                                                <div class="node roadmap-dot roadmap-node-done">
+                                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                                                </div>
+                                            </div>
+                                            <div class="roadmap-card glass done">
+                                                <span class="rm-badge">Abgeschlossen</span>
+                                                <h3 class="rm-title">Start der Community</h3>
+                                                <p class="rm-text">Der offizielle Start unserer Sadaqa-Initiative ist für Rabi' al-Thani 1447 in sha ALLAH geplant. Wir beginnen mit der Sammlung der ersten monatlichen Beiträge.</p>
+                                            </div>
+                                        </div>
+                                        <!-- Roadmap Item 2 -->
+                                        <div class="roadmap-item" data-index="2">
+                                            <div class="roadmap-node-wrapper">
+                                                <div class="roadmap-node-glow roadmap-dot"></div>
+                                                <div class="node roadmap-dot roadmap-node-done">
+                                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                                                </div>
+                                            </div>
+                                            <div class="roadmap-card glass done">
+                                                <span class="rm-badge">Abgeschlossen</span>
+                                                <h3 class="rm-title">Erstes Projekt</h3>
+                                                <p class="rm-text">Nach dem erfolgreichen Start in sha ALLAH, werden wir gemeinsam das erste Projekt auswählen, das wir unterstützen möchten.</p>
+                                            </div>
+                                        </div>
+                                        <!-- Roadmap Item 3 -->
+                                        <div class="roadmap-item" data-index="3">
+                                            <div class="roadmap-node-wrapper">
+                                                <div class="roadmap-pulse-ring-1 roadmap-dot"></div>
+                                                <div class="roadmap-pulse-ring-2 roadmap-dot"></div>
+                                                <div class="node roadmap-dot roadmap-node-active">3</div>
+                                            </div>
+                                            <div class="roadmap-card glass is-current">
+                                                <span class="rm-badge live">● Jetzt aktiv</span>
+                                                <h3 class="rm-title">Laufende Unterstützung</h3>
+                                                <p class="rm-text">In sha ALLAH werden wir weiterhin monatlich spenden und neue Wege finden, um Gutes zu tun.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sheet-fade" aria-hidden="true"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></div>
+                        <div class="sheet-shade" aria-hidden="true"></div>
+                    </div>
+                </section>
+
+                <!-- ========== CARD 4: CALLOUT (quote rail) ========== -->
+                <section class="deck-card" data-label="Ein Aufruf">
+                    <div class="sheet sheet--glow">
+                        <span class="blob gold" style="--s: 300px; top: 30%; left: 50%; margin-left: -150px;"></span>
+                        <span class="blob blue" style="--s: 260px; top: -110px; right: -90px;"></span>
+                        <div class="sheet-scroll">
+                            <div class="sheet-inner">
+                                <div class="sheet-content sheet-content--full fade-in-section" id="callout-section" style="--delay: 0.05s;">
+                                    <div class="callout-head">
+                                        <span class="callout-badge">Ein Aufruf</span>
+                                    </div>
+                                    <div class="quote-rail" id="callout-texts"></div>
+                                    <div class="rail-controls">
+                                        <button type="button" class="c-btn glass only-wide" id="quote-prev" aria-label="Vorheriges Zitat">
+                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                                        </button>
+                                        <div class="c-dots" id="quote-dots"></div>
+                                        <button type="button" class="c-btn glass only-wide" id="quote-next" aria-label="Nächstes Zitat">
+                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sheet-fade" aria-hidden="true"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></div>
+                        <div class="sheet-shade" aria-hidden="true"></div>
+                    </div>
+                </section>
+
+                <!-- ========== CARD 5: PROJECTS (3D carousel) ========== -->
+                <section class="deck-card" data-label="Abgeschlossene Projekte">
+                    <div class="sheet">
+                        <span class="blob blue" style="--s: 260px; top: -100px; left: -100px;"></span>
+                        <span class="blob gold" style="--s: 300px; bottom: -130px; right: -110px;"></span>
+                        <div class="sheet-scroll">
+                            <div class="sheet-inner">
+                                <div class="sheet-content sheet-content--wide projects fade-in-section" id="projects-section" style="--delay: 0.05s;">
+                                    <h2 class="projects-title">
+                                        <span class="pt-main">
+                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                            Abgeschlossene Projekte:
+                                        </span>
+                                        <span class="pt-count">
+                                            <span id="project-counter" class="count-glow">0</span>
+                                            <span>الحمد لله</span>
+                                        </span>
+                                    </h2>
+
+                                    <div class="carousel" id="projects-carousel" tabindex="0" role="region" aria-roledescription="Karussell" aria-label="Abgeschlossene Projekte">
+                                        <div class="carousel-floor" aria-hidden="true"></div>
+                                        <div class="carousel-ring" id="projects-slider"></div>
+                                    </div>
+
+                                    <div class="carousel-controls">
+                                        <button type="button" id="slide-left" class="c-btn glass" aria-label="Vorheriges Projekt">
+                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                                        </button>
+                                        <div class="c-dots" id="project-dots"></div>
+                                        <button type="button" id="slide-right" class="c-btn glass" aria-label="Nächstes Projekt">
+                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                                        </button>
+                                    </div>
+
+                                    <div class="swipe-hint only-narrow">
+                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                                        <span>Wischen für mehr</span>
+                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sheet-fade" aria-hidden="true"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></div>
+                        <div class="sheet-shade" aria-hidden="true"></div>
+                    </div>
+                </section>
+
+                <!-- ========== CARD 6: FAQ ========== -->
+                <section class="deck-card" data-label="Häufige Fragen">
+                    <div class="sheet">
+                        <span class="blob gold" style="--s: 260px; top: -100px; right: -90px;"></span>
+                        <span class="blob blue" style="--s: 280px; bottom: 8%; left: -140px;"></span>
+                        <div class="sheet-scroll">
+                            <div class="sheet-inner">
+                                <div class="sheet-content sheet-content--wide fade-in-section" id="faq-section" style="--delay: 0.05s;">
+                                    <h2 class="section-title faq-title">
+                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                        Häufige Fragen
+                                    </h2>
+                                    <div id="faq-container" class="faq-list"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sheet-fade" aria-hidden="true"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></div>
+                        <div class="sheet-shade" aria-hidden="true"></div>
+                    </div>
+                </section>
+
+                <!-- ========== CARD 7: SHARE ========== -->
+                <section class="deck-card" data-label="Teile die Initiative">
+                    <div class="sheet">
+                        <span class="blob blue" style="--s: 240px; top: -90px; left: -90px;"></span>
+                        <span class="blob gold" style="--s: 320px; bottom: -150px; left: 50%; margin-left: -160px;"></span>
+                        <div class="sheet-scroll">
+                            <div class="sheet-inner">
+                                <div class="sheet-content share fade-in-section" id="share-section" style="--delay: 0.05s;">
+                                    <h2 class="section-title">Teile die Initiative</h2>
+                                    <p class="share-quote">
+                                        „[...] Wer auf Gutes hinweist, erhält den gleichen Lohn wie derjenige, der es tut."
+                                        <span class="share-src">[Sahih Muslim - 1893]</span>
+                                    </p>
+                                    <div class="share-actions">
+                                        <button type="button" id="copy-link-btn" aria-label="Link kopieren" class="btn btn-primary">
+                                            Link kopieren
+                                            <svg class="btn-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                                        </button>
+                                        <button type="button" id="show-qr-btn" aria-label="QR Code anzeigen" class="btn btn-outline glass">
+                                            QR Code
+                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path></svg>
+                                        </button>
+                                    </div>
+                                    <footer class="site-footer">
+                                        <p>SANAABIL &copy; 1447 AH</p>
+                                    </footer>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sheet-fade" aria-hidden="true"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></div>
+                        <div class="sheet-shade" aria-hidden="true"></div>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <div id="toast-message" role="status" aria-live="polite">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            <span>Link in die Zwischenablage kopiert</span>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const body = document.body;
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const smooth = prefersReducedMotion ? 'auto' : 'smooth';
+
+            /* =============================================================
+               THEME - follows the phone's light/dark setting (pure CSS);
+               only the particle tint has to hear about a change
+               ============================================================= */
+            try { localStorage.removeItem('sanaabil-theme'); } catch (err) { /* storage unavailable */ }
+            const lightQuery = window.matchMedia('(prefers-color-scheme: light)');
+            const onSchemeChange = () => refreshParticleColor();
+            if (lightQuery.addEventListener) lightQuery.addEventListener('change', onSchemeChange);
+            else if (lightQuery.addListener) lightQuery.addListener(onSchemeChange);
+
+            /* =============================================================
+               MODALS
+               ============================================================= */
+            const modal = document.getElementById('custom-modal');
+            const qrModal = document.getElementById('qr-modal');
+            const anyModalOpen = () => modal.classList.contains('active') || qrModal.classList.contains('active');
+
+            const qrBtn = document.getElementById('show-qr-btn');
+            const qrCloseX = document.getElementById('qr-modal-close');
+            const closeModal = () => {
+                if (!modal.classList.contains('active')) return;
+                modal.classList.remove('active');
+                setTimeout(() => { if (!modal.classList.contains('active')) modal.style.display = 'none'; }, 400);
+            };
+            const closeQrModal = () => {
+                if (!qrModal.classList.contains('active')) return;
+                qrModal.classList.remove('active');
+                setTimeout(() => { if (!qrModal.classList.contains('active')) qrModal.style.display = 'none'; }, 400);
+                try { qrBtn.focus({ preventScroll: true }); } catch (err) { /* ignore */ }
+            };
+            document.getElementById('modal-close').addEventListener('click', closeModal);
+            document.getElementById('modal-overlay').addEventListener('click', closeModal);
+
+            qrBtn.addEventListener('click', () => {
+                qrModal.style.display = 'flex';
+                requestAnimationFrame(() => requestAnimationFrame(() => qrModal.classList.add('active')));
+                setTimeout(() => { try { qrCloseX.focus({ preventScroll: true }); } catch (err) { /* ignore */ } }, 80);
+            });
+            document.getElementById('qr-modal-close').addEventListener('click', closeQrModal);
+            document.getElementById('qr-modal-overlay').addEventListener('click', closeQrModal);
+            document.getElementById('qr-close-btn').addEventListener('click', closeQrModal);
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    closeModal();
+                    closeQrModal();
+                }
+            });
+
+            /* =============================================================
+               CONTENT
+               ============================================================= */
+            const calloutData = [
+                { text: 'O die ihr glaubt, gebt aus von dem, womit Wir euch versorgt haben, bevor ein Tag kommt, an dem es keinen Verkauf, keine Freundschaft und keine Fürsprache gibt! Und die Ungläubigen sind die Ungerechten.', source: '[Qur\'an - 2:254]' },
+                { text: 'Diejenigen, die ihren Besitz auf dem Weg Allahs ausgeben und hierauf dem, was sie ausgegeben haben, weder (Dankbarkeit einfordernde) Vorhaltung (ihrer Gabe) noch Ungemach nachfolgen lassen, für sie wird es ihren Lohn bei ihrem Herrn geben, und keine Furcht soll über sie kommen, noch sollen sie traurig sein.', source: '[Qur\'an - 2:262]' },
+                { text: 'Glaubt an Allah und Seinen Gesandten und gebt aus von dem, worüber Er euch als Statthalter eingesetzt hat. Diejenigen von euch, die nun glauben und ausgeben, für sie wird es großen Lohn geben.', source: '[Qur\'an: 57:7]' },
+                { text: 'Und was ist mit euch, dass ihr nicht auf dem Weg Allahs ausgeben sollt, wo doch das Erbe der Himmel und der Erde Allah gehört.[..]', source: '[Qur\'an - 57:10]' },
+                { text: '[..]„Wohlstand wird nicht durch Spenden verringert, und Allah mehrt einem Diener durch Vergebung nur an Ehre, und niemand demütigt sich vor Allah, außer dass Allah ihn erhöht."', source: '[Sahih Muslim - 2588]' },
+                { text: '[..]„Allah hat gesagt: ‚Gib aus, o Sohn Adams, und Ich werde für dich ausgeben.‘“', source: '[Sahih al-Bukhari - 5352]' }
+            ];
+
+            const projectsData = [
+                { title: 'Brunnen Reparatur', location: 'Afghanistan', amount: '507,03 €', iconPath: 'M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2.5L8 2.69 9.31 4H20a2 2 0 0 1 2 2v2.5M12 21.5a8.38 8.38 0 0 0 2.5-1.95L12 17l-2.5 2.55A8.38 8.38 0 0 0 12 21.5z', bgIcon: 'M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z' },
+                { title: 'Unterstützung eines Bruders', location: 'Gambia', amount: '166,00 €', iconPath: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z', bgIcon: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' },
+                { title: 'Nothilfe Gaza-Nahost', location: 'Palästina', amount: '493,00 €', iconPath: 'M12 5v10m0 4h.01', bgIcon: 'M12 4v11m0 4h.01', isStroke: true },
+                { title: 'Unterstützung eines Bruders', location: 'Deutschland', amount: '400,00 €', iconPath: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z', bgIcon: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' },
+                { title: 'Unterstützung Hochzeit', location: 'Gambia', amount: '225,91 €', iconPath: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z', bgIcon: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' },
+                { title: '150 Masahif Druck', location: 'Afghanistan', amount: '300,00 €', iconPath: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5s3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18s-3.332.477-4.5 1.253', bgIcon: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5s3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18s-3.332.477-4.5 1.253', isStroke: true },
+                { title: 'Brunnenbau', location: 'Togo', amount: '600,00 €', iconPath: 'M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z', bgIcon: 'M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z' },
+                { title: 'Unterstützung - Schwestern', location: 'Marokko', amount: '526,30 €', iconPath: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z', bgIcon: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' },
+                { title: 'Schuldenhilfe für Bruder', location: 'Deutschland', amount: '180,00 €', iconPath: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z', bgIcon: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' },
+                { title: 'Madrasa-Bau', location: 'Afghanistan', amount: '1.171,99 €', iconPath: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5s3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18s-3.332.477-4.5 1.253', bgIcon: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5s3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18s-3.332.477-4.5 1.253', isStroke: true },
+                { title: 'Finanzielle Unterstützung eines Bruders', location: 'Deutschland', amount: '100,00 €', iconPath: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z', bgIcon: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' },
+                { title: 'Unterstützung von Waisenkindern', location: 'Weltweit', amount: '500,00 €', iconPath: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z', bgIcon: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' },
+                { title: 'Finanzielle Unterstützung eines Bruders', location: 'Medina', amount: '235,80 €', iconPath: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z', bgIcon: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z' }
+            ];
+
+            const faqData = [
+                { q: "Wie kann ich teilnehmen?", a: "Ein Klick auf das SANAABIL Logo genügt, um direkt zur Gruppe zu gelangen und Teil unserer Initiative zu werden in sha ALLAH" },
+                { q: "Wofür werden Spenden verwendet?", a: "Sämtliche Beiträge fließen in Projekte, die der Ummah zu Gute kommen, in sha ALLAH" },
+                { q: "Bedeutung des Namens \"SANAABIL\"?", a: "\"SANAABIL\" (arabisch für Ähren) bezieht sich auf das Gleichnis im Qur'an (2:261), in dem eine Spende auf ALLAHs Weg mit einem Saatkorn verglichen wird. Kleine Gabe, großer Handel bi idhnillah" },
+                { q: "Wie werden Projekte ausgewählt?", a: "Die Auswahl erfolgt in Absprache innerhalb der Community." },
+                { q: "Ist die Teilnahme bindend?", a: "Nein, die Teilnahme ist absolut freiwillig." },
+                { q: "Wie wird das Geld (Amana) verwendet?", a: "Jeder gespendete Betrag ist für uns eine Amana – ein uns von ALLAH anvertrautes Gut, dessen Verwaltung wir mit größter Sorgfalt begegnen in sha ALLAH" },
+                { q: "Gibt es Bilder oder Videos als Nachweis?", a: "Ja, entsprechende Nachweise werden intern in der Community, oder auf Anfrage geteilt in sha ALLAH" }
+            ];
+
+            // Quotes -> swipeable rail
+            const rail = document.getElementById('callout-texts');
+            rail.innerHTML = calloutData.map((item, i) => `
+                <div class="quote-slide" data-index="${i}">
+                    <div class="callout-item glass">
+                        <blockquote class="quote-text">"${item.text}"</blockquote>
+                        <p class="quote-src">${item.source}</p>
+                        <span class="q-dim" aria-hidden="true"></span>
+                    </div>
+                </div>
+            `).join('');
+
+            // Projects -> slides on a 3D ring
+            const ring = document.getElementById('projects-slider');
+            ring.innerHTML = projectsData.map((p, i) => `
+                <div class="p-slide" role="group" aria-roledescription="Folie" aria-label="${i + 1} / ${projectsData.length}">
+                    <article class="p-card">
+                        <div class="p-bg-icon ${i % 2 === 0 ? 'rot-a' : 'rot-b'}" aria-hidden="true">
+                            <svg ${p.isStroke ? 'fill="none" stroke="currentColor"' : 'fill="currentColor"'} viewBox="0 0 24 24"><path ${p.isStroke ? 'stroke-linecap="round" stroke-linejoin="round" stroke-width="3"' : ''} d="${p.bgIcon}"></path></svg>
+                        </div>
+                        <div class="p-icon" aria-hidden="true">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${p.iconPath}"></path></svg>
+                        </div>
+                        <h3 class="p-title">${p.title}</h3>
+                        <p class="p-loc">${p.location}</p>
+                        <div class="p-foot">
+                            <p class="p-label">${p.isPending ? 'Status' : 'Gespendet'}</p>
+                            <p class="p-amount">${p.amount}</p>
+                            ${p.isPending ? `
+                            <span class="p-badge pending">
+                                <span class="p-badge-main">
+                                    <svg class="spin" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle opacity="0.25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path opacity="0.75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>
+                                    In Arbeit
+                                </span>
+                                <span class="p-badge-note">| in sha ALLAH</span>
+                            </span>
+                            ` : `
+                            <span class="p-badge ok">
+                                <span class="p-badge-main">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                                    Erfolgreich
+                                </span>
+                                <span class="p-badge-note">| wa lillahi-l hamd</span>
+                            </span>
+                            `}
+                        </div>
+                        <div class="project-shine" aria-hidden="true"></div>
+                    </article>
+                </div>
+            `).join('');
+
+            // FAQ
+            const faqContainer = document.getElementById('faq-container');
+            faqContainer.innerHTML = faqData.map((f, i) => `
+                <div class="faq-item glass" tabindex="0" role="button" aria-expanded="false">
+                    <div class="faq-q">
+                        <span class="faq-q-text"><span class="faq-num">${i + 1}.</span>${f.q}</span>
+                        <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                    <div class="faq-content-wrapper">
+                        <div class="faq-content">
+                            <p class="faq-a">${f.a}</p>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            /* =============================================================
+               CARD DECK
+               The deck is a stack of cards moved only with transforms.
+               Touch: the card follows the finger, a flick or a short pull
+               lands exactly one card further. A card with more content
+               than fits scrolls its own content first.
+               Wheel, keyboard and the side dots page the same way.
+               ============================================================= */
+            const deck = document.getElementById('deck');
+            const cards = Array.from(deck.querySelectorAll('.deck-card'));
+            const sheets = cards.map(c => c.querySelector('.sheet'));
+            const shades = sheets.map(s => s.querySelector('.sheet-shade'));
+            const scrollers = sheets.map(s => s.querySelector('.sheet-scroll'));
+            const projectsCardIndex = cards.indexOf(document.getElementById('projects-section').closest('.deck-card'));
+            const deckNav = document.getElementById('deck-nav');
+            deckNav.innerHTML = cards.map((c, i) => `<button type="button" data-goto="${i}" aria-label="${c.dataset.label}"></button>`).join('');
+            const navButtons = Array.from(deckNav.children);
+            const last = cards.length - 1;
+            const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+
+            let H = 0, stackStep = 8, stackScale = 0.045;
+            let pos = 0;           // continuous position: 0 = first card on top, 1.5 = halfway to the third card
+            let active = -1;       // the card that is (or is about to be) on top
+            let deckAnim = 0, renderRaf = 0, moving = false;
+            const cardState = cards.map(() => ({ t: '', o: '', gone: null, near: null }));
+            const revealed = cards.map(() => false);
+
+            function readDeckMetrics() {
+                H = deck.clientHeight || window.innerHeight;
+                const cs = getComputedStyle(document.documentElement);
+                stackStep = parseFloat(cs.getPropertyValue('--stack-step')) || 8;
+                stackScale = parseFloat(cs.getPropertyValue('--stack-scale')) || 0.045;
+            }
+
+            // Place every card for the current position. Only transform and opacity change,
+            // and only for cards whose values actually changed.
+            function render() {
+                renderRaf = 0;
+                for (let i = 0; i < cards.length; i++) {
+                    const rel = pos - i;
+                    const st = cardState[i];
+                    let t, o = 0, visible;
+                    if (rel >= 0) {
+                        // under the top card: pushed back into the stack
+                        const d = Math.min(rel, 4);
+                        visible = rel < 3.6;
+                        t = d < 0.0005 ? 'translate3d(0,0,0)' : `translate3d(0,${(-d * stackStep).toFixed(2)}px,0) scale(${(1 - d * stackScale).toFixed(4)})`;
+                        o = Math.min(d, 3) * 0.22;
+                    } else {
+                        // still below: slides up from the bottom edge
+                        visible = rel > -1;
+                        t = `translate3d(0,${(Math.min(-rel, 1) * H).toFixed(1)}px,0)`;
+                    }
+                    if (st.t !== t) { cards[i].style.transform = t; st.t = t; }
+                    const os = o.toFixed(3);
+                    if (st.o !== os) { shades[i].style.opacity = os; st.o = os; }
+                    if (st.gone !== !visible) { cards[i].classList.toggle('is-gone', !visible); st.gone = !visible; }
+                    const near = rel > -2 && rel < 4.5;
+                    if (st.near !== near) { cards[i].classList.toggle('is-near', near); st.near = near; }
+                    if (visible && !revealed[i] && typeof revealCard === 'function') { revealed[i] = true; revealCard(i); }
+                }
+            }
+            const requestRender = () => { if (!renderRaf) renderRaf = requestAnimationFrame(render); };
+
+            function setActive(a) {
+                if (a === active) return;
+                active = a;
+                cards.forEach((c, i) => c.classList.toggle('is-active', i === a));
+                navButtons.forEach((btn, i) => btn.setAttribute('aria-current', i === a ? 'true' : 'false'));
+                if (a === projectsCardIndex && typeof pauseAuto === 'function') pauseAuto(3200);
+            }
+
+            function startMotion() {
+                if (!moving) { moving = true; if (typeof stopParticles === 'function') stopParticles(); }
+            }
+            function endMotion() {
+                moving = false;
+                if (typeof startParticles === 'function' && particlesReady) startParticles();
+                refreshHasMore(active);
+            }
+
+            // Glide to a card. `velocity` (cards per ms) lets a flick carry straight into the glide.
+            const deckEase = (t) => 1 - Math.pow(1 - t, 3);
+            function deckTo(target, velocity = 0) {
+                target = clamp(Math.round(target), 0, last);
+                cancelAnimationFrame(deckAnim); deckAnim = 0;
+                setActive(target);
+                const from = pos, delta = target - from;
+                if (prefersReducedMotion || Math.abs(delta) < 0.0005) {
+                    pos = target; render(); endMotion(); return;
+                }
+                startMotion();
+                let dur = 520 + 140 * Math.min(Math.abs(delta) - 1, 3);
+                if (velocity && Math.sign(velocity) === Math.sign(delta)) {
+                    // easeOutCubic starts at 3x the average speed: match the finger
+                    dur = clamp((3 * Math.abs(delta)) / Math.abs(velocity), 240, dur);
+                }
+                const t0 = performance.now();
+                const frame = (now) => {
+                    const k = Math.min(1, (now - t0) / dur);
+                    pos = from + delta * deckEase(k);
+                    render();
+                    if (k < 1) deckAnim = requestAnimationFrame(frame);
+                    else { deckAnim = 0; pos = target; render(); endMotion(); }
+                };
+                deckAnim = requestAnimationFrame(frame);
+            }
+            const goTo = (i) => deckTo(i);
+            document.addEventListener('click', (e) => {
+                const trigger = e.target.closest('[data-goto]');
+                if (trigger) goTo(parseInt(trigger.dataset.goto, 10));
+            });
+
+            const canScroll = (el, dir) => {
+                if (!el) return false;
+                return dir > 0 ? el.scrollTop + el.clientHeight < el.scrollHeight - 2 : el.scrollTop > 1;
+            };
+
+            // ---- touch: the card follows the finger ----
+            let touch = null;
+            deck.addEventListener('touchstart', (e) => {
+                if (e.touches.length !== 1 || anyModalOpen()) { touch = null; return; }
+                const p = e.touches[0];
+                touch = { x0: p.clientX, y0: p.clientY, mode: null, startPos: pos, samples: [], scroller: e.target.closest ? e.target.closest('.sheet-scroll') : null };
+            }, { passive: true });
+            deck.addEventListener('touchmove', (e) => {
+                if (!touch) return;
+                const p = e.touches[0];
+                if (!touch.mode) {
+                    const dx = p.clientX - touch.x0, dy = p.clientY - touch.y0;
+                    if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return;
+                    if (Math.abs(dx) > Math.abs(dy)) { touch.mode = 'x'; return; }          // quote rail / 3D ring
+                    if (canScroll(touch.scroller, dy < 0 ? 1 : -1)) { touch.mode = 'native'; return; } // card's own content
+                    touch.mode = 'deck';
+                    cancelAnimationFrame(deckAnim); deckAnim = 0;
+                    startMotion();
+                    touch.startPos = pos;
+                    touch.y0 = p.clientY;
+                }
+                if (touch.mode !== 'deck') return;
+                if (e.cancelable) e.preventDefault();
+                touch.samples.push([e.timeStamp, p.clientY]);
+                if (touch.samples.length > 6) touch.samples.shift();
+                const base = Math.round(touch.startPos);
+                let next = touch.startPos - (p.clientY - touch.y0) / H;
+                // one card per swipe, and a soft rubber band at both ends
+                next = clamp(next, base - 1, base + 1);
+                if (next < 0) next = next * 0.35;
+                if (next > last) next = last + (next - last) * 0.35;
+                pos = next;
+                requestRender();
+            }, { passive: false });
+            const endTouch = () => {
+                if (!touch) return;
+                const tch = touch; touch = null;
+                if (tch.mode !== 'deck') return;
+                if (renderRaf) { cancelAnimationFrame(renderRaf); render(); }
+                // release speed from the last ~100 ms of movement
+                let v = 0;
+                const smp = tch.samples;
+                if (smp.length > 1) {
+                    const lastS = smp[smp.length - 1];
+                    let first = smp[0];
+                    for (const s0 of smp) { if (lastS[0] - s0[0] <= 100) { first = s0; break; } }
+                    const dt = lastS[0] - first[0];
+                    if (dt > 0) v = -((lastS[1] - first[1]) / dt) / H; // cards per ms, + = forward
+                }
+                const base = Math.round(tch.startPos);
+                const moved = pos - base;
+                let target = base;
+                if (Math.abs(v) > 0.0004) target = base + Math.sign(v);   // flick
+                else if (Math.abs(moved) > 0.22) target = base + Math.sign(moved); // slow pull past ~1/5
+                deckTo(target, v);
+            };
+            deck.addEventListener('touchend', endTouch, { passive: true });
+            deck.addEventListener('touchcancel', endTouch, { passive: true });
+
+            // ---- mouse wheel / trackpad: one gesture = one card; a card's own overflow scrolls first ----
+            let lastWheelT = 0, wheelOwner = null, wheelPaged = false, wheelAcc = 0;
+            deck.addEventListener('wheel', (e) => {
+                if (e.ctrlKey || e.defaultPrevented || anyModalOpen()) return;
+                const dy = e.deltaMode === 1 ? e.deltaY * 16 : e.deltaY;
+                if (Math.abs(e.deltaX) > Math.abs(dy) || dy === 0) return;
+                const dir = dy > 0 ? 1 : -1;
+                const now = performance.now();
+                const fresh = now - lastWheelT > 200;
+                lastWheelT = now;
+                const scroller = e.target.closest ? e.target.closest('.sheet-scroll') : null;
+                if (fresh) {
+                    wheelOwner = (scroller && canScroll(scroller, dir)) ? scroller : null;
+                    wheelPaged = false;
+                    wheelAcc = 0;
+                }
+                if (wheelOwner) {
+                    if (!canScroll(wheelOwner, dir)) e.preventDefault();
+                    return;
+                }
+                e.preventDefault();
+                if (wheelPaged) return;
+                wheelAcc += dy;
+                if (Math.abs(wheelAcc) < 18) return;
+                wheelPaged = true;
+                goTo(active + (wheelAcc > 0 ? 1 : -1));
+            }, { passive: false });
+
+            // ---- keyboard ----
+            document.addEventListener('keydown', (e) => {
+                if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey || anyModalOpen()) return;
+                const t = e.target;
+                if (t.closest && t.closest('input, textarea, select, [contenteditable="true"]')) return;
+                let dir = 0, small = false;
+                switch (e.key) {
+                    case 'ArrowDown': dir = 1; small = true; break;
+                    case 'ArrowUp': dir = -1; small = true; break;
+                    case 'PageDown': dir = 1; break;
+                    case 'PageUp': dir = -1; break;
+                    case ' ':
+                    case 'Spacebar':
+                        if (t.closest && t.closest('button, a, [role="button"], label')) return;
+                        dir = e.shiftKey ? -1 : 1; break;
+                    case 'Home': e.preventDefault(); goTo(0); return;
+                    case 'End': e.preventDefault(); goTo(last); return;
+                    default: return;
+                }
+                e.preventDefault();
+                const scroller = scrollers[Math.max(active, 0)];
+                if (!deckAnim && canScroll(scroller, dir)) {
+                    scroller.scrollBy({ top: dir * (small ? 90 : scroller.clientHeight * 0.85), behavior: smooth });
+                } else {
+                    goTo(active + dir);
+                }
+            });
+
+            // Tabbing into another card brings that card to the top
+            deck.addEventListener('focusin', (e) => {
+                const i = cards.indexOf(e.target.closest('.deck-card'));
+                if (i >= 0 && i !== active) goTo(i);
+            });
+            // Browsers may still nudge the hidden deck when focusing; keep it pinned
+            deck.addEventListener('scroll', () => { if (deck.scrollTop || deck.scrollLeft) { deck.scrollTop = 0; deck.scrollLeft = 0; } }, { passive: true });
+
+            // "More content inside this card" hint
+            const hasMore = scrollers.map(() => false);
+            function refreshHasMore(i) {
+                const sc = scrollers[i];
+                if (!sc) return;
+                const more = sc.scrollHeight - sc.clientHeight - sc.scrollTop > 6;
+                if (more !== hasMore[i]) { hasMore[i] = more; sheets[i].classList.toggle('has-more', more); }
+            }
+            scrollers.forEach((sc, i) => sc.addEventListener('scroll', () => refreshHasMore(i), { passive: true }));
+
+            /* =============================================================
+               3D PROJECT CAROUSEL
+               Every card sits on a ring and is projected on its own, which
+               renders the same in every browser (no preserve-3d quirks).
+               ============================================================= */
+            const carousel = document.getElementById('projects-carousel');
+            const slides = Array.from(ring.children);
+            const slideCards = slides.map(s => s.firstElementChild);
+            const N = slides.length;
+            const theta = 360 / N;
+            const dotsWrap = document.getElementById('project-dots');
+            dotsWrap.innerHTML = slides.map((_, i) => `<button type="button" aria-label="Projekt ${i + 1}"></button>`).join('');
+            const dots = Array.from(dotsWrap.children);
+            const mod = (a, n) => ((a % n) + n) % n;
+            const slideState = slides.map(() => ({ t: '', o: '', z: '', hidden: false }));
+
+            let radius = 0, cardW = 0, current = -1, animRaf = 0;
+            // Start a little rotated so the ring can spin into place when the card appears
+            let angle = prefersReducedMotion ? 0 : theta * 2;
+            let targetAngle = angle;
+            let autoPausedUntil = 0;
+            const pauseAuto = (ms = 12000) => { autoPausedUntil = performance.now() + ms; };
+
+            function renderRing() {
+                if (!radius) return;
+                const idx = mod(Math.round(-angle / theta), N);
+                for (let i = 0; i < N; i++) {
+                    const a = mod(i * theta + angle + 180, 360) - 180; // this card's angle on the ring, -180..180
+                    const ad = Math.abs(a);
+                    const st = slideState[i];
+                    slides[i].classList.toggle('is-active', i === idx);
+                    const hide = ad > 100;
+                    if (hide !== st.hidden) { slides[i].style.visibility = hide ? 'hidden' : ''; st.hidden = hide; }
+                    if (hide) continue;
+                    const t = `translateZ(${-radius}px) rotateY(${a.toFixed(2)}deg) translateZ(${radius}px)`;
+                    if (t !== st.t) { slides[i].style.transform = t; st.t = t; }
+                    const z = String(300 - Math.round(ad));
+                    if (z !== st.z) { slides[i].style.zIndex = z; st.z = z; }
+                    const slots = ad / theta;
+                    const o = (slots > 3.2 ? 0 : Math.max(0, 1 - slots * 0.28)).toFixed(3);
+                    if (o !== st.o) { slideCards[i].style.opacity = o; st.o = o; }
+                }
+                if (idx !== current) {
+                    current = idx;
+                    dots.forEach((d, i) => d.setAttribute('aria-current', i === idx ? 'true' : 'false'));
+                }
+            }
+            const easeOut = (t) => 1 - Math.pow(1 - t, 4);
+            function animateTo(target, duration) {
+                cancelAnimationFrame(animRaf);
+                animRaf = 0;
+                const from = angle;
+                const delta = target - from;
+                if (prefersReducedMotion || !radius || Math.abs(delta) < 0.01) { angle = target; renderRing(); return; }
+                const start = performance.now();
+                const frame = (now) => {
+                    const t = Math.min(1, (now - start) / duration);
+                    angle = from + delta * easeOut(t);
+                    renderRing();
+                    animRaf = t < 1 ? requestAnimationFrame(frame) : 0;
+                };
+                animRaf = requestAnimationFrame(frame);
+            }
+            function goToSlide(target, duration = 950) {
+                const cont = -targetAngle / theta;
+                const t = target + N * Math.round((cont - target) / N); // shortest way round
+                targetAngle = -t * theta;
+                animateTo(targetAngle, duration);
+            }
+            const stepSlide = (dir) => goToSlide(Math.round(-targetAngle / theta) + dir);
+            function layoutCarousel() {
+                const w = slides[0] ? slides[0].offsetWidth : 0;
+                if (!w) return;
+                cardW = w;
+                radius = Math.round((w / 2) / Math.tan(Math.PI / N) + w * 0.12);
+                slideState.forEach(st => { st.t = ''; });
+                renderRing();
+            }
+
+            document.getElementById('slide-left').addEventListener('click', () => { pauseAuto(); stepSlide(-1); });
+            document.getElementById('slide-right').addEventListener('click', () => { pauseAuto(); stepSlide(1); });
+            dots.forEach((d, i) => d.addEventListener('click', () => { pauseAuto(); goToSlide(i); }));
+            carousel.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft') { e.preventDefault(); pauseAuto(); stepSlide(-1); }
+                else if (e.key === 'ArrowRight') { e.preventDefault(); pauseAuto(); stepSlide(1); }
+            });
+
+            // Drag / swipe to spin the ring (vertical swipes still page the deck)
+            let dragging = false, dragMoved = false, dragPid = null, dragStartX = 0, dragStartY = 0;
+            let dragStartAngle = 0, dragLastX = 0, dragLastT = 0, dragVel = 0, dragRaf = 0, suppressClick = false;
+            carousel.addEventListener('pointerdown', (e) => {
+                if (e.pointerType === 'mouse' && e.button !== 0) return;
+                dragging = true; dragMoved = false; dragPid = e.pointerId;
+                dragStartX = dragLastX = e.clientX; dragStartY = e.clientY;
+                dragLastT = performance.now(); dragVel = 0;
+            });
+            carousel.addEventListener('pointermove', (e) => {
+                if (!dragging || e.pointerId !== dragPid) return;
+                if (!dragMoved) {
+                    const dx0 = e.clientX - dragStartX;
+                    if (Math.abs(dx0) < 6) return;
+                    if (Math.abs(e.clientY - dragStartY) > Math.abs(dx0)) { dragging = false; return; }
+                    dragMoved = true;
+                    try { carousel.setPointerCapture(dragPid); } catch (err) { /* ignore */ }
+                    cancelAnimationFrame(animRaf); animRaf = 0;
+                    dragStartAngle = angle;
+                    dragStartX = e.clientX;
+                    carousel.classList.add('is-dragging');
+                    pauseAuto();
+                }
+                const now = performance.now();
+                const dt = Math.max(1, now - dragLastT);
+                dragVel = dragVel * 0.6 + ((e.clientX - dragLastX) / dt) * 0.4;
+                dragLastX = e.clientX; dragLastT = now;
+                angle = dragStartAngle + ((e.clientX - dragStartX) / (cardW || 240)) * theta * 1.05;
+                targetAngle = angle;
+                if (!dragRaf) dragRaf = requestAnimationFrame(() => { dragRaf = 0; renderRing(); });
+            });
+            const endDrag = (e) => {
+                if (!dragging || (e && e.pointerId !== dragPid)) return;
+                dragging = false;
+                if (!dragMoved) return;
+                if (dragRaf) { cancelAnimationFrame(dragRaf); dragRaf = 0; }
+                carousel.classList.remove('is-dragging');
+                suppressClick = true;
+                setTimeout(() => { suppressClick = false; }, 0);
+                const projected = angle + (dragVel * 220 / (cardW || 240)) * theta;
+                const startIdx = Math.round(-dragStartAngle / theta);
+                let target = Math.round(-projected / theta);
+                target = Math.max(startIdx - 3, Math.min(startIdx + 3, target));
+                targetAngle = angle;
+                pauseAuto();
+                goToSlide(target, 700);
+            };
+            carousel.addEventListener('pointerup', endDrag);
+            carousel.addEventListener('pointercancel', endDrag);
+            // Touch pointers start out captured by the card under the finger; moving the capture to the
+            // carousel fires lostpointercapture on that card, which bubbles up here - ignore those.
+            carousel.addEventListener('lostpointercapture', (e) => { if (e.target === carousel) endDrag(e); });
+            // Tap a side card to bring it to the front
+            ring.addEventListener('click', (e) => {
+                if (suppressClick) return;
+                const s = e.target.closest('.p-slide');
+                if (s && !s.classList.contains('is-active')) { pauseAuto(); goToSlide(slides.indexOf(s)); }
+            });
+            // Horizontal trackpad swipes
+            let cWheelAcc = 0, cWheelLock = 0;
+            carousel.addEventListener('wheel', (e) => {
+                if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
+                e.preventDefault();
+                const now = performance.now();
+                if (now < cWheelLock) return;
+                cWheelAcc += e.deltaX;
+                if (Math.abs(cWheelAcc) > 50) {
+                    stepSlide(cWheelAcc > 0 ? 1 : -1);
+                    cWheelAcc = 0; cWheelLock = now + 450; pauseAuto();
+                }
+            }, { passive: false });
+            // Gentle auto-rotation while the projects card is on top
+            setInterval(() => {
+                if (prefersReducedMotion || document.hidden || dragging) return;
+                if (active !== projectsCardIndex || anyModalOpen()) return;
+                if (performance.now() < autoPausedUntil) return;
+                if (carousel.matches(':hover') || carousel.contains(document.activeElement)) return;
+                stepSlide(1);
+            }, 4200);
+
+            /* =============================================================
+               QUOTE RAIL
+               ============================================================= */
+            const qSlides = Array.from(rail.querySelectorAll('.quote-slide'));
+            const qDotsWrap = document.getElementById('quote-dots');
+            qDotsWrap.innerHTML = qSlides.map((_, i) => `<button type="button" aria-label="Zitat ${i + 1}"></button>`).join('');
+            const qDots = Array.from(qDotsWrap.children);
+            let qCenters = [], qActive = -1;
+            function measureRail() {
+                qCenters = qSlides.map(sl => sl.offsetLeft + sl.offsetWidth / 2);
+            }
+            function setQuote(best) {
+                if (best === qActive) return;
+                qActive = best;
+                qSlides.forEach((sl, i) => sl.classList.toggle('is-current', i === best));
+                qDots.forEach((btn, i) => btn.setAttribute('aria-current', i === best ? 'true' : 'false'));
+            }
+            const railHits = new Set();
+            const railObserver = new IntersectionObserver((entries) => {
+                entries.forEach(en => {
+                    const i = qSlides.indexOf(en.target);
+                    if (en.isIntersecting) railHits.add(i); else railHits.delete(i);
+                });
+                if (railHits.size) setQuote(Math.min(...railHits));
+            }, { root: rail, rootMargin: '0px -50% 0px -50%', threshold: 0 });
+            qSlides.forEach(sl => railObserver.observe(sl));
+            const railGo = (i) => {
+                i = Math.max(0, Math.min(qSlides.length - 1, i));
+                if (!qCenters.length) measureRail();
+                rail.scrollTo({ left: qCenters[i] - rail.clientWidth / 2, behavior: smooth });
+            };
+            qDots.forEach((b, i) => b.addEventListener('click', () => railGo(i)));
+            document.getElementById('quote-prev').addEventListener('click', () => railGo(qActive - 1));
+            document.getElementById('quote-next').addEventListener('click', () => railGo(qActive + 1));
+
+            /* =============================================================
+               REVEALS - run once, the first time a card slides into view
+               ============================================================= */
+            const roadmapSection = document.getElementById('roadmap-section');
+            const calloutSection = document.getElementById('callout-section');
+            const projectsSection = document.getElementById('projects-section');
+            const projectCounter = document.getElementById('project-counter');
+
+            function revealRoadmap() {
+                document.getElementById('progress-line').style.height = '100%';
+                const traveler = document.getElementById('roadmap-traveler');
+                traveler.classList.add('active');
+                setTimeout(() => {
+                    traveler.style.top = '100%';
+                    setTimeout(() => traveler.classList.remove('active'), 2800);
+                }, 50);
+                document.querySelectorAll('.roadmap-item').forEach((item, index) => {
+                    setTimeout(() => item.classList.add('active'), prefersReducedMotion ? 0 : index * 450 + 250);
+                });
+            }
+            function revealQuotes() {
+                document.querySelectorAll('.callout-item').forEach((item, index) => {
+                    setTimeout(() => item.classList.add('is-visible'), prefersReducedMotion ? 0 : index * 90 + 120);
+                });
+            }
+            function revealProjects() {
+                const target = projectsData.length;
+                if (prefersReducedMotion) { projectCounter.textContent = target; return; }
+                const start = performance.now();
+                const duration = 1400;
+                const tickCounter = (now) => {
+                    const t = Math.min((now - start) / duration, 1);
+                    projectCounter.textContent = Math.round((1 - Math.pow(1 - t, 3)) * target);
+                    if (t < 1) requestAnimationFrame(tickCounter);
+                };
+                requestAnimationFrame(tickCounter);
+                setTimeout(() => goToSlide(0, 1700), 250);
+            }
+            function revealFaq() {
+                document.querySelectorAll('.faq-item').forEach((item, index) => {
+                    setTimeout(() => item.classList.add('is-visible'), prefersReducedMotion ? 0 : index * 70 + 120);
+                });
+            }
+            function revealCard(i) {
+                const card = cards[i];
+                card.querySelectorAll('.fade-in-section').forEach(el => el.classList.add('is-visible'));
+                if (card.contains(roadmapSection)) revealRoadmap();
+                if (card.contains(calloutSection)) revealQuotes();
+                if (card.contains(projectsSection)) revealProjects();
+                if (card.contains(faqContainer)) revealFaq();
+            }
+
+            /* =============================================================
+               FAQ
+               ============================================================= */
+            function toggleFaq(item) {
+                const isActive = item.classList.contains('active');
+                faqContainer.querySelectorAll('.faq-item').forEach(el => {
+                    el.classList.remove('active');
+                    el.setAttribute('aria-expanded', 'false');
+                });
+                if (isActive) return;
+                item.classList.add('active');
+                item.setAttribute('aria-expanded', 'true');
+                // Keep the opened answer inside the visible part of the card
+                const scroller = item.closest('.sheet-scroll');
+                if (!scroller) return;
+                setTimeout(() => {
+                    const sr = scroller.getBoundingClientRect();
+                    const ir = item.getBoundingClientRect();
+                    const overflow = ir.bottom - (sr.bottom - 28);
+                    if (overflow > 0) scroller.scrollBy({ top: Math.min(overflow, ir.top - sr.top - 16), behavior: smooth });
+                }, 420);
+            }
+            faqContainer.addEventListener('click', (e) => {
+                const item = e.target.closest('.faq-item');
+                if (item) toggleFaq(item);
+            });
+            faqContainer.addEventListener('keydown', (e) => {
+                if (e.key !== 'Enter' && e.key !== ' ') return;
+                const item = e.target.closest('.faq-item');
+                if (!item) return;
+                e.preventDefault();
+                toggleFaq(item);
+            });
+
+            /* =============================================================
+               SHARE
+               ============================================================= */
+            const toast = document.getElementById('toast-message');
+            let toastTimer = 0;
+            document.getElementById('copy-link-btn').addEventListener('click', async () => {
+                const text = "SANAABIL: https://blu3oceanwaves.github.io/SANAABIL/";
+                let copied = false;
+                try { await navigator.clipboard.writeText(text); copied = true; } catch (err) { /* fall back below */ }
+                if (!copied) {
+                    try {
+                        const ta = document.createElement('textarea');
+                        ta.value = text;
+                        ta.setAttribute('readonly', '');
+                        ta.style.position = 'fixed';
+                        ta.style.opacity = '0';
+                        document.body.appendChild(ta);
+                        ta.select();
+                        ta.setSelectionRange(0, text.length);
+                        document.execCommand('copy');
+                        ta.remove();
+                    } catch (err) { /* ignore */ }
+                }
+                toast.classList.add('is-visible');
+                clearTimeout(toastTimer);
+                toastTimer = setTimeout(() => toast.classList.remove('is-visible'), 3000);
+            });
+
+            /* =============================================================
+               PARTICLES
+               ============================================================= */
+            const canvas = document.getElementById('particle-canvas');
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            let particleColor = getComputedStyle(body).getPropertyValue('--particle-color').trim();
+            function refreshParticleColor() {
+                particleColor = getComputedStyle(body).getPropertyValue('--particle-color').trim();
+            }
+            let resizeTimer;
+            function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(resizeCanvas, 150);
+            }, { passive: true });
+            resizeCanvas();
+            class Particle {
+                constructor() { this.reset(); }
+                reset() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.size = Math.random() * 2 + 0.5;
+                    this.vx = (Math.random() - 0.5) * 0.25;
+                    this.vy = (Math.random() - 0.5) * 0.25;
+                    this.baseOp = Math.random() * 0.35 + 0.1;
+                    this.op = this.baseOp;
+                    this.twinklePhase = Math.random() * Math.PI * 2;
+                    this.twinkleSpeed = 0.006 + Math.random() * 0.01;
+                }
+                update(k) {
+                    // Gentle random drift instead of straight bounces - feels like floating dust in light
+                    this.vx += (Math.random() - 0.5) * 0.015;
+                    this.vy += (Math.random() - 0.5) * 0.015;
+                    const maxSpeed = 0.35;
+                    const speed = Math.hypot(this.vx, this.vy) || 1;
+                    if (speed > maxSpeed) { this.vx = (this.vx / speed) * maxSpeed; this.vy = (this.vy / speed) * maxSpeed; }
+                    this.x += this.vx * k; this.y += this.vy * k;
+                    if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                    if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+                    // Slow breathing twinkle
+                    this.twinklePhase += this.twinkleSpeed * k;
+                    this.op = this.baseOp + Math.sin(this.twinklePhase) * this.baseOp * 0.5;
+                }
+                draw() {
+                    ctx.globalAlpha = this.op;
+                    ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
+                }
+            }
+            const particleCount = prefersReducedMotion ? 0 : (window.innerWidth < 640 ? 18 : 28);
+            for (let i = 0; i < particleCount; i++) particles.push(new Particle());
+            // Dust drifts slowly, so 30 frames per second look identical and cost half
+            let rafId = null, frameTimer = 0, lastDraw = 0;
+            function animate(now) {
+                rafId = null;
+                const k = lastDraw ? Math.min((now - lastDraw) / 16.7, 3) : 1;
+                lastDraw = now;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = 'rgb(' + particleColor + ')';
+                particles.forEach(p => { p.update(k); p.draw(); });
+                ctx.globalAlpha = 1;
+                frameTimer = setTimeout(() => { rafId = requestAnimationFrame(animate); }, 22);
+            }
+            const startParticles = () => {
+                if (!particles.length || rafId || frameTimer || document.hidden) return;
+                lastDraw = 0;
+                rafId = requestAnimationFrame(animate);
+            };
+            const stopParticles = () => {
+                if (rafId) cancelAnimationFrame(rafId);
+                clearTimeout(frameTimer);
+                rafId = null; frameTimer = 0;
+            };
+            // Pause the canvas loop while the tab isn't visible to save CPU/battery
+            let particlesReady = false;
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden) stopParticles();
+                else if (particlesReady) startParticles();
+            });
+            // Defer non-critical, purely decorative work until the browser is idle
+            function onIdle(cb) {
+                if ('requestIdleCallback' in window) requestIdleCallback(cb, { timeout: 1500 });
+                else setTimeout(cb, 200);
+            }
+
+            /* =============================================================
+               LAYOUT & START
+               ============================================================= */
+            function layoutAll() {
+                readDeckMetrics();
+                for (const st of cardState) st.t = '';
+                if (active < 0) setActive(0);
+                render();
+                layoutCarousel();
+                measureRail();
+                scrollers.forEach((_, i) => refreshHasMore(i));
+            }
+            let layoutRaf = 0;
+            const scheduleLayout = () => {
+                cancelAnimationFrame(layoutRaf);
+                layoutRaf = requestAnimationFrame(layoutAll);
+            };
+            const sizeObserver = new ResizeObserver(scheduleLayout);
+            sizeObserver.observe(deck);
+            sizeObserver.observe(carousel);
+            sizeObserver.observe(rail);
+            const innerObserver = new ResizeObserver((entries) => {
+                entries.forEach(en => {
+                    const i = scrollers.indexOf(en.target.closest('.sheet-scroll'));
+                    if (i >= 0) refreshHasMore(i);
+                });
+            });
+            sheets.forEach(s => innerObserver.observe(s.querySelector('.sheet-inner')));
+            if (document.fonts && document.fonts.ready) document.fonts.ready.then(scheduleLayout).catch(() => {});
+
+            const loader = document.getElementById('loader-container');
+            const content = document.getElementById('content-container');
+            let shown = false;
+            function showContent() {
+                if (shown) return;
+                shown = true;
+                content.classList.remove('is-hidden');
+                layoutAll();
+                loader.classList.add('is-fading');
+                setTimeout(() => { loader.style.display = 'none'; }, 650);
+                onIdle(() => {
+                    particlesReady = true;
+                    startParticles();
+                    // Warm the cache so the QR code is there the moment the dialog opens
+                    const qrPreload = new Image();
+                    qrPreload.decoding = 'async';
+                    qrPreload.src = 'https://i.imgur.com/9GoR7tl.png';
+                });
+            }
+            if (document.readyState === 'complete') setTimeout(showContent, 150);
+            else window.addEventListener('load', () => setTimeout(showContent, 150));
+            // Never keep people waiting on a slow image host
+            setTimeout(showContent, 3500);
+        });
+    </script>
+</body>
+</html>
